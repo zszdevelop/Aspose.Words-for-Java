@@ -16,7 +16,6 @@ import org.testng.annotations.BeforeClass;
 import java.io.File;
 import java.util.Locale;
 
-
 public class DocsExamplesBase
 {
     /**
@@ -98,7 +97,6 @@ public class DocsExamplesBase
         return mMainDataDir;
     }
 
-
     /**
      * Gets the path to the documents used by the code examples.
      */
@@ -107,7 +105,6 @@ public class DocsExamplesBase
         return mMyDir;
     }
 
-
     /**
      * Gets the path to the images used by the code examples.
      */
@@ -115,7 +112,6 @@ public class DocsExamplesBase
     {
         return mImagesDir;
     }
-
 
     /**
      * Gets the path of the demo database.
@@ -133,17 +129,13 @@ public class DocsExamplesBase
         return mLicenseDir;
     }
 
-
     /**
      * Gets the path to the artifacts used by the code examples.
      */
-    static String getArtifactsDir()
+    public static String getArtifactsDir()
     {
         return mArtifactsDir;
     }
-
-    ;
-
 
     /**
      * Gets the path of the free fonts. Ends with a back slash.
@@ -152,8 +144,6 @@ public class DocsExamplesBase
     {
         return mFontsDir;
     }
-
-    ;
 
     private static final String mAssemblyDir;
     private static final String mMainDataDir;
