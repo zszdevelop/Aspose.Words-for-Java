@@ -103,20 +103,20 @@ public class WorkingWithFileFormat extends DocsExamplesBase
             if (info.isEncrypted())
             {
                 System.out.println("\tAn encrypted document.");
-                FileUtils.copyFile(fileName, Paths.get(encryptedDir, nameOnly), true);
+                FileUtils.copyFile(new File(fileName), new File(encryptedDir, nameOnly));
             }
             else
             {
                 switch (info.getLoadFormat())
                 {
                     case LoadFormat.DOC_PRE_WORD_60:
-                        File.copy(fileName, Path.combine(pre97Dir, nameOnly), true);
+                        FileUtils.copyFile(new File(fileName), new File(pre97Dir, nameOnly));
                         break;
                     case LoadFormat.UNKNOWN:
-                        File.copy(fileName, Path.combine(unknownDir, nameOnly), true);
+                        FileUtils.copyFile(new File(fileName), new File(unknownDir, nameOnly));
                         break;
                     default:
-                        File.copy(fileName, Path.combine(supportedDir, nameOnly), true);
+                        FileUtils.copyFile(new File(fileName), new File(supportedDir, nameOnly));
                         break;
                 }
             }

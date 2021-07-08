@@ -170,7 +170,8 @@ class WorkingWithFields extends DocsExamplesBase
 
         private static class DataSource implements IMailMergeDataSource
         {
-            private boolean next = true;private TableNametableName();
+            private boolean next = true;
+            private TableNametableName();
 
             private String tableName()
             {

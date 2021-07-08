@@ -1,20 +1,17 @@
-package DocsExamples.File_Formats_and_Conversions.Load_Options;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.File_formats_and_conversions.Load_options;
 
 import DocsExamples.DocsExamplesBase;
 import org.testng.annotations.Test;
 import com.aspose.words.TxtLoadOptions;
 import com.aspose.words.Document;
-import com.aspose.ms.System.IO.MemoryStream;
-import com.aspose.ms.System.Text.Encoding;
 import com.aspose.words.TxtLeadingSpacesOptions;
 import com.aspose.words.TxtTrailingSpacesOptions;
 import com.aspose.words.DocumentDirection;
 import com.aspose.words.Paragraph;
-import com.aspose.ms.System.msConsole;
 
+import java.io.ByteArrayInputStream;
 
+@Test
 public class WorkingWithTxtLoadOptions extends DocsExamplesBase
 {
     @Test
@@ -47,7 +44,7 @@ public class WorkingWithTxtLoadOptions extends DocsExamplesBase
         TxtLoadOptions loadOptions = new TxtLoadOptions(); { loadOptions.setDetectNumberingWithWhitespaces(true); }
 
         // Load the document while applying LoadOptions as a parameter and verify the result.
-        Document doc = new Document(new MemoryStream(Encoding.getUTF8().getBytes(TEXT_DOC)), loadOptions);
+        Document doc = new Document(new ByteArrayInputStream(TEXT_DOC.getBytes()), loadOptions);
 
         doc.save(getArtifactsDir() + "WorkingWithTxtLoadOptions.DetectNumberingWithWhitespaces.docx");
         //ExEnd:DetectNumberingWithWhitespaces
@@ -67,7 +64,7 @@ public class WorkingWithTxtLoadOptions extends DocsExamplesBase
             loadOptions.setTrailingSpacesOptions(TxtTrailingSpacesOptions.TRIM);
         }
 
-        Document doc = new Document(new MemoryStream(Encoding.getUTF8().getBytes(TEXT_DOC)), loadOptions);
+        Document doc = new Document(new ByteArrayInputStream(TEXT_DOC.getBytes()), loadOptions);
 
         doc.save(getArtifactsDir() + "WorkingWithTxtLoadOptions.HandleSpacesOptions.docx");
         //ExEnd:HandleSpacesOptions
@@ -82,7 +79,7 @@ public class WorkingWithTxtLoadOptions extends DocsExamplesBase
         Document doc = new Document(getMyDir() + "Hebrew text.txt", loadOptions);
 
         Paragraph paragraph = doc.getFirstSection().getBody().getFirstParagraph();
-        msConsole.writeLine(paragraph.getParagraphFormat().getBidi());
+        System.out.println(paragraph.getParagraphFormat().getBidi());
 
         doc.save(getArtifactsDir() + "WorkingWithTxtLoadOptions.DocumentTextDirection.docx");
         //ExEnd:DocumentTextDirection

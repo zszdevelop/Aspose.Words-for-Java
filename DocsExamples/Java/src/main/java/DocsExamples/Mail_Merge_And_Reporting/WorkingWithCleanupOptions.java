@@ -1,6 +1,4 @@
-package DocsExamples.Mail_Merge_and_Reporting;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Mail_Merge_And_Reporting;
 
 import DocsExamples.DocsExamplesBase;
 import org.testng.annotations.Test;
@@ -10,8 +8,8 @@ import com.aspose.words.MailMergeCleanupOptions;
 import com.aspose.words.DocumentBuilder;
 import com.aspose.words.FieldMergeField;
 
-
-class WorkingWithCleanupOptions extends DocsExamplesBase
+@Test
+public class WorkingWithCleanupOptions extends DocsExamplesBase
 {
     @Test
     public void removeRowsFromTable() throws Exception

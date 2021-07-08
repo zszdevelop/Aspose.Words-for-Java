@@ -1,17 +1,16 @@
-package DocsExamples.File_Formats_and_Conversions.Load_Options;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.File_formats_and_conversions.Load_options;
 
 import DocsExamples.DocsExamplesBase;
 import org.testng.annotations.Test;
 import com.aspose.words.HtmlLoadOptions;
 import com.aspose.words.HtmlControlType;
 import com.aspose.words.Document;
-import com.aspose.ms.System.IO.MemoryStream;
-import com.aspose.ms.System.Text.Encoding;
 import com.aspose.words.SaveFormat;
 
+import java.io.ByteArrayInputStream;
+import java.nio.charset.StandardCharsets;
 
+@Test
 public class WorkingWithHtmlLoadOptions extends DocsExamplesBase
 {
     @Test
@@ -22,7 +21,7 @@ public class WorkingWithHtmlLoadOptions extends DocsExamplesBase
 
         HtmlLoadOptions loadOptions = new HtmlLoadOptions(); { loadOptions.setPreferredControlType(HtmlControlType.STRUCTURED_DOCUMENT_TAG); }
 
-        Document doc = new Document(new MemoryStream(Encoding.getUTF8().getBytes(HTML)), loadOptions);
+        Document doc = new Document(new ByteArrayInputStream(HTML.getBytes(StandardCharsets.UTF_8)), loadOptions);
 
         doc.save(getArtifactsDir() + "WorkingWithHtmlLoadOptions.PreferredControlType.docx", SaveFormat.DOCX);
         //ExEnd:LoadHtmlElementsWithPreferredControlType

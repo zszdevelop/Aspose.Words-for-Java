@@ -108,7 +108,7 @@ public class DocsExamplesBase
     /**
      * Gets the path to the images used by the code examples.
      */
-    static String getImagesDir()
+    public static String getImagesDir()
     {
         return mImagesDir;
     }

@@ -1,6 +1,4 @@
-package DocsExamples.File_Formats_and_Conversions.Load_Options;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.File_formats_and_conversions.Load_options;
 
 import DocsExamples.DocsExamplesBase;
 import org.testng.annotations.Test;
@@ -11,11 +9,12 @@ import com.aspose.words.SaveFormat;
 import com.aspose.words.MsWordVersion;
 import com.aspose.words.IWarningCallback;
 import com.aspose.words.WarningInfo;
-import com.aspose.ms.System.msConsole;
-import com.aspose.ms.System.Text.Encoding;
 import com.aspose.words.PdfLoadOptions;
 
+import java.nio.charset.Charset;
+import java.text.MessageFormat;
 
+@Test
 public class WorkingWithLoadOptions extends DocsExamplesBase
 {
     @Test
@@ -94,22 +93,11 @@ public class WorkingWithLoadOptions extends DocsExamplesBase
         public void warning(WarningInfo info)
         {
             // Prints warnings and their details as they arise during document loading.
-            System.out.println("WARNING: {info.WarningType}, source: {info.Source}");
-            System.out.println("\tDescription: {info.Description}");
+            System.out.println(MessageFormat.format("WARNING: {0}, source: {1}", info.getWarningType(), info.getSource()));
+            System.out.println(MessageFormat.format("\tDescription: {0}", info.getDescription()));
         }
     }
     //ExEnd:DocumentLoadingWarningCallback
-    
-
-    @Test
-    public void loadWithEncoding() throws Exception
-    {
-        //ExStart:LoadWithEncoding
-        LoadOptions loadOptions = new LoadOptions(); { loadOptions.setEncoding(Encoding.getUTF7()); }
-
-        Document doc = new Document(getMyDir() + "Encoded in UTF-7.txt", loadOptions);
-        //ExEnd:LoadWithEncoding
-    }
 
     @Test
     public void skipPdfImages() throws Exception
@@ -135,7 +123,7 @@ public class WorkingWithLoadOptions extends DocsExamplesBase
     public void loadChm() throws Exception
     {
         //ExStart:LoadCHM
-        LoadOptions loadOptions = new LoadOptions(); { loadOptions.setEncoding(Encoding.getEncoding("windows-1251")); }
+        LoadOptions loadOptions = new LoadOptions(); { loadOptions.setEncoding(Charset.forName("windows-1251")); }
 
         Document doc = new Document(getMyDir() + "HTML help.chm", loadOptions);
         //ExEnd:LoadCHM

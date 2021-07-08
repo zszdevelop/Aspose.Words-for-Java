@@ -1,6 +1,4 @@
-package DocsExamples.File_Formats_and_Conversions.Save_Options;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.File_formats_and_conversions.Save_options;
 
 import DocsExamples.DocsExamplesBase;
 import org.testng.annotations.Test;
@@ -9,9 +7,10 @@ import com.aspose.words.DocumentBuilder;
 import com.aspose.words.ParagraphAlignment;
 import com.aspose.words.MarkdownSaveOptions;
 import com.aspose.words.TableContentAlignment;
-import com.aspose.ms.System.IO.MemoryStream;
 
+import java.io.ByteArrayOutputStream;
 
+@Test
 public class WorkingWithMarkdownSaveOptions extends DocsExamplesBase
 {
     @Test
@@ -55,12 +54,10 @@ public class WorkingWithMarkdownSaveOptions extends DocsExamplesBase
 
         MarkdownSaveOptions saveOptions = new MarkdownSaveOptions(); { saveOptions.setImagesFolder(getArtifactsDir() + "Images"); }
 
-        MemoryStream stream = new MemoryStream();
-        try /*JAVA: was using*/
+        try(ByteArrayOutputStream stream = new ByteArrayOutputStream())
     	{
             doc.save(stream, saveOptions);
     	}
-        finally { if (stream != null) stream.close(); }
         //ExEnd:SetImagesFolder
     }
 }

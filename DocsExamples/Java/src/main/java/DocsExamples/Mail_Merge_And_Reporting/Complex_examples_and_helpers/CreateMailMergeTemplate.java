@@ -1,14 +1,13 @@
-package DocsExamples.Mail_Merge_and_Reporting.Custom_examples;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Mail_Merge_And_Reporting.Complex_examples_and_helpers;
 
 import com.aspose.words.Document;
 import com.aspose.words.DocumentBuilder;
 import com.aspose.words.TextFormFieldType;
 import com.aspose.words.BreakType;
+import org.testng.annotations.Test;
 
-
-class CreateMailMergeTemplate
+@Test
+public class CreateMailMergeTemplate
 {
     //ExStart:CreateMailMergeTemplate
     public Document template() throws Exception

@@ -1,17 +1,15 @@
 package DocsExamples.LINQ_Reporting_Engine.Helpers;
 
-// ********* THIS FILE IS AUTO PORTED *********
-
 import DocsExamples.DocsExamplesBase;
 import DocsExamples.LINQ_Reporting_Engine.Helpers.Data_Source_Objects.Manager;
+
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Iterator;
 import DocsExamples.LINQ_Reporting_Engine.Helpers.Data_Source_Objects.Client;
 import DocsExamples.LINQ_Reporting_Engine.Helpers.Data_Source_Objects.Contract;
-import com.aspose.ms.System.DateTime;
-import com.aspose.ms.System.IO.File;
 
-
-class Common extends DocsExamplesBase
+public class Common extends DocsExamplesBase
 {
     /// <summary>
     /// Return the first manager from Managers, which is an enumeration of instances of the Manager class. 
@@ -35,7 +33,7 @@ class Common extends DocsExamplesBase
         for (Manager manager : getManagers())
         {
             for (Contract contract : manager.getContracts())
-                yield return contract.getClient();
+                return (Iterable<Client>) contract.getClient();
         }
         //ExEnd:GetClients
     }
@@ -142,7 +140,7 @@ class Common extends DocsExamplesBase
     {
         //ExStart:Photo
         // Load the photo and read all bytes
-        byte[] logo = com.aspose.ms.System.IO.File.readAllBytes(getImagesDir() + "Logo.jpg");
+        byte[] logo = Files.readAllBytes(Paths.get(getImagesDir() + "Logo.jpg"));
         
         return logo;
         //ExEnd:Photo
@@ -157,7 +155,7 @@ class Common extends DocsExamplesBase
         for (Manager manager : getManagers())
         {
             for (Contract contract : manager.getContracts())
-                yield return contract;
+                return (Iterable<Contract>) contract;
         }
         //ExEnd:GetContracts
     }

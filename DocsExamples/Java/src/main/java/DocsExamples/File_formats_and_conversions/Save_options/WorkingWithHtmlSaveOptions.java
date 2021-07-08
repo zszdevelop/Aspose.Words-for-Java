@@ -1,6 +1,4 @@
-package DocsExamples.File_Formats_and_Conversions.Save_Options;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.File_formats_and_conversions.Save_options;
 
 import DocsExamples.DocsExamplesBase;
 import org.testng.annotations.Test;
@@ -10,10 +8,11 @@ import com.aspose.words.CssStyleSheetType;
 import com.aspose.words.DocumentBuilder;
 import com.aspose.words.HtmlMetafileFormat;
 import com.aspose.words.SaveFormat;
-import com.aspose.ms.System.IO.Path;
-import com.aspose.ms.System.IO.Directory;
 
+import java.io.File;
+import java.nio.file.Paths;
 
+@Test
 public class WorkingWithHtmlSaveOptions extends DocsExamplesBase
 {
     @Test
@@ -143,18 +142,18 @@ public class WorkingWithHtmlSaveOptions extends DocsExamplesBase
         //ExStart:ExportTextInputFormFieldAsText
         Document doc = new Document(getMyDir() + "Rendering.docx");
 
-        String imagesDir = Path.combine(getArtifactsDir(), "Images");
+        File imagesDir = new File(Paths.get(getArtifactsDir(), "Images").toString());
 
         // The folder specified needs to exist and should be empty.
-        if (Directory.exists(imagesDir))
-            Directory.delete(imagesDir, true);
+        if (imagesDir.exists())
+            imagesDir.delete();
 
-        Directory.createDirectory(imagesDir);
+        imagesDir.mkdir();
 
         // Set an option to export form fields as plain text, not as HTML input elements.
         HtmlSaveOptions saveOptions = new HtmlSaveOptions(SaveFormat.HTML);
         {
-            saveOptions.setExportTextInputFormFieldAsText(true); saveOptions.setImagesFolder(imagesDir);
+            saveOptions.setExportTextInputFormFieldAsText(true); saveOptions.setImagesFolder(imagesDir.getPath());
         }
 
         doc.save(getArtifactsDir() + "WorkingWithHtmlSaveOptions.ExportTextInputFormFieldAsText.html", saveOptions);

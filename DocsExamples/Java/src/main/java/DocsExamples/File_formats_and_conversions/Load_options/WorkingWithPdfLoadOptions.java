@@ -1,6 +1,4 @@
-package DocsExamples.File_Formats_and_Conversions.Load_Options;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.File_formats_and_conversions.Load_options;
 
 import DocsExamples.DocsExamplesBase;
 import org.testng.annotations.Test;
@@ -11,7 +9,7 @@ import com.aspose.words.PdfEncryptionAlgorithm;
 import com.aspose.words.PdfLoadOptions;
 import com.aspose.words.LoadFormat;
 
-
+@Test
 public class WorkingWithPdfLoadOptions extends DocsExamplesBase
 {
     @Test

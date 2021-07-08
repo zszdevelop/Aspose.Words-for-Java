@@ -1,8 +1,7 @@
 package DocsExamples.LINQ_Reporting_Engine;
 
-// ********* THIS FILE IS AUTO PORTED *********
-
 import DocsExamples.DocsExamplesBase;
+import DocsExamples.LINQ_Reporting_Engine.Helpers.Common;
 import org.testng.annotations.Test;
 import com.aspose.words.Document;
 import com.aspose.words.DocumentBuilder;
@@ -11,9 +10,8 @@ import com.aspose.words.ReportingEngine;
 import java.util.ArrayList;
 import DocsExamples.LINQ_Reporting_Engine.Helpers.Data_Source_Objects.BackgroundColor;
 import java.awt.Color;
-import com.aspose.ms.System.Drawing.msColor;
 
-
+@Test
 public class BaseOperations extends DocsExamplesBase
 {
     @Test
@@ -79,11 +77,14 @@ public class BaseOperations extends DocsExamplesBase
         //ExStart:SettingBackgroundColor
         Document doc = new Document(getMyDir() + "Reporting engine template - Background color.docx");
 
-        ArrayList<BackgroundColor> colors = new ArrayList<BackgroundColor>();
+        ArrayList<BackgroundColor> colors = new ArrayList<>();
         {
-            colors.add(new BackgroundColor()); {((BackgroundColor)colors.get(0)).setName("Black"); ((BackgroundColor)colors.get(0)).setColor(Color.BLACK);}
-            colors.add(new BackgroundColor()); {((BackgroundColor)colors.get(1)).setName("Red"); ((BackgroundColor)colors.get(1)).setColor(new Color((255), (0), (0)));}
-            colors.add(new BackgroundColor()); {((BackgroundColor)colors.get(2)).setName("Empty"); ((BackgroundColor)colors.get(2)).setColor(msColor.Empty);}
+            colors.add(new BackgroundColor()); {
+            colors.get(0).setName("Black"); colors.get(0).setColor(Color.BLACK);}
+            colors.add(new BackgroundColor()); {
+            colors.get(1).setName("Red"); colors.get(1).setColor(new Color((255), (0), (0)));}
+            colors.add(new BackgroundColor()); {
+            colors.get(2).setName("Empty"); colors.get(2).setColor(null);}
         }
 
         ReportingEngine engine = new ReportingEngine();

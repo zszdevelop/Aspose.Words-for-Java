@@ -1,6 +1,4 @@
-package DocsExamples.Mail_Merge_and_Reporting.Custom_examples;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Mail_Merge_And_Reporting.Complex_examples_and_helpers;
 
 import DocsExamples.DocsExamplesBase;
 import org.testng.annotations.Test;
@@ -22,8 +20,8 @@ import com.aspose.words.Cell;
 import com.aspose.words.CellMerge;
 import com.aspose.words.net.System.Data.DataRelation;
 
-
-class ApplyCustomLogicToEmptyRegions extends DocsExamplesBase
+@Test
+public class ApplyCustomLogicToEmptyRegions extends DocsExamplesBase
 {
     @Test
     public void executeWithRegionsNestedCustom() throws Exception

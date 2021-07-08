@@ -1,6 +1,4 @@
-package DocsExamples.File_Formats_and_Conversions.Save_Options;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.File_formats_and_conversions.Save_options;
 
 import DocsExamples.DocsExamplesBase;
 import org.testng.annotations.Test;
@@ -11,7 +9,7 @@ import com.aspose.words.OoxmlCompliance;
 import com.aspose.words.SaveFormat;
 import com.aspose.words.CompressionLevel;
 
-
+@Test
 public class WorkingWithOoxmlSaveOptions extends DocsExamplesBase
 {
     @Test

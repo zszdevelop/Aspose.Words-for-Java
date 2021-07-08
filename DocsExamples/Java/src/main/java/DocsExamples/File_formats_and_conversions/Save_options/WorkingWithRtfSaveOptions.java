@@ -1,13 +1,11 @@
-package DocsExamples.File_Formats_and_Conversions.Save_Options;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.File_formats_and_conversions.Save_options;
 
 import DocsExamples.DocsExamplesBase;
 import org.testng.annotations.Test;
 import com.aspose.words.Document;
 import com.aspose.words.RtfSaveOptions;
 
-
+@Test
 public class WorkingWithRtfSaveOptions extends DocsExamplesBase
 {
     @Test

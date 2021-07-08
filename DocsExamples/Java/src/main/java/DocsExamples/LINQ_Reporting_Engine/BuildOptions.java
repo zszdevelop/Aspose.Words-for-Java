@@ -1,14 +1,13 @@
 package DocsExamples.LINQ_Reporting_Engine;
 
-// ********* THIS FILE IS AUTO PORTED *********
-
 import DocsExamples.DocsExamplesBase;
+import DocsExamples.LINQ_Reporting_Engine.Helpers.Common;
 import org.testng.annotations.Test;
 import com.aspose.words.Document;
 import com.aspose.words.ReportingEngine;
 import com.aspose.words.ReportBuildOptions;
 
-
+@Test
 public class BuildOptions extends DocsExamplesBase
 {
     @Test

@@ -1,13 +1,11 @@
-package DocsExamples.File_Formats_and_Conversions.Load_Options;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.File_formats_and_conversions.Load_options;
 
 import DocsExamples.DocsExamplesBase;
 import org.testng.annotations.Test;
 import com.aspose.words.RtfLoadOptions;
 import com.aspose.words.Document;
 
-
+@Test
 public class WorkingWithRtfLoadOptions extends DocsExamplesBase
 {
     @Test

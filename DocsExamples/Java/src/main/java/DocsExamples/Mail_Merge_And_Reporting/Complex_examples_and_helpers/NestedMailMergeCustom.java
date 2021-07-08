@@ -1,8 +1,5 @@
-package DocsExamples.Mail_Merge_and_Reporting.Custom_examples;
+package DocsExamples.Mail_Merge_And_Reporting.Complex_examples_and_helpers;
 
-// ********* THIS FILE IS AUTO PORTED *********
-
-import com.aspose.ms.java.collections.StringSwitchMap;
 import DocsExamples.DocsExamplesBase;
 import org.testng.annotations.Test;
 import com.aspose.words.Document;
@@ -11,8 +8,8 @@ import java.util.ArrayList;
 import com.aspose.words.IMailMergeDataSource;
 import com.aspose.words.ref.Ref;
 
-
-class NestedMailMergeCustom extends DocsExamplesBase
+@Test
+public class NestedMailMergeCustom extends DocsExamplesBase
 {
     @Test
     public void customMailMerge() throws Exception
@@ -141,6 +138,11 @@ class NestedMailMergeCustom extends DocsExamplesBase
                     fieldValue.set(null);
                     return false;
             }
+        }
+
+        @Override
+        public String getTableName() throws Exception {
+            return null;
         }
 
         /// <summary>

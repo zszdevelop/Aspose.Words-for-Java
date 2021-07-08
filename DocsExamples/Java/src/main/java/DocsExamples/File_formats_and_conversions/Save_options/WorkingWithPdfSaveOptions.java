@@ -1,6 +1,4 @@
-package DocsExamples.File_Formats_and_Conversions.Save_Options;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.File_formats_and_conversions.Save_options;
 
 import DocsExamples.DocsExamplesBase;
 import org.testng.annotations.Test;
@@ -9,7 +7,6 @@ import com.aspose.words.PdfSaveOptions;
 import com.aspose.words.MetafileRenderingOptions;
 import com.aspose.words.MetafileRenderingMode;
 import com.aspose.words.WarningInfo;
-import com.aspose.ms.System.msConsole;
 import com.aspose.words.IWarningCallback;
 import com.aspose.words.WarningType;
 import com.aspose.words.WarningInfoCollection;
@@ -17,7 +14,6 @@ import com.aspose.words.DocumentBuilder;
 import com.aspose.words.PdfDigitalSignatureDetails;
 import com.aspose.words.CertificateHolder;
 import java.util.Date;
-import com.aspose.ms.System.DateTime;
 import com.aspose.words.PdfFontEmbeddingMode;
 import com.aspose.words.HeaderFooterBookmarksExportMode;
 import com.aspose.words.PdfCompliance;
@@ -26,7 +22,7 @@ import com.aspose.words.PdfImageCompression;
 import com.aspose.words.PdfImageColorSpaceExportMode;
 import com.aspose.words.Dml3DEffectsRenderingMode;
 
-
+@Test
 public class WorkingWithPdfSaveOptions extends DocsExamplesBase
 {
     @Test
@@ -261,7 +257,8 @@ public class WorkingWithPdfSaveOptions extends DocsExamplesBase
         // This value will prevent the second image in the input document from being downsampled.
         PdfSaveOptions saveOptions = new PdfSaveOptions();
         {
-            saveOptions.setDownsampleOptions({ saveOptions.getDownsampleOptions().setResolution(36); saveOptions.getDownsampleOptions().setResolutionThreshold(128); });
+            saveOptions.getDownsampleOptions().setResolution(36);
+            saveOptions.getDownsampleOptions().setResolutionThreshold(128);
         }
 
         doc.save(getArtifactsDir() + "WorkingWithPdfSaveOptions.DownsamplingImages.pdf", saveOptions);

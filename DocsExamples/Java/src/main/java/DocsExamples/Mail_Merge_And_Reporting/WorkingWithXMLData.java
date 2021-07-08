@@ -1,6 +1,4 @@
-package DocsExamples.Mail_Merge_and_Reporting;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Mail_Merge_And_Reporting;
 
 import DocsExamples.DocsExamplesBase;
 import org.testng.annotations.Test;
@@ -11,8 +9,8 @@ import java.lang.Class;
 import java.util.Iterator;
 import com.aspose.words.ref.Ref;
 
-
-class WorkingWithXmlData extends DocsExamplesBase
+@Test
+public class WorkingWithXmlData extends DocsExamplesBase
 {
     @Test
     public void xmlMailMerge() throws Exception
