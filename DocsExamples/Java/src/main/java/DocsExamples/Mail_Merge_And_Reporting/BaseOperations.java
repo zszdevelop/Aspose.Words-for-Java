@@ -1,6 +1,4 @@
-package DocsExamples.Mail_Merge_and_Reporting;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Mail_Merge_And_Reporting;
 
 import DocsExamples.DocsExamplesBase;
 import org.testng.annotations.Test;
@@ -15,8 +13,8 @@ import java.util.ArrayList;
 import com.aspose.words.MailMergeRegionInfo;
 import org.testng.Assert;
 
-
-class BaseOperations extends DocsExamplesBase
+@Test
+public class BaseOperations extends DocsExamplesBase
 {
     @Test
     public void simpleMailMerge() throws Exception
@@ -104,7 +102,7 @@ class BaseOperations extends DocsExamplesBase
     //ExStart:ExecuteWithRegionsDataTableMethods
     private DataTable getTestOrder(int orderId)
     {
-        DataTable table = executeDataTable($"SELECT * FROM AsposeWordOrders WHERE OrderId = {orderId}");
+        DataTable table = executeDataTable(MessageFormat.format("SELECT * FROM AsposeWordOrders WHERE OrderId = {0}", orderId));
         table.setTableName("Orders");
         
         return table;
@@ -113,7 +111,7 @@ class BaseOperations extends DocsExamplesBase
     private DataTable getTestOrderDetails(int orderId)
     {
         DataTable table = executeDataTable(
-            $"SELECT * FROM AsposeWordOrderDetails WHERE OrderId = {orderId} ORDER BY ProductID");
+            MessageFormat.format("SELECT * FROM AsposeWordOrderDetails WHERE OrderId = {0} ORDER BY ProductID", orderId));
         table.setTableName("OrderDetails");
         
         return table;

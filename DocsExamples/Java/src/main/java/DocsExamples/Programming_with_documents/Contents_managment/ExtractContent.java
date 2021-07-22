@@ -1,48 +1,17 @@
-package DocsExamples.Programming_with_Documents.Contents_Managment;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Programming_with_documents.Contents_managment;
 
 import DocsExamples.DocsExamplesBase;
+import com.aspose.words.*;
 import org.testng.annotations.Test;
-import com.aspose.words.Document;
-import com.aspose.words.Paragraph;
-import com.aspose.words.NodeType;
-import com.aspose.words.Table;
+
+import java.text.MessageFormat;
 import java.util.ArrayList;
-import com.aspose.words.Node;
 import java.util.Collections;
-import com.aspose.words.Section;
-import com.aspose.words.Bookmark;
-import com.aspose.words.BookmarkStart;
-import com.aspose.words.BookmarkEnd;
-import com.aspose.words.CommentRangeStart;
-import com.aspose.words.CommentRangeEnd;
-import com.aspose.words.Run;
-import com.aspose.ms.System.msConsole;
-import com.aspose.words.SaveFormat;
-import com.aspose.words.DocumentVisitor;
-import com.aspose.words.VisitorAction;
-import com.aspose.words.FieldStart;
-import com.aspose.words.FieldSeparator;
-import com.aspose.words.FieldEnd;
-import com.aspose.words.ControlChar;
-import com.aspose.words.Body;
-import com.aspose.ms.System.Text.msStringBuilder;
-import com.aspose.words.HeaderFooter;
-import com.aspose.words.DocumentBuilder;
-import com.aspose.words.Field;
-import com.aspose.words.FieldType;
-import com.aspose.words.FieldHyperlink;
-import com.aspose.words.NodeCollection;
-import com.aspose.ms.System.msString;
-import com.aspose.words.Shape;
 
-
-public class ExtractContent extends DocsExamplesBase
-{
+@Test
+public class ExtractContent extends DocsExamplesBase {
     @Test
-    public void extractContentBetweenBlockLevelNodes() throws Exception
-    {
+    public void extractContentBetweenBlockLevelNodes() throws Exception {
         //ExStart:ExtractContentBetweenBlockLevelNodes
         Document doc = new Document(getMyDir() + "Extract content.docx");
 
@@ -55,8 +24,7 @@ public class ExtractContent extends DocsExamplesBase
         // Let's reverse the array to make inserting the content back into the document easier.
         Collections.reverse(extractedNodes);
 
-        while (extractedNodes.size() > 0)
-        {
+        while (extractedNodes.size() > 0) {
             // Insert the last node from the reversed list.
             endTable.getParentNode().insertAfter((Node) extractedNodes.get(0), endTable);
             // Remove this node from the list after insertion.
@@ -68,8 +36,7 @@ public class ExtractContent extends DocsExamplesBase
     }
 
     @Test
-    public void extractContentBetweenBookmark() throws Exception
-    {
+    public void extractContentBetweenBookmark() throws Exception {
         //ExStart:ExtractContentBetweenBookmark
         Document doc = new Document(getMyDir() + "Extract content.docx");
 
@@ -84,21 +51,20 @@ public class ExtractContent extends DocsExamplesBase
 
         // Firstly, extract the content between these nodes, including the bookmark.
         ArrayList<Node> extractedNodesInclusive = ExtractContentHelper.extractContent(bookmarkStart, bookmarkEnd, true);
-        
+
         Document dstDoc = ExtractContentHelper.generateDocument(doc, extractedNodesInclusive);
         dstDoc.save(getArtifactsDir() + "ExtractContent.ExtractContentBetweenBookmark.IncludingBookmark.docx");
 
         // Secondly, extract the content between these nodes this time without including the bookmark.
         ArrayList<Node> extractedNodesExclusive = ExtractContentHelper.extractContent(bookmarkStart, bookmarkEnd, false);
-        
+
         dstDoc = ExtractContentHelper.generateDocument(doc, extractedNodesExclusive);
         dstDoc.save(getArtifactsDir() + "ExtractContent.ExtractContentBetweenBookmark.WithoutBookmark.docx");
         //ExEnd:ExtractContentBetweenBookmark
     }
 
     @Test
-    public void extractContentBetweenCommentRange() throws Exception
-    {
+    public void extractContentBetweenCommentRange() throws Exception {
         //ExStart:ExtractContentBetweenCommentRange
         Document doc = new Document(getMyDir() + "Extract content.docx");
 
@@ -109,21 +75,20 @@ public class ExtractContent extends DocsExamplesBase
 
         // Firstly, extract the content between these nodes including the comment as well.
         ArrayList<Node> extractedNodesInclusive = ExtractContentHelper.extractContent(commentStart, commentEnd, true);
-        
+
         Document dstDoc = ExtractContentHelper.generateDocument(doc, extractedNodesInclusive);
         dstDoc.save(getArtifactsDir() + "ExtractContent.ExtractContentBetweenCommentRange.IncludingComment.docx");
 
         // Secondly, extract the content between these nodes without the comment.
         ArrayList<Node> extractedNodesExclusive = ExtractContentHelper.extractContent(commentStart, commentEnd, false);
-        
+
         dstDoc = ExtractContentHelper.generateDocument(doc, extractedNodesExclusive);
         dstDoc.save(getArtifactsDir() + "ExtractContent.ExtractContentBetweenCommentRange.WithoutComment.docx");
         //ExEnd:ExtractContentBetweenCommentRange
     }
 
     @Test
-    public void extractContentBetweenParagraphs() throws Exception
-    {
+    public void extractContentBetweenParagraphs() throws Exception {
         //ExStart:ExtractContentBetweenParagraphs
         Document doc = new Document(getMyDir() + "Extract content.docx");
 
@@ -139,8 +104,7 @@ public class ExtractContent extends DocsExamplesBase
     }
 
     @Test
-    public void extractContentBetweenParagraphStyles() throws Exception
-    {
+    public void extractContentBetweenParagraphStyles() throws Exception {
         //ExStart:ExtractContentBetweenParagraphStyles
         Document doc = new Document(getMyDir() + "Extract content.docx");
 
@@ -161,8 +125,7 @@ public class ExtractContent extends DocsExamplesBase
     }
 
     @Test
-    public void extractContentBetweenRuns() throws Exception
-    {
+    public void extractContentBetweenRuns() throws Exception {
         //ExStart:ExtractContentBetweenRuns
         Document doc = new Document(getMyDir() + "Extract content.docx");
 
@@ -180,8 +143,7 @@ public class ExtractContent extends DocsExamplesBase
     }
 
     @Test
-    public void extractContentUsingDocumentVisitor() throws Exception
-    {
+    public void extractContentUsingDocumentVisitor() throws Exception {
         //ExStart:ExtractContentUsingDocumentVisitor
         Document doc = new Document(getMyDir() + "Absolute position tab.docx");
 
@@ -204,10 +166,8 @@ public class ExtractContent extends DocsExamplesBase
     /// <summary>
     /// Simple implementation of saving a document in the plain text format. Implemented as a Visitor.
     /// </summary>
-    static class MyDocToTxtWriter extends DocumentVisitor
-    {
-        public MyDocToTxtWriter()
-        {
+    static class MyDocToTxtWriter extends DocumentVisitor {
+        public MyDocToTxtWriter() {
             mIsSkipText = false;
             mBuilder = new StringBuilder();
         }
@@ -215,16 +175,14 @@ public class ExtractContent extends DocsExamplesBase
         /// <summary>
         /// Gets the plain text of the document that was accumulated by the visitor.
         /// </summary>
-        public String getText()
-        {
+        public String getText() {
             return mBuilder.toString();
         }
 
         /// <summary>
         /// Called when a Run node is encountered in the document.
         /// </summary>
-        public /*override*/ /*VisitorAction*/int visitRun(Run run)
-        {
+        public /*override*/ /*VisitorAction*/int visitRun(Run run) {
             appendText(run.getText());
 
             // Let the visitor continue visiting other nodes.
@@ -234,8 +192,7 @@ public class ExtractContent extends DocsExamplesBase
         /// <summary>
         /// Called when a FieldStart node is encountered in the document.
         /// </summary>
-        public /*override*/ /*VisitorAction*/int visitFieldStart(FieldStart fieldStart)
-        {
+        public /*override*/ /*VisitorAction*/int visitFieldStart(FieldStart fieldStart) {
             // In Microsoft Word, a field code (such as "MERGEFIELD FieldName") follows
             // after a field start character. We want to skip field codes and output field.
             // Result only, therefore we use a flag to suspend the output while inside a field code.
@@ -249,8 +206,7 @@ public class ExtractContent extends DocsExamplesBase
         /// <summary>
         /// Called when a FieldSeparator node is encountered in the document.
         /// </summary>
-        public /*override*/ /*VisitorAction*/int visitFieldSeparator(FieldSeparator fieldSeparator)
-        {
+        public /*override*/ /*VisitorAction*/int visitFieldSeparator(FieldSeparator fieldSeparator) {
             // Once reached a field separator node, we enable the output because we are
             // now entering the field result nodes.
             mIsSkipText = false;
@@ -261,8 +217,7 @@ public class ExtractContent extends DocsExamplesBase
         /// <summary>
         /// Called when a FieldEnd node is encountered in the document.
         /// </summary>
-        public /*override*/ /*VisitorAction*/int visitFieldEnd(FieldEnd fieldEnd)
-        {
+        public /*override*/ /*VisitorAction*/int visitFieldEnd(FieldEnd fieldEnd) {
             // Make sure we enable the output when reached a field end because some fields
             // do not have field separator and do not have field result.
             mIsSkipText = false;
@@ -273,34 +228,30 @@ public class ExtractContent extends DocsExamplesBase
         /// <summary>
         /// Called when visiting of a Paragraph node is ended in the document.
         /// </summary>
-        public /*override*/ /*VisitorAction*/int visitParagraphEnd(Paragraph paragraph)
-        {
+        public /*override*/ /*VisitorAction*/int visitParagraphEnd(Paragraph paragraph) {
             // When outputting to plain text we output Cr+Lf characters.
             appendText(ControlChar.CR_LF);
 
             return VisitorAction.CONTINUE;
         }
 
-        public /*override*/ /*VisitorAction*/int visitBodyStart(Body body)
-        {
+        public /*override*/ /*VisitorAction*/int visitBodyStart(Body body) {
             // We can detect beginning and end of all composite nodes such as Section, Body, 
             // Table, Paragraph etc and provide custom handling for them.
-            msStringBuilder.append(mBuilder, "*** Body Started ***\r\n");
+            mBuilder.append("*** Body Started ***\r\n");
 
             return VisitorAction.CONTINUE;
         }
 
-        public /*override*/ /*VisitorAction*/int visitBodyEnd(Body body)
-        {
-            msStringBuilder.append(mBuilder, "*** Body Ended ***\r\n");
+        public /*override*/ /*VisitorAction*/int visitBodyEnd(Body body) {
+            mBuilder.append("*** Body Ended ***\r\n");
             return VisitorAction.CONTINUE;
         }
 
         /// <summary>
         /// Called when a HeaderFooter node is encountered in the document.
         /// </summary>
-        public /*override*/ /*VisitorAction*/int visitHeaderFooterStart(HeaderFooter headerFooter)
-        {
+        public /*override*/ /*VisitorAction*/int visitHeaderFooterStart(HeaderFooter headerFooter) {
             // Returning this value from a visitor method causes visiting of this
             // Node to stop and move on to visiting the next sibling node
             // The net effect in this example is that the text of headers and footers
@@ -311,20 +262,18 @@ public class ExtractContent extends DocsExamplesBase
         /// <summary>
         /// Adds text to the current output. Honors the enabled/disabled output flag.
         /// </summary>
-        private void appendText(String text)
-        {
+        private void appendText(String text) {
             if (!mIsSkipText)
-                msStringBuilder.append(mBuilder, text);
+                mBuilder.append(text);
         }
 
         private /*final*/ StringBuilder mBuilder;
         private boolean mIsSkipText;
     }
     //ExEnd:MyDocToTxtWriter
-    
+
     @Test
-    public void extractContentUsingField() throws Exception
-    {
+    public void extractContentUsingField() throws Exception {
         //ExStart:ExtractContentUsingField
         Document doc = new Document(getMyDir() + "Extract content.docx");
         DocumentBuilder builder = new DocumentBuilder(doc);
@@ -346,25 +295,21 @@ public class ExtractContent extends DocsExamplesBase
     }
 
     @Test
-    public void extractTableOfContents() throws Exception
-    {
+    public void extractTableOfContents() throws Exception {
         Document doc = new Document(getMyDir() + "Table of contents.docx");
 
-        for (Field field : doc.getRange().getFields())
-        {
-            if (field.getType() == FieldType.FIELD_HYPERLINK)
-            {
+        for (Field field : doc.getRange().getFields()) {
+            if (field.getType() == FieldType.FIELD_HYPERLINK) {
                 FieldHyperlink hyperlink = (FieldHyperlink) field;
-                if (hyperlink.getSubAddress() != null && hyperlink.getSubAddress().startsWith("_Toc"))
-                {
+                if (hyperlink.getSubAddress() != null && hyperlink.getSubAddress().startsWith("_Toc")) {
                     Paragraph tocItem = (Paragraph) field.getStart().getAncestor(NodeType.PARAGRAPH);
-                    
+
                     System.out.println(tocItem.toString(SaveFormat.TEXT).trim());
                     System.out.println("------------------");
 
                     Bookmark bm = doc.getRange().getBookmarks().get(hyperlink.getSubAddress());
                     Paragraph pointer = (Paragraph) bm.getBookmarkStart().getAncestor(NodeType.PARAGRAPH);
-                    
+
                     System.out.println(pointer.toString(SaveFormat.TEXT));
                 }
             }
@@ -372,12 +317,11 @@ public class ExtractContent extends DocsExamplesBase
     }
 
     @Test
-    public void extractTextOnly() throws Exception
-    {
+    public void extractTextOnly() throws Exception {
         //ExStart:ExtractTextOnly
         Document doc = new Document();
         DocumentBuilder builder = new DocumentBuilder(doc);
-        
+
         builder.insertField("MERGEFIELD Field");
 
         System.out.println("GetText() Result: " + doc.getText());
@@ -390,8 +334,7 @@ public class ExtractContent extends DocsExamplesBase
     }
 
     @Test
-    public void extractContentBasedOnStyles() throws Exception
-    {
+    public void extractContentBasedOnStyles() throws Exception {
         //ExStart:ExtractContentBasedOnStyles
         Document doc = new Document(getMyDir() + "Styles.docx");
 
@@ -400,43 +343,39 @@ public class ExtractContent extends DocsExamplesBase
 
         ArrayList<Paragraph> paragraphs = paragraphsByStyleName(doc, PARA_STYLE);
         System.out.println("Paragraphs with \"{paraStyle}\" styles ({paragraphs.Count}):");
-        
+
         for (Paragraph paragraph : paragraphs)
-            msConsole.write(paragraph.toString(SaveFormat.TEXT));
+            System.out.println(paragraph.toString(SaveFormat.TEXT));
 
         ArrayList<Run> runs = runsByStyleName(doc, RUN_STYLE);
         System.out.println("\nRuns with \"{runStyle}\" styles ({runs.Count}):");
-        
+
         for (Run run : runs)
             System.out.println(run.getRange().getText());
         //ExEnd:ExtractContentBasedOnStyles
     }
 
     //ExStart:ParagraphsByStyleName
-    public ArrayList<Paragraph> paragraphsByStyleName(Document doc, String styleName)
-    {
+    public ArrayList<Paragraph> paragraphsByStyleName(Document doc, String styleName) {
         ArrayList<Paragraph> paragraphsWithStyle = new ArrayList<Paragraph>();
         NodeCollection paragraphs = doc.getChildNodes(NodeType.PARAGRAPH, true);
-        
-        for (Paragraph paragraph : (Iterable<Paragraph>) paragraphs)
-        {
-            if (msString.equals(paragraph.getParagraphFormat().getStyle().getName(), styleName))
+
+        for (Paragraph paragraph : (Iterable<Paragraph>) paragraphs) {
+            if (paragraph.getParagraphFormat().getStyle().getName().equals(styleName))
                 paragraphsWithStyle.add(paragraph);
         }
 
         return paragraphsWithStyle;
     }
     //ExEnd:ParagraphsByStyleName
-    
+
     //ExStart:RunsByStyleName
-    public ArrayList<Run> runsByStyleName(Document doc, String styleName)
-    {
+    public ArrayList<Run> runsByStyleName(Document doc, String styleName) {
         ArrayList<Run> runsWithStyle = new ArrayList<Run>();
         NodeCollection runs = doc.getChildNodes(NodeType.RUN, true);
-        
-        for (Run run : (Iterable<Run>) runs)
-        {
-            if (msString.equals(run.getFont().getStyle().getName(), styleName))
+
+        for (Run run : (Iterable<Run>) runs) {
+            if (run.getFont().getStyle().getName().equals(styleName))
                 runsWithStyle.add(run);
         }
 
@@ -445,12 +384,11 @@ public class ExtractContent extends DocsExamplesBase
     //ExEnd:RunsByStyleName
 
     @Test
-    public void extractPrintText() throws Exception
-    {
+    public void extractPrintText() throws Exception {
         //ExStart:ExtractText
         Document doc = new Document(getMyDir() + "Tables.docx");
 
-        
+
         Table table = (Table) doc.getChild(NodeType.TABLE, 0, true);
 
         // The range text will include control characters such as "\a" for a cell.
@@ -470,20 +408,17 @@ public class ExtractContent extends DocsExamplesBase
     }
 
     @Test
-    public void extractImagesToFiles() throws Exception
-    {
+    public void extractImagesToFiles() throws Exception {
         //ExStart:ExtractImagesToFiles
         Document doc = new Document(getMyDir() + "Images.docx");
 
         NodeCollection shapes = doc.getChildNodes(NodeType.SHAPE, true);
         int imageIndex = 0;
-        
-        for (Shape shape : (Iterable<Shape>) shapes)
-        {
-            if (shape.hasImage())
-            {
+
+        for (Shape shape : (Iterable<Shape>) shapes) {
+            if (shape.hasImage()) {
                 String imageFileName =
-                    $"Image.ExportImages.{imageIndex}_{FileFormatUtil.ImageTypeToExtension(shape.ImageData.ImageType)}";
+                        MessageFormat.format("Image.ExportImages.{0}_{1}", imageIndex, FileFormatUtil.imageTypeToExtension(shape.getImageData().getImageType()));
 
                 shape.getImageData().save(getArtifactsDir() + imageFileName);
                 imageIndex++;

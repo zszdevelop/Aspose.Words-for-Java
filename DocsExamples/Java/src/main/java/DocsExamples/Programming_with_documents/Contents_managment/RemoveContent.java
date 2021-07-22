@@ -1,6 +1,4 @@
-package DocsExamples.Programming_with_Documents.Contents_Managment;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Programming_with_documents.Contents_managment;
 
 import DocsExamples.DocsExamplesBase;
 import org.testng.annotations.Test;
@@ -19,8 +17,8 @@ import com.aspose.words.Node;
 import com.aspose.words.FieldType;
 import com.aspose.words.FieldEnd;
 
-
-class RemoveContent extends DocsExamplesBase
+@Test
+public class RemoveContent extends DocsExamplesBase
 {
     @Test
     public void removePageBreaks() throws Exception
@@ -49,7 +47,7 @@ class RemoveContent extends DocsExamplesBase
                 para.getParagraphFormat().setPageBreakBefore(false);
 
             // Check all runs in the paragraph for page breaks and remove them.
-            for (Run run : (Iterable<Run>) para.getRuns())
+            for (Run run : para.getRuns())
             {
                 if (run.getText().contains(ControlChar.PAGE_BREAK))
                     run.setText(run.getText().replace(ControlChar.PAGE_BREAK, ""));
@@ -78,19 +76,19 @@ class RemoveContent extends DocsExamplesBase
         //ExStart:RemoveFooters
         Document doc = new Document(getMyDir() + "Header and footer types.docx");
 
-        for (Section section : (Iterable<Section>) doc)
+        for (Section section : doc.getSections())
         {
             // Up to three different footers are possible in a section (for first, even and odd pages)
             // we check and delete all of them.
             HeaderFooter footer = section.getHeadersFooters().getByHeaderFooterType(HeaderFooterType.FOOTER_FIRST);
-            footer?.Remove();
+            footer.remove();
 
             // Primary footer is the footer used for odd pages.
             footer = section.getHeadersFooters().getByHeaderFooterType(HeaderFooterType.FOOTER_PRIMARY);
-            footer?.Remove();
+            footer.remove();
 
             footer = section.getHeadersFooters().getByHeaderFooterType(HeaderFooterType.FOOTER_EVEN);
-            footer?.Remove();
+            footer.remove();
         }
 
         doc.save(getArtifactsDir() + "RemoveContent.RemoveFooters.docx");
@@ -117,9 +115,9 @@ class RemoveContent extends DocsExamplesBase
     public void removeTableOfContents(Document doc, int index)
     {
         // Store the FieldStart nodes of TOC fields in the document for quick access.
-        ArrayList<FieldStart> fieldStarts = new ArrayList<FieldStart>();
+        ArrayList<FieldStart> fieldStarts = new ArrayList<>();
         // This is a list to store the nodes found inside the specified TOC. They will be removed at the end of this method.
-        ArrayList<Node> nodeList = new ArrayList<Node>();
+        ArrayList<Node> nodeList = new ArrayList<>();
 
         for (FieldStart start : (Iterable<FieldStart>) doc.getChildNodes(NodeType.FIELD_START, true))
         {

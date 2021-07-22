@@ -1,22 +1,11 @@
-package DocsExamples.Programming_with_Documents.Contents_Managment;
+package DocsExamples.Programming_with_documents.Contents_managment;
 
-// ********* THIS FILE IS AUTO PORTED *********
+import com.aspose.words.*;
+import org.testng.Assert;
 
 import java.util.ArrayList;
-import com.aspose.words.Node;
-import com.aspose.words.NodeType;
-import com.aspose.words.Section;
-import com.aspose.words.Paragraph;
-import com.aspose.words.Document;
-import com.aspose.words.NodeCollection;
-import com.aspose.ms.System.msString;
-import com.aspose.words.NodeImporter;
-import com.aspose.words.ImportFormatMode;
-import com.aspose.words.CompositeNode;
-import com.aspose.ms.System.Diagnostics.Debug;
 
-
-class ExtractContentHelper
+public class ExtractContentHelper
 {
     //ExStart:CommonExtractContent
     public static ArrayList<Node> extractContent(Node startNode, Node endNode, boolean isInclusive)
@@ -118,7 +107,7 @@ class ExtractContentHelper
         // Look through all paragraphs to find those with the specified style.
         for (Paragraph paragraph : (Iterable<Paragraph>) paragraphs)
         {
-            if (msString.equals(paragraph.getParagraphFormat().getStyle().getName(), styleName))
+            if (paragraph.getParagraphFormat().getStyle().getName().equals(styleName))
                 paragraphsWithStyle.add(paragraph);
         }
 
@@ -215,7 +204,7 @@ class ExtractContentHelper
 
         // cloneNode is a clone of blockLevelNode. If node != blockLevelNode, blockLevelAncestor
         // is the node's ancestor that means it is a composite node.
-        com.aspose.ms.System.Diagnostics.Debug.assert(cloneNode.isComposite());
+        assert cloneNode.isComposite();
 
         // If a marker is a FieldStart node check if it's to be included or not.
         // We assume for simplicity that the FieldStart and FieldEnd appear in the same paragraph.

@@ -116,7 +116,7 @@ public class DocsExamplesBase
     /**
      * Gets the path of the demo database.
      */
-    static String getDatabaseDir()
+    public static String getDatabaseDir()
     {
         return mDatabaseDir;
     }

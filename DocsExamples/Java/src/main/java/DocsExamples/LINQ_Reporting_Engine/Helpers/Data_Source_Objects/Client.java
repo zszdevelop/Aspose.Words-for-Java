@@ -7,6 +7,17 @@ public class Client
     private String mCountry;
     private String mLocalAddress;
 
+    public Client(final String name, final String localAddress) {
+        setName(name);
+        setLocalAddress(localAddress);
+    }
+
+    public Client(final String name, final String country, final String localAddress) {
+        setName(name);
+        setCountry(country);
+        setLocalAddress(localAddress);
+    }
+
     public String getName() { return mName; }
     public String getCountry() { return mCountry; }
     public String getLocalAddress() { return mLocalAddress; }

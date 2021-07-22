@@ -1,26 +1,11 @@
-package DocsExamples.Programming_with_Documents.Contents_Managment;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Programming_with_documents.Contents_managment;
 
 import DocsExamples.DocsExamplesBase;
+import com.aspose.words.*;
 import org.testng.annotations.Test;
-import com.aspose.words.Document;
-import com.aspose.words.Bookmark;
-import com.aspose.words.DocumentBuilder;
-import com.aspose.ms.System.msConsole;
-import com.aspose.words.NodeType;
-import com.aspose.words.Row;
-import com.aspose.words.CompositeNode;
-import com.aspose.words.NodeImporter;
-import com.aspose.words.ImportFormatMode;
-import com.aspose.words.Paragraph;
-import com.aspose.words.Node;
-import com.aspose.words.PdfSaveOptions;
-import com.aspose.words.Field;
-import com.aspose.words.SaveFormat;
 
-
-class WorkingWithBookmarks extends DocsExamplesBase
+@Test
+public class WorkingWithBookmarks extends DocsExamplesBase
 {
     @Test
     public void accessBookmarks() throws Exception

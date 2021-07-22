@@ -1,41 +1,18 @@
-package DocsExamples.Programming_with_Documents.Contents_Managment;
+package DocsExamples.Programming_with_documents.Contents_managment;
 
-// ********* THIS FILE IS AUTO PORTED *********
-
-import com.aspose.ms.ms;
 import DocsExamples.DocsExamplesBase;
-import org.testng.annotations.Test;
-import com.aspose.words.Document;
-import com.aspose.words.DocumentBuilder;
-import com.aspose.ms.System.msConsole;
-import com.aspose.words.FindReplaceOptions;
-import com.aspose.words.FindReplaceDirection;
-import com.aspose.ms.System.Text.RegularExpressions.Regex;
-import com.aspose.ms.System.Text.RegularExpressions.RegexOptions;
-import com.aspose.words.IReplacingCallback;
-import com.aspose.words.ReplaceAction;
-import com.aspose.words.ReplacingArgs;
-import com.aspose.words.Node;
-import com.aspose.words.Run;
-import java.util.ArrayList;
-import com.aspose.words.NodeType;
-import java.awt.Color;
-import com.aspose.words.BreakType;
-import com.aspose.words.ParagraphAlignment;
-import java.util.Date;
-import com.aspose.ms.System.DateTime;
-import com.aspose.words.HeaderFooterCollection;
-import com.aspose.words.HeaderFooter;
-import com.aspose.words.HeaderFooterType;
-import com.aspose.words.Section;
-import com.aspose.ms.System.Text.msStringBuilder;
-import com.aspose.words.FieldType;
 import com.aspose.words.Shape;
-import com.aspose.words.ShapeType;
-import com.aspose.words.Table;
+import com.aspose.words.*;
+import org.testng.annotations.Test;
 
+import java.awt.*;
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.regex.Pattern;
 
-class FindAndReplace extends DocsExamplesBase
+@Test
+public class FindAndReplace extends DocsExamplesBase
 {
     @Test
     public void simpleFindReplace() throws Exception
@@ -65,8 +42,8 @@ class FindAndReplace extends DocsExamplesBase
             options.setReplacingCallback(new ReplaceEvaluatorFindAndHighlight()); options.setDirection(FindReplaceDirection.BACKWARD);
         }
 
-        Regex regex = new Regex("your document", RegexOptions.IGNORE_CASE);
-        doc.getRange().replaceInternal(regex, "", options);
+        Pattern regex = Pattern.compile("your document");
+        doc.getRange().replace(regex, "", options);
 
         doc.save(getArtifactsDir() + "FindAndReplace.FindAndHighlight.docx");
         //ExEnd:FindAndHighlight
@@ -93,7 +70,7 @@ class FindAndReplace extends DocsExamplesBase
             ArrayList<Run> runs = new ArrayList<Run>();
 
             // Find all runs that contain parts of the match string.
-            int remainingLength = e.getMatchInternal().getValue().length();
+            int remainingLength = e.getMatch().group().length();
             while (
                 remainingLength > 0 &&
                 currentNode != null &&
@@ -214,13 +191,13 @@ class FindAndReplace extends DocsExamplesBase
         
         FindReplaceOptions options = new FindReplaceOptions(); { options.setIgnoreFields(true); }
         
-        Regex regex = new Regex("e");
-        doc.getRange().replaceInternal(regex, "*", options);
+        Pattern regex = Pattern.compile("e");
+        doc.getRange().replace(regex, "*", options);
         
         System.out.println(doc.getText());
 
         options.setIgnoreFields(false);
-        doc.getRange().replaceInternal(regex, "*", options);
+        doc.getRange().replace(regex, "*", options);
         
         System.out.println(doc.getText());
         //ExEnd:IgnoreTextInsideFields
@@ -238,19 +215,19 @@ class FindAndReplace extends DocsExamplesBase
         builder.write("Text");
 
         // Remove first paragraph with tracking revisions.
-        doc.startTrackRevisionsInternal("author", new Date());
+        doc.startTrackRevisions("author", new Date());
         doc.getFirstSection().getBody().getFirstParagraph().remove();
         doc.stopTrackRevisions();
 
         FindReplaceOptions options = new FindReplaceOptions(); { options.setIgnoreDeleted(true); }
 
-        Regex regex = new Regex("e");
-        doc.getRange().replaceInternal(regex, "*", options);
+        Pattern regex = Pattern.compile("e");
+        doc.getRange().replace(regex, "*", options);
 
         System.out.println(doc.getText());
 
         options.setIgnoreDeleted(false);
-        doc.getRange().replaceInternal(regex, "*", options);
+        doc.getRange().replace(regex, "*", options);
 
         System.out.println(doc.getText());
         //ExEnd:IgnoreTextInsideDeleteRevisions
@@ -264,7 +241,7 @@ class FindAndReplace extends DocsExamplesBase
         DocumentBuilder builder = new DocumentBuilder(doc);
 
         // Insert text with tracking revisions.
-        doc.startTrackRevisionsInternal("author", new Date());
+        doc.startTrackRevisions("author", new Date());
         builder.writeln("Inserted");
         doc.stopTrackRevisions();
 
@@ -273,13 +250,13 @@ class FindAndReplace extends DocsExamplesBase
 
         FindReplaceOptions options = new FindReplaceOptions(); { options.setIgnoreInserted(true); }
 
-        Regex regex = new Regex("e");
-        doc.getRange().replaceInternal(regex, "*", options);
+        Pattern regex = Pattern.compile("e");
+        doc.getRange().replace(regex, "*", options);
         
         System.out.println(doc.getText());
 
         options.setIgnoreInserted(false);
-        doc.getRange().replaceInternal(regex, "*", options);
+        doc.getRange().replace(regex, "*", options);
         
         System.out.println(doc.getText());
         //ExEnd:IgnoreTextInsideInsertRevisions
@@ -309,7 +286,7 @@ class FindAndReplace extends DocsExamplesBase
         {
             Node currentNode = e.getMatchNode();
 
-            DocumentBuilder builder = new DocumentBuilder(ms.as(e.getMatchNode().getDocument(), Document.class));
+            DocumentBuilder builder = new DocumentBuilder((Document) e.getMatchNode().getDocument());
             builder.moveTo(currentNode);
             builder.insertHtml(e.getReplacement());
 
@@ -348,7 +325,7 @@ class FindAndReplace extends DocsExamplesBase
         
         FindReplaceOptions options = new FindReplaceOptions(); { options.setReplacingCallback(logger); }
 
-        doc.getRange().replaceInternal(new Regex("(header|footer)"), "", options);
+        doc.getRange().replace(Pattern.compile("(header|footer)"), "", options);
         
         doc.save(getArtifactsDir() + "FindAndReplace.ShowChangesForHeaderAndFooterOrders.docx");
 
@@ -356,23 +333,23 @@ class FindAndReplace extends DocsExamplesBase
 
         firstPageSection.getPageSetup().setDifferentFirstPageHeaderFooter(false);
 
-        doc.getRange().replaceInternal(new Regex("(header|footer)"), "", options);
+        doc.getRange().replace(Pattern.compile("(header|footer)"), "", options);
     }
 
     private static class ReplaceLog implements IReplacingCallback
     {
-        public /*ReplaceAction*/int replacing(ReplacingArgs args)
+        public int replacing(ReplacingArgs args)
         {
-            msStringBuilder.appendLine(mTextBuilder, args.getMatchNode().getText());
+            mTextBuilder.append(args.getMatchNode().getText());
             return ReplaceAction.SKIP;
         }
 
         void clearText()
         {
-            mTextBuilder.Clear();
+            mTextBuilder.setLength(0);
         }
 
-        private /*final*/ StringBuilder mTextBuilder = new StringBuilder();
+        private StringBuilder mTextBuilder = new StringBuilder();
     }
     //ExEnd:ShowChangesForHeaderAndFooterOrders
 
@@ -386,7 +363,7 @@ class FindAndReplace extends DocsExamplesBase
             options.setReplacingCallback(new ReplaceTextWithFieldHandler(FieldType.FIELD_MERGE_FIELD));
         }
 
-        doc.getRange().replaceInternal(new Regex("PlaceHolder(\\d+)"), "", options);
+        doc.getRange().replace(Pattern.compile("PlaceHolder(\\d+)"), "", options);
 
         doc.save(getArtifactsDir() + "FindAndReplace.ReplaceTextWithField.docx");
     }
@@ -394,13 +371,12 @@ class FindAndReplace extends DocsExamplesBase
 
     public static class ReplaceTextWithFieldHandler implements IReplacingCallback
     {
-        public ReplaceTextWithFieldHandler(/*FieldType*/int type)
+        public ReplaceTextWithFieldHandler(int type)
         {
             mFieldType = type;
         }
 
-        public /*ReplaceAction*/int replacing(ReplacingArgs args) throws Exception
-        {
+        public int replacing(ReplacingArgs args) throws Exception {
             ArrayList<Run> runs = findAndSplitMatchRuns(args);
 
             DocumentBuilder builder = new DocumentBuilder((Document) args.getMatchNode().getDocument());
@@ -412,7 +388,7 @@ class FindAndReplace extends DocsExamplesBase
 
             // Insert the field into the document using the specified field type and the matched text as the field name.
             // If the fields you are inserting do not require this extra parameter, it can be removed from the string below.
-            builder.insertField($"{fieldName} {args.Match.Groups[0]}");
+            builder.insertField(MessageFormat.format("{0} {1}", fieldName, args.getMatch().group(0)));
 
             for (Run run : runs)
                 run.remove();
@@ -437,7 +413,7 @@ class FindAndReplace extends DocsExamplesBase
             ArrayList<Run> runs = new ArrayList<Run>();
 
             // Find all runs that contain parts of the match string.
-            int remainingLength = args.getMatchInternal().getValue().length();
+            int remainingLength = args.getMatch().group().length();
             while (
                 remainingLength > 0 &&
                 currentNode != null &&
@@ -492,7 +468,7 @@ class FindAndReplace extends DocsExamplesBase
 
         FindReplaceOptions options = new FindReplaceOptions(); { options.setReplacingCallback(new MyReplaceEvaluator()); }
 
-        doc.getRange().replaceInternal(new Regex("[s|m]ad"), "", options);
+        doc.getRange().replace(Pattern.compile("[s|m]ad"), "", options);
 
         doc.save(getArtifactsDir() + "FindAndReplace.ReplaceWithEvaluator.docx");
         //ExEnd:ReplaceWithEvaluator
@@ -507,7 +483,7 @@ class FindAndReplace extends DocsExamplesBase
         /// </summary>
         public /*ReplaceAction*/int /*IReplacingCallback.*/replacing(ReplacingArgs e)
         {
-            e.setReplacement(e.getMatchInternal() + Integer.toString(mMatchNumber));
+            e.setReplacement(e.getMatch() + Integer.toString(mMatchNumber));
             mMatchNumber++;
             
             return ReplaceAction.REPLACE;
@@ -529,7 +505,7 @@ class FindAndReplace extends DocsExamplesBase
         FindReplaceOptions options = new FindReplaceOptions();
         options.setReplacingCallback(new ReplaceWithHtmlEvaluator(options));
 
-        doc.getRange().replaceInternal(new Regex(" <CustomerName>,"), "", options);
+        doc.getRange().replace(Pattern.compile(" <CustomerName>,"), "", options);
 
         doc.save(getArtifactsDir() + "FindAndReplace.ReplaceWithHtml.docx");
     }
@@ -572,7 +548,7 @@ class FindAndReplace extends DocsExamplesBase
 
         FindReplaceOptions options = new FindReplaceOptions();
 
-        doc.getRange().replaceInternal(new Regex("[s|m]ad"), "bad", options);
+        doc.getRange().replace(Pattern.compile("[s|m]ad"), "bad", options);
 
         doc.save(getArtifactsDir() + "FindAndReplace.ReplaceWithRegex.docx");
         //ExEnd:ReplaceWithRegex
@@ -587,11 +563,11 @@ class FindAndReplace extends DocsExamplesBase
 
         builder.write("Jason give money to Paul.");
 
-        Regex regex = new Regex("([A-z]+) give money to ([A-z]+)");
+        Pattern regex = Pattern.compile("([A-z]+) give money to ([A-z]+)");
 
         FindReplaceOptions options = new FindReplaceOptions(); { options.setUseSubstitutions(true); }
 
-        doc.getRange().replaceInternal(regex, "$2 take money from $1", options);
+        doc.getRange().replace(regex, "$2 take money from $1", options);
         //ExEnd:RecognizeAndSubstitutionsWithinReplacementPatterns
     }
 
@@ -629,7 +605,7 @@ class FindAndReplace extends DocsExamplesBase
             options.setReplacingCallback(new ReplacingCallback()); options.setUseLegacyOrder(true);
         }
 
-        doc.getRange().replaceInternal(new Regex("\\[(.*?)\\]"), "", options);
+        doc.getRange().replace(Pattern.compile("\\[(.*?)\\]"), "", options);
 
         doc.save(getArtifactsDir() + "FindAndReplace.UsingLegacyOrder.docx");
     }
@@ -638,7 +614,7 @@ class FindAndReplace extends DocsExamplesBase
     {
         public /*ReplaceAction*/int /*IReplacingCallback.*/replacing(ReplacingArgs e)
         {
-            msConsole.write(e.getMatchInternal().getValue());
+            System.out.println(e.getMatch().group());
             return ReplaceAction.REPLACE;
         }
     }

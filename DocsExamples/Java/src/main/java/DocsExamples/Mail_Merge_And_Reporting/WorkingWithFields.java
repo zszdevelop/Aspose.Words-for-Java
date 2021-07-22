@@ -1,35 +1,20 @@
-package DocsExamples.Mail_Merge_and_Reporting;
+package DocsExamples.Mail_Merge_And_Reporting;
 
-// ********* THIS FILE IS AUTO PORTED *********
-
-import com.aspose.ms.java.collections.StringSwitchMap;
 import DocsExamples.DocsExamplesBase;
-import org.testng.annotations.Test;
-import com.aspose.words.Document;
-import com.aspose.words.IFieldMergingCallback;
-import com.aspose.words.FieldMergingArgs;
-import com.aspose.words.DocumentBuilder;
-import com.aspose.words.TextFormFieldType;
-import com.aspose.words.ImageFieldMergingArgs;
-import com.aspose.words.MergeFieldImageDimension;
-import com.aspose.words.MergeFieldImageDimensionUnit;
-import com.aspose.words.MailMergeCleanupOptions;
 import com.aspose.words.Shape;
-import com.aspose.words.ShapeType;
-import com.aspose.words.WrapType;
-import com.aspose.words.IMailMergeDataSourceRoot;
-import com.aspose.words.IMailMergeDataSource;
-import com.aspose.words.FieldIf;
+import com.aspose.words.*;
+import com.aspose.words.net.System.Data.DataRow;
 import com.aspose.words.net.System.Data.DataTable;
 import com.aspose.words.net.System.Data.IDataReader;
-import com.aspose.ms.System.IO.MemoryStream;
-import com.aspose.words.FieldMergeField;
-import java.awt.Color;
-import com.aspose.words.net.System.Data.DataRow;
 import com.aspose.words.ref.Ref;
+import org.testng.annotations.Test;
 
+import java.awt.*;
+import java.io.ByteArrayInputStream;
+import java.text.MessageFormat;
 
-class WorkingWithFields extends DocsExamplesBase
+@Test
+public class WorkingWithFields extends DocsExamplesBase
 {
     @Test
     public void mailMergeFormFields() throws Exception
@@ -76,23 +61,23 @@ class WorkingWithFields extends DocsExamplesBase
                 // Move the "cursor" to the current merge field.
                 mBuilder.moveToMergeField(e.getFieldName());
 
-                String checkBoxName = $"{e.FieldName}{e.RecordIndex}";
+                String checkBoxName = MessageFormat.format("{0}{1}", e.getFieldName(), e.getRecordIndex());
 
-                mBuilder.insertCheckBox(checkBoxName, (/*boolean*/Boolean) e.getFieldValue(), 0);
+                mBuilder.insertCheckBox(checkBoxName, (Boolean) e.getFieldValue(), 0);
 
                 return;
             }
 
-            switch (gStringSwitchMap.of(e.getFieldName()))
+            switch (e.getFieldName())
             {
-                case /*"Body"*/0:
+                case "Body":
                     mBuilder.moveToMergeField(e.getFieldName());
                     mBuilder.insertHtml((String) e.getFieldValue());
                     break;
-                case /*"Subject"*/1:
+                case "Subject":
                 {
                     mBuilder.moveToMergeField(e.getFieldName());
-                    String textInputName = $"{e.FieldName}{e.RecordIndex}";
+                    String textInputName = MessageFormat.format("{0}{1}", e.getFieldName(), e.getRecordIndex());
                     mBuilder.insertTextInput(textInputName, TextFormFieldType.REGULAR, "", (String) e.getFieldValue(), 0);
                     break;
                 }
@@ -100,7 +85,7 @@ class WorkingWithFields extends DocsExamplesBase
         }
 
         //ExStart:ImageFieldMerging
-        public void /*IFieldMergingCallback.*/imageFieldMerging(ImageFieldMergingArgs args)
+        public void imageFieldMerging(ImageFieldMergingArgs args)
         {
             args.setImageFileName("Image.png");
             args.getImageWidth().setValue(200.0);
@@ -141,12 +126,12 @@ class WorkingWithFields extends DocsExamplesBase
     //ExStart:ImageFieldMergingHandler
     private static class ImageFieldMergingHandler implements IFieldMergingCallback
     {
-        public void /*IFieldMergingCallback.*/fieldMerging(FieldMergingArgs args)
+        public void fieldMerging(FieldMergingArgs args)
         {
             //  Implementation is not required.
         }
 
-        public void /*IFieldMergingCallback.*/imageFieldMerging(ImageFieldMergingArgs args) throws Exception
+        public void imageFieldMerging(ImageFieldMergingArgs args) throws Exception
         {
             Shape shape = new Shape(args.getDocument(), ShapeType.IMAGE);
             {
@@ -171,11 +156,15 @@ class WorkingWithFields extends DocsExamplesBase
         private static class DataSource implements IMailMergeDataSource
         {
             private boolean next = true;
-            private TableNametableName();
 
             private String tableName()
             {
                 return "example";
+            }
+
+            @Override
+            public String getTableName() {
+                return tableName();
             }
 
             public boolean moveNext()
@@ -190,7 +179,7 @@ class WorkingWithFields extends DocsExamplesBase
                 return null;
             }
 
-            public boolean getValue(String fieldName, /*out*/Ref<Object> fieldValue)
+            public boolean getValue(String fieldName, Ref<Object> fieldValue)
             {
                 fieldValue.set(null);
                 return false;
@@ -266,9 +255,9 @@ class WorkingWithFields extends DocsExamplesBase
         public void /*IFieldMergingCallback.*/imageFieldMerging(ImageFieldMergingArgs e) throws Exception
         {
             // The field value is a byte array, just cast it and create a stream on it.
-            MemoryStream imageStream = new MemoryStream((byte[]) e.getFieldValue());
+            ByteArrayInputStream imageStream = new ByteArrayInputStream((byte[]) e.getFieldValue());
             // Now the mail merge engine will retrieve the image from the stream.
-            e.setImageStreamInternal(imageStream);
+            e.setImageStream(imageStream);
         }
     }
     //ExEnd:HandleMergeImageFieldFromBlob
@@ -399,13 +388,5 @@ class WorkingWithFields extends DocsExamplesBase
 
         return dataTable;
     }
-
-	//JAVA-added for string switch emulation
-	private static final StringSwitchMap gStringSwitchMap = new StringSwitchMap
-	(
-		"Body",
-		"Subject"
-	);
-
     //ExEnd:HandleMergeFieldAlternatingRows
 }
