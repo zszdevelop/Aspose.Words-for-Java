@@ -1,21 +1,13 @@
-package DocsExamples.Programming_with_Documents.Working_with_Document;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Programming_with_documents.Working_with_document;
 
 import DocsExamples.DocsExamplesBase;
+import com.aspose.words.*;
 import org.testng.annotations.Test;
-import com.aspose.words.Document;
-import com.aspose.words.TaskPane;
-import com.aspose.words.TaskPaneDockState;
-import com.aspose.words.WebExtensionStoreType;
-import com.aspose.words.WebExtensionProperty;
-import com.aspose.words.WebExtensionBinding;
-import com.aspose.words.WebExtensionBindingType;
-import com.aspose.ms.System.msConsole;
-import com.aspose.words.WebExtensionReference;
 
+import java.text.MessageFormat;
 
-class WorkingWithWebExtension extends DocsExamplesBase
+@Test
+public class WorkingWithWebExtension extends DocsExamplesBase
 {
     @Test
     public void usingWebExtensionTaskPanes() throws Exception
@@ -46,10 +38,10 @@ class WorkingWithWebExtension extends DocsExamplesBase
         
         System.out.println("Task panes sources:\n");
 
-        for (TaskPane taskPaneInfo : (Iterable<TaskPane>) doc.getWebExtensionTaskPanes())
+        for (TaskPane taskPaneInfo : doc.getWebExtensionTaskPanes())
         {
             WebExtensionReference reference = taskPaneInfo.getWebExtension().getReference();
-            System.out.println("Provider: \"{reference.Store}\", version: \"{reference.Version}\", catalog identifier: \"{reference.Id}\";");
+            System.out.println(MessageFormat.format("Provider: \"{0}\", version: \"{1}\", catalog identifier: \"{2}\";", reference.getStore(), reference.getVersion(), reference.getId()));
         }
         //ExEnd:GetListOfAddins
     }

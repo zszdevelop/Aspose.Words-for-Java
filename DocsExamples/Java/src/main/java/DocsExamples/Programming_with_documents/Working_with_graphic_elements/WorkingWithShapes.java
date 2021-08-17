@@ -1,35 +1,15 @@
-package DocsExamples.Programming_with_Documents.Working_with_Graphic_Elements;
+package DocsExamples.Programming_with_documents.Working_with_graphic_elements;
 
-// ********* THIS FILE IS AUTO PORTED *********
-
-import com.aspose.ms.ms;
 import DocsExamples.DocsExamplesBase;
-import org.testng.annotations.Test;
-import com.aspose.words.Document;
-import com.aspose.words.GroupShape;
+import com.aspose.words.*;
 import com.aspose.words.Shape;
-import com.aspose.words.ShapeType;
-import com.aspose.ms.System.Drawing.msSize;
-import com.aspose.words.DocumentBuilder;
-import com.aspose.words.RelativeHorizontalPosition;
-import com.aspose.words.RelativeVerticalPosition;
-import com.aspose.words.WrapType;
-import com.aspose.words.OoxmlSaveOptions;
-import com.aspose.words.SaveFormat;
-import com.aspose.words.OoxmlCompliance;
-import com.aspose.words.HeightRule;
-import com.aspose.words.HorizontalAlignment;
-import com.aspose.words.VerticalAlignment;
-import com.aspose.ms.System.Drawing.msColor;
-import java.awt.Color;
-import com.aspose.words.Run;
-import com.aspose.words.NodeType;
-import com.aspose.words.MsWordVersion;
-import com.aspose.ms.System.msConsole;
-import com.aspose.words.TextBoxAnchor;
+import org.testng.annotations.Test;
 
+import java.awt.*;
+import java.text.MessageFormat;
 
-class WorkingWithShapes extends DocsExamplesBase
+@Test
+public class WorkingWithShapes extends DocsExamplesBase
 {
     @Test
     public void addGroupShape() throws Exception
@@ -50,7 +30,7 @@ class WorkingWithShapes extends DocsExamplesBase
 
         groupShape.setWidth(200.0);
         groupShape.setHeight(200.0);
-        groupShape.setCoordSizeInternal(msSize.ctor(200, 200));
+        groupShape.setCoordSize(new Dimension(200, 200));
 
         DocumentBuilder builder = new DocumentBuilder(doc);
         builder.insertNode(groupShape);
@@ -130,8 +110,8 @@ class WorkingWithShapes extends DocsExamplesBase
             watermark.setRotation(-40);
         }
 
-        watermark.setFillColor(msColor.getGray());
-        watermark.setStrokeColor(msColor.getGray());
+        watermark.setFillColor(Color.GRAY);
+        watermark.setStrokeColor(Color.GRAY);
 
         watermark.getTextPath().setText("watermarkText");
         watermark.getTextPath().setFontFamily("Arial");
@@ -139,7 +119,7 @@ class WorkingWithShapes extends DocsExamplesBase
         watermark.setName("WaterMark_{Guid.NewGuid()}");
         watermark.setWrapType(WrapType.NONE);
 
-        Run run = ms.as(doc.getChildNodes(NodeType.RUN, true).get(doc.getChildNodes(NodeType.RUN, true).getCount() - 1), Run.class);
+        Run run = (Run) doc.getChildNodes(NodeType.RUN, true).get(doc.getChildNodes(NodeType.RUN, true).getCount() - 1);
 
         builder.moveTo(run);
         builder.insertNode(watermark);
@@ -177,8 +157,8 @@ class WorkingWithShapes extends DocsExamplesBase
         Shape shape = builder.insertImage(getImagesDir() + "Transparent background logo.png");
         shape.setAspectRatioLocked(false);
 
-        msConsole.write("\nGets the actual bounds of the shape in points: ");
-        System.out.println(shape.getShapeRenderer().getBoundsInPointsInternal());
+        System.out.println("\nGets the actual bounds of the shape in points: ");
+        System.out.println(shape.getShapeRenderer().getBoundsInPoints());
         //ExEnd:GetActualShapeBoundsPoints
     }
 
@@ -207,7 +187,7 @@ class WorkingWithShapes extends DocsExamplesBase
 
         int count = doc.getChildNodes(NodeType.SHAPE, true).<Shape>Cast().Count(shape => shape.HasSmartArt);
 
-        System.out.println("The document has {0} shapes with SmartArt.",count);
+        System.out.println(MessageFormat.format("The document has {0} shapes with SmartArt.", count));
         //ExEnd:DetectSmartArtShape
     }
 

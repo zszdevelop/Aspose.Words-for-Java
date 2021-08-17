@@ -1,32 +1,14 @@
-package DocsExamples.Programming_with_Documents.Working_with_Document;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Programming_with_documents.Working_with_document;
 
 import DocsExamples.DocsExamplesBase;
+import com.aspose.words.*;
 import org.testng.annotations.Test;
-import com.aspose.words.Document;
-import com.aspose.words.FindReplaceOptions;
-import com.aspose.words.FindReplaceDirection;
-import com.aspose.ms.System.Text.RegularExpressions.Regex;
-import com.aspose.words.Bookmark;
-import com.aspose.words.Node;
-import com.aspose.words.NodeType;
-import com.aspose.words.CompositeNode;
-import com.aspose.words.NodeImporter;
-import com.aspose.words.ImportFormatMode;
-import com.aspose.words.Section;
-import com.aspose.words.Paragraph;
-import com.aspose.words.IFieldMergingCallback;
-import com.aspose.words.FieldMergingArgs;
-import com.aspose.words.DocumentBuilder;
-import com.aspose.words.ImageFieldMergingArgs;
-import com.aspose.ms.System.IO.MemoryStream;
-import com.aspose.words.IReplacingCallback;
-import com.aspose.words.ReplaceAction;
-import com.aspose.words.ReplacingArgs;
 
+import java.io.ByteArrayInputStream;
+import java.util.regex.Pattern;
 
-class CloneAndCombineDocuments extends DocsExamplesBase
+@Test
+public class CloneAndCombineDocuments extends DocsExamplesBase
 {
     @Test
     public void cloningDocument() throws Exception
@@ -53,7 +35,7 @@ class CloneAndCombineDocuments extends DocsExamplesBase
         }
 
         // Call the replace method.
-        mainDoc.getRange().replaceInternal(new Regex("\\[MY_DOCUMENT\\]"), "", options);
+        mainDoc.getRange().replace(Pattern.compile("\\[MY_DOCUMENT\\]"), "", options);
         mainDoc.save(getArtifactsDir() + "CloneAndCombineDocuments.InsertDocumentAtReplace.docx");
         //ExEnd:InsertDocumentAtReplace
     }
@@ -107,8 +89,8 @@ class CloneAndCombineDocuments extends DocsExamplesBase
 
             // Loop through all block-level nodes in the section's body,
             // then clone and insert every node that is not the last empty paragraph of a section.
-            for (Section srcSection : docToInsert.getSections().<Section>OfType() !!Autoporter error: Undefined expression type )
-            for (Node srcNode : (Iterable<Node>) srcSection.getBody())
+            for (Section srcSection : docToInsert.getSections())
+            for (Node srcNode : srcSection.getBody())
             {
                 if (srcNode.getNodeType() == NodeType.PARAGRAPH)
                 {
@@ -230,7 +212,7 @@ class CloneAndCombineDocuments extends DocsExamplesBase
                 DocumentBuilder builder = new DocumentBuilder(e.getDocument());
                 builder.moveToMergeField(e.getDocumentFieldName());
 
-                MemoryStream stream = new MemoryStream((byte[]) e.getFieldValue());
+                ByteArrayInputStream stream = new ByteArrayInputStream((byte[]) e.getFieldValue());
                 Document subDoc = new Document(stream);
 
                 insertDocument(builder.getCurrentParagraph(), subDoc);

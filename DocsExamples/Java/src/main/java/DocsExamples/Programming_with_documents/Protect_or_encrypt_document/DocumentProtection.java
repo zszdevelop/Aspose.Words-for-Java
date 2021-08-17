@@ -1,14 +1,12 @@
-package DocsExamples.Programming_with_Documents.Protect_or_Encrypt_Document;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Programming_with_documents.Protect_or_encrypt_document;
 
 import DocsExamples.DocsExamplesBase;
 import org.testng.annotations.Test;
 import com.aspose.words.Document;
 import com.aspose.words.ProtectionType;
 
-
-class DocumentProtection extends DocsExamplesBase
+@Test
+public class DocumentProtection extends DocsExamplesBase
 {
     @Test
     public void protect() throws Exception

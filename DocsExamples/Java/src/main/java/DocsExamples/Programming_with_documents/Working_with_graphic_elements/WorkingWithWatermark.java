@@ -1,29 +1,14 @@
-package DocsExamples.Programming_with_Documents.Working_with_Graphic_Elements;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Programming_with_documents.Working_with_graphic_elements;
 
 import DocsExamples.DocsExamplesBase;
-import org.testng.annotations.Test;
-import com.aspose.words.Document;
-import com.aspose.words.TextWatermarkOptions;
-import java.awt.Color;
-import com.aspose.words.WatermarkLayout;
 import com.aspose.words.Shape;
-import com.aspose.words.ShapeType;
-import com.aspose.ms.System.Drawing.msColor;
-import com.aspose.words.RelativeHorizontalPosition;
-import com.aspose.words.RelativeVerticalPosition;
-import com.aspose.words.WrapType;
-import com.aspose.words.VerticalAlignment;
-import com.aspose.words.HorizontalAlignment;
-import com.aspose.words.Paragraph;
-import com.aspose.words.Section;
-import com.aspose.words.HeaderFooterType;
-import com.aspose.words.HeaderFooter;
-import com.aspose.words.NodeType;
+import com.aspose.words.*;
+import org.testng.annotations.Test;
 
+import java.awt.*;
 
-class WorkWithWatermark extends DocsExamplesBase
+@Test
+public class WorkingWithWatermark extends DocsExamplesBase
 {
     @Test
     public void addTextWatermarkWithSpecificOptions() throws Exception
@@ -79,8 +64,8 @@ class WorkWithWatermark extends DocsExamplesBase
         watermark.setRotation(-40);
 
         // Remove the following two lines if you need a solid black text.
-        watermark.setFillColor(msColor.getGray()); 
-        watermark.setStrokeColor(msColor.getGray());
+        watermark.setFillColor(Color.GRAY);
+        watermark.setStrokeColor(Color.GRAY);
 
         // Place the watermark in the page center.
         watermark.setRelativeHorizontalPosition(RelativeHorizontalPosition.PAGE);

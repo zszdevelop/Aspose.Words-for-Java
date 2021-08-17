@@ -1,22 +1,13 @@
-package DocsExamples.Programming_with_Documents.Contents_Managment;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Programming_with_documents.Contents_managment;
 
 import DocsExamples.DocsExamplesBase;
+import com.aspose.words.*;
 import org.testng.annotations.Test;
-import com.aspose.words.Document;
-import com.aspose.words.StyleCollection;
-import com.aspose.words.Style;
-import com.aspose.ms.System.msConsole;
-import com.aspose.words.Theme;
-import com.aspose.ms.System.Drawing.msColor;
-import java.awt.Color;
-import com.aspose.words.DocumentBuilder;
-import com.aspose.words.StyleType;
-import com.aspose.words.StyleIdentifier;
 
+import java.awt.*;
 
-class WorkingWithStylesAndThemes extends DocsExamplesBase
+@Test
+public class WorkingWithStylesAndThemes extends DocsExamplesBase
 {
     @Test
     public void accessStyles() throws Exception
@@ -79,7 +70,7 @@ class WorkingWithStylesAndThemes extends DocsExamplesBase
 
         Theme theme = doc.getTheme();
         theme.getMinorFonts().setLatin("Times New Roman");
-        theme.getColors().setHyperlink(msColor.getGold());
+        theme.getColors().setHyperlink(Color.ORANGE);
         //ExEnd:SetThemeProperties 
     }
 

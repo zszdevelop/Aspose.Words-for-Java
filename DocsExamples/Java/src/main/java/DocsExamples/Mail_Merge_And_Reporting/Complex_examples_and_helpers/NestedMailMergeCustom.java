@@ -60,43 +60,69 @@ public class NestedMailMergeCustom extends DocsExamplesBase
     /// <summary>
     /// An example of a "data entity" class in your application.
     /// </summary>
-    public static class Customer
-    {
-        public Customer(String aFullName, String anAddress)
-        {
+    public static class Customer {
+        public Customer(String aFullName, String anAddress) {
             setFullName(aFullName);
             setAddress(anAddress);
-            setOrders(new ArrayList<Order>());
+            setOrders(new ArrayList<>());
         }
 
-        public String getFullName() { return mFullName; }; public void setFullName(String value) { mFullName = value; };
+        public String getFullName() {
+            return mFullName;
+        }
 
-        private String mFullName;
-        public String getAddress() { return mAddress; }; public void setAddress(String value) { mAddress = value; };
+        public void setFullName(String value) {
+            mFullName = value;
+        }
 
-        private String mAddress;
-        public ArrayList<Order> getOrders() { return mOrders; }; public void setOrders(ArrayList<Order> value) { mOrders = value; };
+        public String getAddress() {
+            return mAddress;
+        }
+
+        public void setAddress(String value) {
+            mAddress = value;
+        }
+
+        public ArrayList<Order> getOrders() {
+            return mOrders;
+        }
+
+        public void setOrders(ArrayList<Order> value) {
+            mOrders = value;
+        }
 
         private ArrayList<Order> mOrders;
+        private String mAddress;
+        private String mFullName;
     }
 
     /// <summary>
     /// An example of a child "data entity" class in your application.
     /// </summary>
-    public static class Order
-    {
-        public Order(String oName, int oQuantity)
-        {
+    public static class Order {
+        public Order(String oName, int oQuantity) {
             setName(oName);
             setQuantity(oQuantity);
         }
 
-        public String getName() { return mName; }; public void setName(String value) { mName = value; };
+        public String getName() {
+            return mName;
+        }
 
-        private String mName;
-        public int getQuantity() { return mQuantity; }; public void setQuantity(int value) { mQuantity = value; };
+        public void setName(String value) {
+            mName = value;
+        }
+
+        public int getQuantity() {
+            return mQuantity;
+        }
+
+        public void setQuantity(int value) {
+            mQuantity = value;
+        }
 
         private int mQuantity;
+        private String mName;
     }
 
     /// <summary>
@@ -114,24 +140,19 @@ public class NestedMailMergeCustom extends DocsExamplesBase
         }
 
         /// <summary>
-        /// The name of the data source. Used by Aspose.Words only when executing mail merge with repeatable regions.
-        /// </summary>
-        public String TableName => "Customer";
-
-        /// <summary>
         /// Aspose.Words calls this method to get a value for every data field.
         /// </summary>
-        public boolean getValue(String fieldName, /*out*/Ref<Object> fieldValue)
+        public boolean getValue(String fieldName, Ref<Object> fieldValue)
         {
-            switch (gStringSwitchMap.of(fieldName))
+            switch (fieldName)
             {
-                case /*"FullName"*/0:
+                case "FullName":
                     fieldValue.set(mCustomers.get(mRecordIndex).getFullName());
                     return true;
-                case /*"Address"*/1:
+                case "Address":
                     fieldValue.set(mCustomers.get(mRecordIndex).getAddress());
                     return true;
-                case /*"Order"*/2:
+                case "Order":
                     fieldValue.set(mCustomers.get(mRecordIndex).getOrders());
                     return true;
                 default:
@@ -141,8 +162,8 @@ public class NestedMailMergeCustom extends DocsExamplesBase
         }
 
         @Override
-        public String getTableName() throws Exception {
-            return null;
+        public String getTableName() {
+            return "Customer";
         }
 
         /// <summary>
@@ -150,19 +171,19 @@ public class NestedMailMergeCustom extends DocsExamplesBase
         /// </summary>
         public boolean moveNext()
         {
-            if (!IsEof)
+            if (!IsEof())
                 mRecordIndex++;
 
-            return !IsEof;
+            return !IsEof();
         }
 
         //ExStart:GetChildDataSourceExample           
         public IMailMergeDataSource getChildDataSource(String tableName)
         {
-            switch (gStringSwitchMap.of(tableName))
+            switch (tableName)
             {
                 // Get the child collection to merge it with the region provided with tableName variable.
-                case /*"Order"*/2:
+                case "Order":
                     return new OrderMailMergeDataSource(mCustomers.get(mRecordIndex).getOrders());
                 default:
                     return null;
@@ -170,15 +191,18 @@ public class NestedMailMergeCustom extends DocsExamplesBase
         }
         //ExEnd:GetChildDataSourceExample
 
-        private boolean IsEof => (mRecordIndex >= mCustomers.Count);
+        private boolean IsEof()
+        {
+            return mRecordIndex >= mCustomers.size();
+        }
 
-        private /*final*/ ArrayList<Customer> mCustomers;
+        private ArrayList<Customer> mCustomers;
         private int mRecordIndex;
     }
 
     public static class OrderMailMergeDataSource implements IMailMergeDataSource
     {
-        public OrderMailMergeDataSource(ArrayList<Order> orders)
+        public OrderMailMergeDataSource(ArrayList<NestedMailMergeCustom.Order> orders)
         {
             mOrders = orders;
 
@@ -187,22 +211,17 @@ public class NestedMailMergeCustom extends DocsExamplesBase
         }
 
         /// <summary>
-        /// The name of the data source. Used by Aspose.Words only when executing mail merge with repeatable regions.
-        /// </summary>
-        public String TableName => "Order";
-
-        /// <summary>
         /// Aspose.Words calls this method to get a value for every data field.
         /// </summary>
         public boolean getValue(String fieldName, /*out*/Ref<Object> fieldValue)
         {
-            switch (gStringSwitchMap.of(fieldName))
+            switch (fieldName)
             {
-                case /*"Name"*/3:
-                    fieldValue.set(mOrders[mRecordIndex].Name);
+                case "Name":
+                    fieldValue.set(mOrders.get(mRecordIndex).getName());
                     return true;
-                case /*"Quantity"*/4:
-                    fieldValue.set(mOrders[mRecordIndex].Quantity);
+                case "Quantity":
+                    fieldValue.set(mOrders.get(mRecordIndex).getQuantity());
                     return true;
                 default:
                     fieldValue.set(null);
@@ -211,14 +230,22 @@ public class NestedMailMergeCustom extends DocsExamplesBase
         }
 
         /// <summary>
+        /// The name of the data source. Used by Aspose.Words only when executing mail merge with repeatable regions.
+        /// </summary>
+        @Override
+        public String getTableName() {
+            return "Order";
+        }
+
+        /// <summary>
         /// A standard implementation for moving to a next record in a collection.
         /// </summary>
         public boolean moveNext()
         {
-            if (!IsEof)
+            if (!isEof())
                 mRecordIndex++;
 
-            return !IsEof;
+            return !isEof();
         }
 
         public IMailMergeDataSource getChildDataSource(String tableName)
@@ -227,20 +254,12 @@ public class NestedMailMergeCustom extends DocsExamplesBase
             return null;
         }
 
-        private boolean IsEof => mRecordIndex >= private mOrders.CountmOrders;
+        private boolean isEof()
+        {
+            return mRecordIndex >= mOrders.size() ;
+        }
 
-        private /*final*/ ArrayList<Order> mOrders;
+        private ArrayList<NestedMailMergeCustom.Order> mOrders;
         private int mRecordIndex;
     }
-
-	//JAVA-added for string switch emulation
-	private static final StringSwitchMap gStringSwitchMap = new StringSwitchMap
-	(
-		"FullName",
-		"Address",
-		"Order",
-		"Name",
-		"Quantity"
-	);
-
 }

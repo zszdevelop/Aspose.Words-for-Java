@@ -1,6 +1,4 @@
-package DocsExamples.Programming_with_Documents.Contents_Managment;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Programming_with_documents.Contents_managment;
 
 import DocsExamples.DocsExamplesBase;
 import org.testng.annotations.Test;
@@ -10,8 +8,8 @@ import com.aspose.words.Paragraph;
 import com.aspose.words.NodeType;
 import com.aspose.words.TabStop;
 
-
-class WorkingWithTableOfContent extends DocsExamplesBase
+@Test
+public class WorkingWithTableOfContent extends DocsExamplesBase
 {
     @Test
     public void changeStyleOfTocLevel() throws Exception

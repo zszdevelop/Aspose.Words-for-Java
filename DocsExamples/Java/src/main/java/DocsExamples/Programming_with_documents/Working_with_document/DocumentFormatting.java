@@ -1,27 +1,13 @@
-package DocsExamples.Programming_with_Documents.Working_with_Document;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Programming_with_documents.Working_with_document;
 
 import DocsExamples.DocsExamplesBase;
+import com.aspose.words.*;
 import org.testng.annotations.Test;
-import com.aspose.words.Document;
-import com.aspose.words.DocumentBuilder;
-import com.aspose.words.ParagraphFormat;
-import com.aspose.words.ParagraphAlignment;
-import com.aspose.words.StyleIdentifier;
-import com.aspose.words.BorderCollection;
-import com.aspose.words.BorderType;
-import com.aspose.words.LineStyle;
-import com.aspose.words.Shading;
-import com.aspose.words.TextureIndex;
-import com.aspose.ms.System.Drawing.msColor;
-import java.awt.Color;
-import com.aspose.words.Paragraph;
-import com.aspose.words.NodeType;
-import com.aspose.ms.System.msConsole;
 
+import java.awt.*;
 
-class DocumentFormatting extends DocsExamplesBase
+@Test
+public class DocumentFormatting extends DocsExamplesBase
 {
     @Test
     public void spaceBetweenAsianAndLatinText() throws Exception
@@ -139,8 +125,8 @@ class DocumentFormatting extends DocsExamplesBase
 
         Shading shading = builder.getParagraphFormat().getShading();
         shading.setTexture(TextureIndex.TEXTURE_DIAGONAL_CROSS);
-        shading.setBackgroundPatternColor(msColor.getLightCoral());
-        shading.setForegroundPatternColor(java.awt.Color.LightSalmon);
+        shading.setBackgroundPatternColor(Color.lightGray);
+        shading.setForegroundPatternColor(Color.orange);
 
         builder.write("I'm a formatted paragraph with double border and nice shading.");
         

@@ -1,36 +1,16 @@
-package DocsExamples.Programming_with_Documents.Contents_Managment;
+package DocsExamples.Programming_with_documents.Contents_managment;
 
-// ********* THIS FILE IS AUTO PORTED *********
-
-import com.aspose.ms.ms;
 import DocsExamples.DocsExamplesBase;
-import org.testng.annotations.Test;
-import com.aspose.words.Document;
-import com.aspose.words.DocumentBuilder;
-import com.aspose.words.StructuredDocumentTag;
-import com.aspose.words.SdtType;
-import com.aspose.words.MarkupLevel;
-import com.aspose.words.SaveFormat;
-import com.aspose.words.NodeType;
-import com.aspose.words.Paragraph;
-import com.aspose.words.Run;
-import com.aspose.words.SdtListItem;
 import com.aspose.words.Shape;
-import com.aspose.ms.System.Drawing.msColor;
-import java.awt.Color;
-import com.aspose.words.CustomXmlPart;
-import com.aspose.ms.System.Guid;
-import com.aspose.words.Style;
-import com.aspose.words.StyleIdentifier;
-import com.aspose.words.Table;
-import com.aspose.words.Row;
-import com.aspose.words.NodeCollection;
-import com.aspose.words.StructuredDocumentTagRangeStart;
-import com.aspose.ms.System.msConsole;
-import com.aspose.ms.System.Text.Encoding;
+import com.aspose.words.*;
+import org.testng.annotations.Test;
 
+import java.awt.*;
+import java.nio.charset.StandardCharsets;
+import java.util.UUID;
 
-class WorkingWithSdt extends DocsExamplesBase
+@Test
+public class WorkingWithSdt extends DocsExamplesBase
 {
     @Test
     public void checkBoxTypeContentControl() throws Exception
@@ -76,7 +56,7 @@ class WorkingWithSdt extends DocsExamplesBase
                 case SdtType.PLAIN_TEXT:
                 {
                     sdt.removeAllChildren();
-                    Paragraph para = ms.as(sdt.appendChild(new Paragraph(doc)), Paragraph.class);
+                    Paragraph para = (Paragraph) sdt.appendChild(new Paragraph(doc));
                     Run run = new Run(doc, "new text goes here");
                     para.appendChild(run);
                     break;
@@ -131,7 +111,7 @@ class WorkingWithSdt extends DocsExamplesBase
         Paragraph para = new Paragraph(doc);
         Run run = new Run(doc);
         run.setText("Hello World");
-        run.getFont().setColor(msColor.getGreen());
+        run.getFont().setColor(Color.GREEN);
         para.getRuns().add(run);
         sdtRichText.getChildNodes().add(para);
         doc.getFirstSection().getBody().appendChild(sdtRichText);
@@ -172,7 +152,7 @@ class WorkingWithSdt extends DocsExamplesBase
         //ExStart:BindSDTtoCustomXmlPart
         Document doc = new Document();
         CustomXmlPart xmlPart =
-            doc.getCustomXmlParts().add(Guid.newGuid().toString("B"), "<root><text>Hello, World!</text></root>");
+            doc.getCustomXmlParts().add(UUID.randomUUID().toString(), "<root><text>Hello, World!</text></root>");
 
         StructuredDocumentTag sdt = new StructuredDocumentTag(doc, SdtType.PLAIN_TEXT, MarkupLevel.BLOCK);
         doc.getFirstSection().getBody().appendChild(sdt);
@@ -266,10 +246,10 @@ class WorkingWithSdt extends DocsExamplesBase
         Document doc = new Document(getMyDir() + "Multi-section structured document tags.docx");
 
         // Construct an XML part that contains data and add it to the document's CustomXmlPart collection.
-        String xmlPartId = Guid.newGuid().toString("B");
+        String xmlPartId = UUID.randomUUID().toString();
         String xmlPartContent = "<root><text>Text element #1</text><text>Text element #2</text></root>";
         CustomXmlPart xmlPart = doc.getCustomXmlParts().add(xmlPartId, xmlPartContent);
-        System.out.println(Encoding.getUTF8().getString(xmlPart.getData()));
+        System.out.println(new String(xmlPart.getData(), StandardCharsets.US_ASCII));
 
         // Create a StructuredDocumentTag that will display the contents of our CustomXmlPart in the document.
         StructuredDocumentTagRangeStart sdtRangeStart = (StructuredDocumentTagRangeStart)doc.getChild(NodeType.STRUCTURED_DOCUMENT_TAG_RANGE_START, 0, true);

@@ -1,22 +1,15 @@
-package DocsExamples.Programming_with_Documents.Working_with_Document;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Programming_with_documents.Working_with_document;
 
 import DocsExamples.DocsExamplesBase;
+import com.aspose.words.*;
 import org.testng.annotations.Test;
-import com.aspose.words.Document;
+
+import java.text.MessageFormat;
+import java.util.Date;
 import java.util.Map;
-import com.aspose.ms.System.msConsole;
-import com.aspose.words.DocumentProperty;
-import com.aspose.words.CustomDocumentProperties;
-import com.aspose.ms.System.DateTime;
-import com.aspose.words.DocumentBuilder;
-import com.aspose.words.PageSetup;
-import com.aspose.words.ConvertUtil;
-import com.aspose.words.ControlChar;
 
-
-class DocumentPropertiesAndVariables extends DocsExamplesBase
+@Test
+public class WorkingWithDocumentProperties extends DocsExamplesBase
 {
     @Test
     public void getVariables() throws Exception
@@ -48,17 +41,17 @@ class DocumentPropertiesAndVariables extends DocsExamplesBase
     {
         //ExStart:EnumerateProperties            
         Document doc = new Document(getMyDir() + "Properties.docx");
-        
-        System.out.println("1. Document name: {0}",doc.getOriginalFileName());
+
+        System.out.println(MessageFormat.format("1. Document name: {0}", doc.getOriginalFileName()));
         System.out.println("2. Built-in Properties");
         
-        for (DocumentProperty prop : (Iterable<DocumentProperty>) doc.getBuiltInDocumentProperties())
-            System.out.println("{0} : {1}",prop.getName(),prop.getValue());
+        for (DocumentProperty prop : doc.getBuiltInDocumentProperties())
+            System.out.println(MessageFormat.format("{0} : {1}",prop.getName(),prop.getValue()));
 
         System.out.println("3. Custom Properties");
         
-        for (DocumentProperty prop : (Iterable<DocumentProperty>) doc.getCustomDocumentProperties())
-            System.out.println("{0} : {1}",prop.getName(),prop.getValue());
+        for (DocumentProperty prop : doc.getCustomDocumentProperties())
+            System.out.println(MessageFormat.format("{0} : {1}",prop.getName(),prop.getValue()));
         //ExEnd:EnumerateProperties
     }
 
@@ -74,7 +67,7 @@ class DocumentPropertiesAndVariables extends DocsExamplesBase
         
         customDocumentProperties.add("Authorized", true);
         customDocumentProperties.add("Authorized By", "John Smith");
-        customDocumentProperties.addInternal("Authorized Date", DateTime.getToday());
+        customDocumentProperties.add("Authorized Date", new Date());
         customDocumentProperties.add("Authorized Revision", doc.getBuiltInDocumentProperties().getRevisionNumber());
         customDocumentProperties.add("Authorized Amount", 123.45);
         //ExEnd:AddCustomDocumentProperties

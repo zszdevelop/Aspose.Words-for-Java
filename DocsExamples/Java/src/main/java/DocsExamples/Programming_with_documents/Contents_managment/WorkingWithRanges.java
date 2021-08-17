@@ -1,13 +1,11 @@
-package DocsExamples.Programming_with_Documents.Contents_Managment;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Programming_with_documents.Contents_managment;
 
 import DocsExamples.DocsExamplesBase;
 import org.testng.annotations.Test;
 import com.aspose.words.Document;
 
-
-class WorkingWithRanges extends DocsExamplesBase
+@Test
+public class WorkingWithRanges extends DocsExamplesBase
 {
     @Test
     public void rangesDeleteText() throws Exception

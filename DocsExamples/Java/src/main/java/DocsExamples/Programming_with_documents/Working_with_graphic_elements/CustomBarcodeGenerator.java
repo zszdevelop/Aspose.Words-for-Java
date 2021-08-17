@@ -1,16 +1,15 @@
-package DocsExamples.Programming_with_Documents.Working_with_Graphic_Elements;
+package DocsExamples.Programming_with_documents.Working_with_graphic_elements;
 
-// ********* THIS FILE IS AUTO PORTED *********
-
-import com.aspose.ms.java.collections.StringSwitchMap;
 import DocsExamples.DocsExamplesBase;
-import com.aspose.words.IBarcodeGenerator;
-import java.awt.Color;
-import java.awt.image.BufferedImage;
-import com.aspose.words.BarcodeParameters;
 import com.aspose.barcode.EncodeTypes;
-import com.aspose.ms.System.Globalization.msCultureInfo;
+import com.aspose.barcode.generation.AutoSizeMode;
+import com.aspose.barcode.generation.BarcodeGenerator;
+import com.aspose.barcode.generation.CodeLocation;
+import com.aspose.words.BarcodeParameters;
+import com.aspose.words.IBarcodeGenerator;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
 
 //ExStart:GenerateACustomBarCodeImage_IBarcodeGenerator
 public class CustomBarcodeGenerator extends DocsExamplesBase implements IBarcodeGenerator
@@ -20,8 +19,7 @@ public class CustomBarcodeGenerator extends DocsExamplesBase implements IBarcode
     /// </summary>
     /// <param name="heightInTwipsString"></param>
     /// <returns></returns>
-    private static float convertSymbolHeight(String heightInTwipsString)
-    {
+    private static float convertSymbolHeight(String heightInTwipsString) throws Exception {
         // Input value is in 1/1440 inches (twips)
         int heightInTwips = tryParseInt(heightInTwipsString);
 
@@ -37,8 +35,7 @@ public class CustomBarcodeGenerator extends DocsExamplesBase implements IBarcode
     /// </summary>
     /// <param name="inputColor"></param>
     /// <returns></returns>
-    private static Color convertColor(String inputColor)
-    {
+    private static Color convertColor(String inputColor) throws Exception {
         // Input should be from "0x000000" to "0xFFFFFF"
         int color = tryParseHex(inputColor.replace("0x", ""));
 
@@ -56,8 +53,7 @@ public class CustomBarcodeGenerator extends DocsExamplesBase implements IBarcode
     /// </summary>
     /// <param name="scalingFactor"></param>
     /// <returns></returns>
-    private static float convertScalingFactor(String scalingFactor)
-    {
+    private static float convertScalingFactor(String scalingFactor) throws Exception {
         boolean isParsed = false;
         int percent = tryParseInt(scalingFactor);
 
@@ -75,8 +71,7 @@ public class CustomBarcodeGenerator extends DocsExamplesBase implements IBarcode
     /// </summary>
     /// <param name="parameters"></param>
     /// <returns></returns>
-    public BufferedImage getBarcodeImage(BarcodeParameters parameters)
-    {
+    public BufferedImage getBarcodeImage(BarcodeParameters parameters) throws Exception {
         if (parameters.getBarcodeType() == null || parameters.getBarcodeValue() == null)
             return null;
 
@@ -84,93 +79,93 @@ public class CustomBarcodeGenerator extends DocsExamplesBase implements IBarcode
 
         String type = parameters.getBarcodeType().toUpperCase();
 
-        switch (gStringSwitchMap.of(type))
+        switch (type)
         {
-            case /*"QR"*/0:
+            case "QR":
                 generator = new BarcodeGenerator(EncodeTypes.QR);
                 break;
-            case /*"CODE128"*/1:
+            case "CODE128":
                 generator = new BarcodeGenerator(EncodeTypes.CODE_128);
                 break;
-            case /*"CODE39"*/2:
+            case "CODE39":
                 generator = new BarcodeGenerator(EncodeTypes.CODE_39_STANDARD);
                 break;
-            case /*"EAN8"*/3:
+            case "EAN8":
                 generator = new BarcodeGenerator(EncodeTypes.EAN_8);
                 break;
-            case /*"EAN13"*/4:
+            case "EAN13":
                 generator = new BarcodeGenerator(EncodeTypes.EAN_13);
                 break;
-            case /*"UPCA"*/5:
+            case "UPCA":
                 generator = new BarcodeGenerator(EncodeTypes.UPCA);
                 break;
-            case /*"UPCE"*/6:
+            case "UPCE":
                 generator = new BarcodeGenerator(EncodeTypes.UPCE);
                 break;
-            case /*"ITF14"*/7:
+            case "ITF14":
                 generator = new BarcodeGenerator(EncodeTypes.ITF_14);
                 break;
-            case /*"CASE"*/8:
-                generator = new BarcodeGenerator(EncodeTypes.None);
+            case "CASE":
+                generator = new BarcodeGenerator(EncodeTypes.NONE);
                 break;
         }
 
-        if (generator.BarcodeType.Equals(EncodeTypes.None))
+        if (generator.getBarcodeType().equals(EncodeTypes.NONE))
             return null;
 
-        generator.CodeText = parameters.getBarcodeValue();
+        generator.setCodeText(parameters.getBarcodeValue());
 
-        if (generator.BarcodeType.Equals(EncodeTypes.QR))
-            generator.Parameters.Barcode.CodeTextParameters.TwoDDisplayText = parameters.getBarcodeValue();
+        if (generator.getBarcodeType().equals(EncodeTypes.QR))
+            generator.getParameters().getBarcode().getCodeTextParameters().setTwoDDisplayText(parameters.getBarcodeValue());
 
         if (parameters.getForegroundColor() != null)
-            generator.Parameters.Barcode.BarColor = convertColor(parameters.getForegroundColor());
+            generator.getParameters().getBarcode().setBarColor(convertColor(parameters.getForegroundColor()));
 
         if (parameters.getBackgroundColor() != null)
-            generator.Parameters.BackColor = convertColor(parameters.getBackgroundColor());
+            generator.getParameters().setBackColor(convertColor(parameters.getBackgroundColor()));
 
         if (parameters.getSymbolHeight() != null)
         {
-            generator.Parameters.ImageHeight.Pixels = convertSymbolHeight(parameters.getSymbolHeight());
-            generator.Parameters.AutoSizeMode = AutoSizeMode.None;
+            generator.getParameters().getImageHeight().setPixels(convertSymbolHeight(parameters.getSymbolHeight()));
+            generator.getParameters().setAutoSizeMode(AutoSizeMode.NONE);
         }
 
-        generator.Parameters.Barcode.CodeTextParameters.Location = CodeLocation.None;
+        generator.getParameters().getBarcode().getCodeTextParameters().setLocation(CodeLocation.NONE);
 
         if (parameters.getDisplayText())
-            generator.Parameters.Barcode.CodeTextParameters.Location = CodeLocation.Below;
+            generator.getParameters().getBarcode().getCodeTextParameters().setLocation(CodeLocation.BELOW);
 
-        generator.Parameters.CaptionAbove.Text = "";
+        generator.getParameters().getCaptionAbove().setText("");
 
         final float SCALE = 2.4f; // Empiric scaling factor for converting Word barcode to Aspose.BarCode
         float xdim = 1.0f;
 
-        if (generator.BarcodeType.Equals(EncodeTypes.QR))
+        if (generator.getBarcodeType().equals(EncodeTypes.QR))
         {
-            generator.Parameters.AutoSizeMode = AutoSizeMode.Nearest;
-            generator.Parameters.ImageWidth.Inches *= SCALE;
-            generator.Parameters.ImageHeight.Inches = generator.Parameters.ImageWidth.Inches;
-            xdim = generator.Parameters.ImageHeight.Inches / 25;
-            generator.Parameters.Barcode.XDimension.Inches =
-                generator.Parameters.Barcode.BarHeight.Inches = xdim;
+            generator.getParameters().setAutoSizeMode(AutoSizeMode.NEAREST);
+            generator.getParameters().getImageWidth().setInches(generator.getParameters().getImageWidth().getInches() * SCALE);
+            generator.getParameters().getImageHeight().setInches(generator.getParameters().getImageWidth().getInches());
+            xdim = generator.getParameters().getImageHeight().getInches() / 25;
+            generator.getParameters().getBarcode().getXDimension().setInches(xdim);
+            generator.getParameters().getBarcode().getBarHeight().setInches(xdim);
         }
 
         if (parameters.getScalingFactor() != null)
         {
             float scalingFactor = convertScalingFactor(parameters.getScalingFactor());
-            generator.Parameters.ImageHeight.Inches *= scalingFactor;
+            generator.getParameters().getImageHeight().setInches(generator.getParameters().getImageHeight().getInches() * scalingFactor);
 
-            if (generator.BarcodeType.Equals(EncodeTypes.QR))
+            if (generator.getBarcodeType().equals(EncodeTypes.QR))
             {
-                generator.Parameters.ImageWidth.Inches = generator.Parameters.ImageHeight.Inches;
-                generator.Parameters.Barcode.XDimension.Inches =
-                    generator.Parameters.Barcode.BarHeight.Inches = xdim * scalingFactor;
+                generator.getParameters().getImageWidth().setInches(generator.getParameters().getImageHeight().getInches());
+                generator.getParameters().getBarcode().getXDimension().setInches(xdim * scalingFactor);
+                generator.getParameters().getBarcode().getBarHeight().setInches(xdim * scalingFactor);
             }
 
-            generator.Parameters.AutoSizeMode = AutoSizeMode.None;
+            generator.getParameters().setAutoSizeMode(AutoSizeMode.NONE);
         }
 
-        return generator.GenerateBarCodeImage();
+        return generator.generateBarCodeImage();
 
     }
 
@@ -190,7 +185,7 @@ public class CustomBarcodeGenerator extends DocsExamplesBase implements IBarcode
         }
 
         // Hardcode type for old-fashioned Barcode
-        return generator.GenerateBarCodeImage();
+        return generator.generateBarCodeImage();
     }
 
     /// <summary>
@@ -201,9 +196,8 @@ public class CustomBarcodeGenerator extends DocsExamplesBase implements IBarcode
     /// </summary>
     public static int tryParseInt(String s)
     {
-        return double.TryParse(s, NumberStyles.Integer, msCultureInfo.getInvariantCulture(), /*out*/ double temp)
-            ? CastDoubleToInt(temp)
-            : Integer.MIN_VALUE;
+        return Double.parseDouble(s)
+            ? castDoubleToInt(temp) : Integer.MIN_VALUE;
     }
 
     /// <summary>
@@ -221,25 +215,10 @@ public class CustomBarcodeGenerator extends DocsExamplesBase implements IBarcode
     /// </summary>
     public static int tryParseHex(String s)
     {
-        return int.TryParse(s, NumberStyles.HexNumber, msCultureInfo.getInvariantCulture(), /*out*/ int result)
+        return Integer.parseInt(s)
             ? result
             : Integer.MIN_VALUE;
     }
-
-	//JAVA-added for string switch emulation
-	private static final StringSwitchMap gStringSwitchMap = new StringSwitchMap
-	(
-		"QR",
-		"CODE128",
-		"CODE39",
-		"EAN8",
-		"EAN13",
-		"UPCA",
-		"UPCE",
-		"ITF14",
-		"CASE"
-	);
-
 }
 //ExEnd:GenerateACustomBarCodeImage_IBarcodeGenerator
 

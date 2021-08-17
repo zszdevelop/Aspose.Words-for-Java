@@ -1,20 +1,13 @@
-package DocsExamples.Programming_with_Documents.Working_with_Document;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Programming_with_documents.Working_with_document;
 
 import DocsExamples.DocsExamplesBase;
+import com.aspose.words.*;
 import org.testng.annotations.Test;
-import com.aspose.words.Document;
+
 import java.util.Date;
-import com.aspose.ms.System.DateTime;
-import com.aspose.ms.System.msConsole;
-import com.aspose.words.CompareOptions;
-import com.aspose.words.ComparisonTargetType;
-import com.aspose.words.DocumentBuilder;
-import com.aspose.words.Granularity;
 
-
-class CompareDocument extends DocsExamplesBase
+@Test
+public class CompareDocuments extends DocsExamplesBase
 {
     @Test
     public void compareForEqual() throws Exception
@@ -24,7 +17,7 @@ class CompareDocument extends DocsExamplesBase
         Document docB = docA.deepClone();
         
         // DocA now contains changes as revisions.
-        docA.compareInternal(docB, "user", new Date());
+        docA.compare(docB, "user", new Date());
 
         System.out.println(docA.getRevisions().getCount() == 0 ? "Documents are equal" : "Documents are not equal");
         //ExEnd:CompareForEqual                     
@@ -49,7 +42,7 @@ class CompareDocument extends DocsExamplesBase
             options.setIgnoreFootnotes(true);
         }
 
-        docA.compareInternal(docB, "user", new Date(), options);
+        docA.compare(docB, "user", new Date(), options);
 
         System.out.println(docA.getRevisions().getCount() == 0 ? "Documents are equal" : "Documents are not equal");
         //ExEnd:CompareOptions                     
@@ -65,7 +58,7 @@ class CompareDocument extends DocsExamplesBase
         // Relates to Microsoft Word "Show changes in" option in "Compare Documents" dialog box.
         CompareOptions options = new CompareOptions(); { options.setIgnoreFormatting(true); options.setTarget(ComparisonTargetType.NEW); }
 
-        docA.compareInternal(docB, "user", new Date(), options);
+        docA.compare(docB, "user", new Date(), options);
         //ExEnd:ComparisonTarget
     }
 
@@ -81,7 +74,7 @@ class CompareDocument extends DocsExamplesBase
 
         CompareOptions compareOptions = new CompareOptions(); { compareOptions.setGranularity(Granularity.CHAR_LEVEL); }
 
-        builderA.getDocument().compareInternal(builderB.getDocument(), "author", new Date(), compareOptions);
+        builderA.getDocument().compare(builderB.getDocument(), "author", new Date(), compareOptions);
         //ExEnd:ComparisonGranularity      
     }
 }

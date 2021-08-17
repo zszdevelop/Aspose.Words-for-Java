@@ -1,34 +1,13 @@
-package DocsExamples.Programming_with_Documents.Working_with_Graphic_Elements;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Programming_with_documents.Working_with_graphic_elements;
 
 import DocsExamples.DocsExamplesBase;
+import com.aspose.words.*;
 import org.testng.annotations.Test;
-import com.aspose.words.Document;
-import com.aspose.words.DocumentBuilder;
-import com.aspose.words.Shape;
-import com.aspose.words.ChartType;
-import com.aspose.words.Chart;
-import com.aspose.words.ChartSeries;
-import com.aspose.words.LegendPosition;
-import com.aspose.words.ChartSeriesCollection;
-import com.aspose.ms.System.msConsole;
-import com.aspose.ms.System.DateTime;
-import com.aspose.words.ChartAxis;
-import com.aspose.words.AxisCategoryType;
-import com.aspose.words.AxisCrosses;
-import com.aspose.words.AxisTickMark;
-import com.aspose.words.AxisTickLabelPosition;
-import com.aspose.words.AxisBuiltInUnit;
-import com.aspose.words.AxisBound;
-import com.aspose.words.ParagraphAlignment;
-import com.aspose.words.ChartDataLabelCollection;
-import com.aspose.words.ChartDataPointCollection;
-import com.aspose.words.ChartDataPoint;
-import com.aspose.words.MarkerSymbol;
 
+import java.util.Date;
 
-class WorkingWithCharts extends DocsExamplesBase
+@Test
+public class WorkingWithCharts extends DocsExamplesBase
 {
     @Test
     public void formatNumberOfDataLabel() throws Exception
@@ -100,7 +79,7 @@ class WorkingWithCharts extends DocsExamplesBase
         //ExStart:ChartSeriesCollection 
         ChartSeriesCollection seriesColl = chart.getSeries();
 
-        msConsole.writeLine(seriesColl.getCount());
+        System.out.println(seriesColl.getCount());
         //ExEnd:ChartSeriesCollection 
 
         // Delete default generated series.
@@ -146,13 +125,13 @@ class WorkingWithCharts extends DocsExamplesBase
         Shape shape = builder.insertChart(ChartType.AREA, 432.0, 252.0);
 
         Chart chart = shape.getChart();
-        chart.getSeries().addInternal("Aspose Series 1", new DateTime[]
+        chart.getSeries().add("Aspose Series 1", new Date[]
             {
-                new DateTime(2002, 5, 1),
-                new DateTime(2002, 6, 1),
-                new DateTime(2002, 7, 1),
-                new DateTime(2002, 8, 1),
-                new DateTime(2002, 9, 1)
+                new Date(2002, 5, 1),
+                new Date(2002, 6, 1),
+                new Date(2002, 7, 1),
+                new Date(2002, 8, 1),
+                new Date(2002, 9, 1)
             }, 
             new double[] { 32.0, 32.0, 28.0, 12.0, 15.0 });
         
@@ -207,11 +186,11 @@ class WorkingWithCharts extends DocsExamplesBase
 
         chart.getSeries().clear();
 
-        chart.getSeries().addInternal("Aspose Series 1",
-            new DateTime[]
+        chart.getSeries().add("Aspose Series 1",
+            new Date[]
             {
-                new DateTime(2002, 1, 1), new DateTime(2002, 6, 1), new DateTime(2002, 7, 1),
-                new DateTime(2002, 8, 1), new DateTime(2002, 9, 1)
+                new Date(2002, 1, 1), new Date(2002, 6, 1), new Date(2002, 7, 1),
+                new Date(2002, 8, 1), new Date(2002, 9, 1)
             },
             new double[] { 640.0, 320.0, 280.0, 120.0, 150.0 });
 
@@ -250,17 +229,17 @@ class WorkingWithCharts extends DocsExamplesBase
 
         chart.getSeries().clear();
 
-        chart.getSeries().addInternal("Aspose Series 1",
-            new DateTime[]
+        chart.getSeries().add("Aspose Series 1",
+            new Date[]
             {
-                new DateTime(2017, 11, 6), new DateTime(2017, 11, 9), new DateTime(2017, 11, 15),
-                new DateTime(2017, 11, 21), new DateTime(2017, 11, 25), new DateTime(2017, 11, 29)
+                new Date(2017, 11, 6), new Date(2017, 11, 9), new Date(2017, 11, 15),
+                new Date(2017, 11, 21), new Date(2017, 11, 25), new Date(2017, 11, 29)
             },
             new double[] { 1.2, 0.3, 2.1, 2.9, 4.2, 5.3 });
 
         ChartAxis xAxis = chart.getAxisX();
-        xAxis.getScaling().setMinimum(new AxisBound(new DateTime(2017, 11, 5).toOADate()));
-        xAxis.getScaling().setMaximum(new AxisBound(new DateTime(2017, 12, 3).toOADate()));
+        xAxis.getScaling().setMinimum(new AxisBound(new Date(2017, 11, 5)));
+        xAxis.getScaling().setMaximum(new AxisBound(new Date(2017, 12, 3)));
 
         // Set major units to a week and minor units to a day.
         xAxis.setMajorUnit(7.0);

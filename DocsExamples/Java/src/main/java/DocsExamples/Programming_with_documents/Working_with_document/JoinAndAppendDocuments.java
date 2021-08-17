@@ -1,31 +1,14 @@
-package DocsExamples.Programming_with_Documents.Working_with_Document;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Programming_with_documents.Working_with_document;
 
 import DocsExamples.DocsExamplesBase;
+import com.aspose.words.*;
 import org.testng.annotations.Test;
-import com.aspose.words.Document;
-import com.aspose.words.ImportFormatMode;
-import com.aspose.words.Section;
-import com.aspose.words.Node;
-import com.aspose.words.ImportFormatOptions;
-import com.aspose.words.DocumentBuilder;
-import com.aspose.words.NodeType;
-import com.aspose.words.FieldStart;
-import com.aspose.words.FieldType;
-import com.aspose.words.Field;
-import com.aspose.ms.System.Text.msStringBuilder;
-import com.aspose.words.SectionStart;
-import com.aspose.words.Paragraph;
+
+import java.text.MessageFormat;
 import java.util.HashMap;
-import com.aspose.words.List;
-import com.aspose.ms.System.Collections.msDictionary;
-import com.aspose.words.BreakType;
-import com.aspose.words.NodeImporter;
-import com.aspose.words.ParagraphCollection;
 
-
-class JoinAndAppendDocuments extends DocsExamplesBase
+@Test
+public class JoinAndAppendDocuments extends DocsExamplesBase
 {
     @Test
     public void simpleAppendDocument() throws Exception
@@ -48,7 +31,7 @@ class JoinAndAppendDocuments extends DocsExamplesBase
         
         // Loop through all sections in the source document.
         // Section nodes are immediate children of the Document node so we can just enumerate the Document.
-        for (Section srcSection : (Iterable<Section>) srcDoc)
+        for (Section srcSection : srcDoc.getSections())
         {
             // Because we are copying a section from one document to another, 
             // it is required to import the Section node into the destination document.
@@ -138,7 +121,7 @@ class JoinAndAppendDocuments extends DocsExamplesBase
 
         DocumentBuilder builder = new DocumentBuilder(doc);
         
-        for (Section section : (Iterable<Section>) doc.getSections())
+        for (Section section : doc.getSections())
         {
             // This section has its page numbering restarted to treat this as the start of a sub-document.
             // Any PAGENUM fields in this inner document must be converted to special PAGEREF fields to correct numbering.
@@ -182,8 +165,10 @@ class JoinAndAppendDocuments extends DocsExamplesBase
             // or the last section is encountered.
             Node[] nodes = section.getChildNodes(NodeType.FIELD_START, true).toArray();
             
-            for (FieldStart fieldStart : nodes)
+            for (Node fieldStartNode : nodes)
             {
+                FieldStart fieldStart = (FieldStart) fieldStartNode;
+
                 if (fieldStart.getFieldType() == FieldType.FIELD_NUM_PAGES)
                 {
                     String fieldCode = getFieldCode(fieldStart);
@@ -202,7 +187,7 @@ class JoinAndAppendDocuments extends DocsExamplesBase
                     builder.moveTo(previousNode);
                     
                     Field newField = builder.insertField(
-                        $" {pageRefFieldName} {bookmarkPrefix}{subDocumentCount} {fieldSwitches} ");
+                            MessageFormat.format(" {0} {1}{2} {3} ", PAGE_REF_FIELD_NAME, BOOKMARK_PREFIX, subDocumentCount, fieldSwitches));
 
                     // The field will be inserted before the referenced node. Move the node before the field instead.
                     previousNode.getParentNode().insertBefore(previousNode, newField.getStart());
@@ -243,7 +228,7 @@ class JoinAndAppendDocuments extends DocsExamplesBase
         {
             // Use text only of Run nodes to avoid duplication.
             if (node.getNodeType() == NodeType.RUN)
-                msStringBuilder.append(builder, node.getText());
+                builder.append(node.getText());
         }
 
         return builder.toString();
@@ -405,7 +390,7 @@ class JoinAndAppendDocuments extends DocsExamplesBase
                     {
                         // Add a copy of this list to the document and store it for later reference.
                         currentList = srcDoc.getLists().addCopy(para.getListFormat().getList());
-                        msDictionary.add(newLists, listId, currentList);
+                        newLists.put(listId, currentList);
                     }
 
                     // Set the list of this paragraph to the copied list.

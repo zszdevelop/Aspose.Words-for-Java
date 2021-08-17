@@ -1,21 +1,13 @@
-package DocsExamples.Programming_with_Documents.Split_Documents;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Programming_with_documents.Split_documents;
 
 import DocsExamples.DocsExamplesBase;
+import com.aspose.words.*;
 import org.testng.annotations.Test;
-import com.aspose.words.Document;
-import com.aspose.words.HtmlSaveOptions;
-import com.aspose.words.DocumentSplitCriteria;
-import com.aspose.words.Section;
-import com.aspose.ms.System.IO.Directory;
-import com.aspose.ms.System.IO.SearchOption;
-import com.aspose.words.DocumentBuilder;
-import com.aspose.ms.System.msString;
-import com.aspose.words.ImportFormatMode;
 
+import java.text.MessageFormat;
 
-class SplitDocument extends DocsExamplesBase
+@Test
+public class SplitDocument extends DocsExamplesBase
 {
     @Test
     public void byHeadingsHtml() throws Exception
@@ -64,7 +56,7 @@ class SplitDocument extends DocsExamplesBase
             newDoc.getSections().add(newSection);
 
             // Save each section as a separate document.
-            newDoc.save(getArtifactsDir() + $"SplitDocument.BySections_{i}.docx");
+            newDoc.save(getArtifactsDir() + MessageFormat.format("SplitDocument.BySections_{0}.docx", i));
         }
         //ExEnd:SplitDocumentBySections
     }
@@ -81,7 +73,7 @@ class SplitDocument extends DocsExamplesBase
         {
             // Save each page as a separate document.
             Document extractedPage = doc.extractPages(page, 1);
-            extractedPage.save(getArtifactsDir() + $"SplitDocument.PageByPage_{page + 1}.docx");
+            extractedPage.save(getArtifactsDir() + MessageFormat.format("SplitDocument.PageByPage_{0}.docx", page + 1));
         }
         //ExEnd:SplitDocumentPageByPage
 
@@ -131,5 +123,3 @@ class SplitDocument extends DocsExamplesBase
         //ExEnd:SplitDocumentByPageRange
     }
 }
-
-

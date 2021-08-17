@@ -1,23 +1,13 @@
-package DocsExamples.Programming_with_Documents.Working_with_Document;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Programming_with_documents.Working_with_document;
 
 import DocsExamples.DocsExamplesBase;
+import com.aspose.words.*;
 import org.testng.annotations.Test;
-import com.aspose.words.Document;
-import com.aspose.words.MsWordVersion;
-import com.aspose.ms.System.msConsole;
-import com.aspose.words.CleanupOptions;
-import com.aspose.words.ViewType;
-import com.aspose.words.SectionLayoutMode;
-import com.aspose.words.LoadOptions;
-import com.aspose.words.EditingLanguage;
-import com.aspose.words.DocumentBuilder;
-import com.aspose.words.Orientation;
-import com.aspose.words.PaperSize;
 
+import java.text.MessageFormat;
 
-class WorkingWithDocumentOptionsAndSettings extends DocsExamplesBase
+@Test
+public class WorkingWithDocumentOptionsAndSettings extends DocsExamplesBase
 {
     @Test
     public void optimizeForMsWord() throws Exception
@@ -53,15 +43,15 @@ class WorkingWithDocumentOptionsAndSettings extends DocsExamplesBase
         // Combined with the built-in styles, the document now has eight styles.
         // A custom style is marked as "used" while there is any text within the document
         // formatted in that style. This means that the 4 styles we added are currently unused.
-        System.out.println("Count of styles before Cleanup: {doc.Styles.Count}\n" +
-                              $"Count of lists before Cleanup: {doc.Lists.Count}");
+        System.out.println(MessageFormat.format("Count of styles before Cleanup: {0}\n", doc.getStyles().getCount()) +
+                              MessageFormat.format("Count of lists before Cleanup: {0}", doc.getLists().getCount()));
 
         // Cleans unused styles and lists from the document depending on given CleanupOptions. 
         CleanupOptions cleanupOptions = new CleanupOptions(); { cleanupOptions.setUnusedLists(false); cleanupOptions.setUnusedStyles(true); }
         doc.cleanup(cleanupOptions);
 
-        System.out.println("Count of styles after Cleanup was decreased: {doc.Styles.Count}\n" +
-                              $"Count of lists after Cleanup is the same: {doc.Lists.Count}");
+        System.out.println(MessageFormat.format("Count of styles after Cleanup was decreased: {0}\n", doc.getStyles().getCount()) +
+                              MessageFormat.format("Count of lists after Cleanup is the same: {0}", doc.getLists().getCount()));
 
         doc.save(getArtifactsDir() + "WorkingWithDocumentOptionsAndSettings.CleanupUnusedStylesAndLists.docx");
         //ExEnd:CleanupUnusedStylesandLists
@@ -74,14 +64,14 @@ class WorkingWithDocumentOptionsAndSettings extends DocsExamplesBase
         Document doc = new Document(getMyDir() + "Document.docx");
 
         // Count of styles before Cleanup.
-        msConsole.writeLine(doc.getStyles().getCount());
+        System.out.println(doc.getStyles().getCount());
 
         // Cleans duplicate styles from the document.
         CleanupOptions options = new CleanupOptions(); { options.setDuplicateStyle(true); }
         doc.cleanup(options);
 
         // Count of styles after Cleanup was decreased.
-        msConsole.writeLine(doc.getStyles().getCount());
+        System.out.println(doc.getStyles().getCount());
 
         doc.save(getArtifactsDir() + "WorkingWithDocumentOptionsAndSettings.CleanupDuplicateStyle.docx");
         //ExEnd:CleanupDuplicateStyle

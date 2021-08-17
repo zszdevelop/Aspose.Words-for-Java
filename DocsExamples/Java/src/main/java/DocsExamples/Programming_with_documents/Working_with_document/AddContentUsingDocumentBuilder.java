@@ -1,49 +1,18 @@
-package DocsExamples.Programming_with_Documents.Working_with_Document;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Programming_with_documents.Working_with_document;
 
 import DocsExamples.DocsExamplesBase;
-import org.testng.annotations.Test;
-import com.aspose.words.Document;
-import com.aspose.words.DocumentBuilder;
-import com.aspose.words.Table;
-import com.aspose.words.AutoFitBehavior;
-import com.aspose.words.CellVerticalAlignment;
-import com.aspose.words.HeightRule;
-import com.aspose.words.TextOrientation;
-import com.aspose.words.Shape;
-import com.aspose.words.HorizontalRuleFormat;
-import com.aspose.words.HorizontalRuleAlignment;
-import java.awt.Color;
-import com.aspose.words.BreakType;
-import com.aspose.words.TextFormFieldType;
-import com.aspose.words.Underline;
-import com.aspose.words.StyleIdentifier;
-import com.aspose.words.RelativeHorizontalPosition;
-import com.aspose.words.RelativeVerticalPosition;
-import com.aspose.words.WrapType;
 import com.aspose.words.Font;
-import com.aspose.words.ParagraphFormat;
-import com.aspose.words.ParagraphAlignment;
-import com.aspose.words.FindReplaceOptions;
-import com.aspose.ms.System.Drawing.msColor;
-import com.aspose.ms.System.Text.RegularExpressions.Regex;
-import com.aspose.words.IReplacingCallback;
-import com.aspose.words.ReplaceAction;
-import com.aspose.words.ReplacingArgs;
-import com.aspose.ms.System.msString;
-import com.aspose.words.Node;
-import com.aspose.words.Paragraph;
-import com.aspose.ms.System.msConsole;
+import com.aspose.words.Shape;
+import com.aspose.words.*;
 import org.testng.Assert;
-import com.aspose.words.NodeType;
-import com.aspose.words.Section;
-import com.aspose.words.ParagraphCollection;
-import com.aspose.words.HeaderFooterType;
-import com.aspose.words.Field;
+import org.testng.annotations.Test;
 
+import java.awt.*;
+import java.text.MessageFormat;
+import java.util.regex.Pattern;
 
-class AddContentUsingDocumentBuilder extends DocsExamplesBase
+@Test
+public class AddContentUsingDocumentBuilder extends DocsExamplesBase
 {
     @Test
     public void documentBuilderInsertBookmark() throws Exception
@@ -356,10 +325,10 @@ class AddContentUsingDocumentBuilder extends DocsExamplesBase
         Document doc = new Document();
 
         FindReplaceOptions options = new FindReplaceOptions();
-        options.getApplyFont().setHighlightColor(msColor.getDarkOrange());
+        options.getApplyFont().setHighlightColor(Color.ORANGE);
         options.setReplacingCallback(new InsertTCFieldHandler("Chapter 1", "\\l 1"));
 
-        doc.getRange().replaceInternal(new Regex("The Beginning"), "", options);
+        doc.getRange().replace(Pattern.compile("The Beginning"), "", options);
         //ExEnd:InsertTCFieldsAtText
     }
 
@@ -386,9 +355,9 @@ class AddContentUsingDocumentBuilder extends DocsExamplesBase
 
             // If the user-specified text to be used in the field as display text, then use that,
             // otherwise use the match string as the display text.
-            String insertText = !msString.isNullOrEmpty(mFieldText) ? mFieldText : args.getMatchInternal().getValue();
+            String insertText = !mFieldText.isEmpty() ? mFieldText : args.getMatch().group();
 
-            builder.insertField($"TC \"{insertText}\" {mFieldSwitches}");
+            builder.insertField(MessageFormat.format("TC \"{0}\" {1}", insertText, mFieldSwitches));
 
             return ReplaceAction.SKIP;
         }

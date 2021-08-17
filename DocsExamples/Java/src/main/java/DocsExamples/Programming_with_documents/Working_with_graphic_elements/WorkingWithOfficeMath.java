@@ -1,6 +1,4 @@
-package DocsExamples.Programming_with_Documents.Working_with_Graphic_Elements;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Programming_with_documents.Working_with_graphic_elements;
 
 import DocsExamples.DocsExamplesBase;
 import org.testng.annotations.Test;
@@ -10,8 +8,8 @@ import com.aspose.words.NodeType;
 import com.aspose.words.OfficeMathDisplayType;
 import com.aspose.words.OfficeMathJustification;
 
-
-class WorkingWithOfficeMath extends DocsExamplesBase
+@Test
+public class WorkingWithOfficeMath extends DocsExamplesBase
 {
     @Test
     public void mathEquations() throws Exception

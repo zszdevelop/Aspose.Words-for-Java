@@ -1,16 +1,12 @@
 package DocsExamples.File_formats_and_conversions.Complex_examples_and_helpers;
 
-// ********* THIS FILE IS AUTO PORTED *********
-
 import DocsExamples.DocsExamplesBase;
-import org.testng.annotations.Test;
 import com.aspose.words.Document;
-import com.aspose.ms.System.IO.MemoryStream;
 import com.aspose.words.SaveFormat;
-import com.aspose.ms.System.IO.Path;
 import com.aspose.words.net.System.Data.DataTable;
+import org.testng.annotations.Test;
 
-
+@Test
 public class WorkingWithDocumentInDatabase extends DocsExamplesBase
 {
     @Test (enabled = false, description = "Uses Microsoft.Jet.OLEDB.4.0")

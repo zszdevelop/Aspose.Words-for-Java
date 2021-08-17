@@ -1,41 +1,20 @@
-package DocsExamples.Programming_with_Documents.Split_Documents;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Programming_with_documents.Split_documents;
 
 import DocsExamples.DocsExamplesBase;
+import com.aspose.words.*;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang.StringUtils;
 import org.testng.annotations.Test;
-import com.aspose.ms.System.IO.Path;
-import com.aspose.ms.System.msConsole;
-import com.aspose.words.Document;
+
+import java.text.MessageFormat;
 import java.util.ArrayList;
-import com.aspose.ms.System.IO.Directory;
-import com.aspose.ms.System.IO.SearchOption;
-import com.aspose.words.Node;
-import com.aspose.words.NodeType;
-import java.util.Map;
-import java.util.HashMap;
-import com.aspose.words.LayoutCollector;
-import com.aspose.words.Paragraph;
-import com.aspose.ms.System.Collections.msDictionary;
-import com.aspose.words.Run;
-import com.aspose.ms.System.msString;
-import com.aspose.words.DocumentVisitor;
-import com.aspose.words.VisitorAction;
-import com.aspose.words.Table;
-import com.aspose.words.Row;
-import com.aspose.words.Cell;
-import com.aspose.words.StructuredDocumentTag;
-import com.aspose.words.SmartTag;
-import com.aspose.words.Section;
-import com.aspose.words.HeaderFooterCollection;
-import com.aspose.words.HeaderFooter;
-import com.aspose.words.SectionStart;
-import com.aspose.words.CompositeNode;
 import java.util.Collections;
-import com.aspose.words.Body;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Stream;
 
-
-class PageSplitter extends DocsExamplesBase
+@Test
+public class PageSplitter extends DocsExamplesBase
 {
     @Test
     public void splitDocuments() throws Exception
@@ -45,8 +24,8 @@ class PageSplitter extends DocsExamplesBase
 
     public void splitDocumentToPages(String docName) throws Exception
     {
-        String fileName = Path.getFileNameWithoutExtension(docName);
-        String extensionName = Path.getExtension(docName);
+        String fileName = FilenameUtils.removeExtension(docName);
+        String extensionName = FilenameUtils.getExtension(docName);
 
         System.out.println("Processing document: " + fileName + extensionName);
 
@@ -59,8 +38,7 @@ class PageSplitter extends DocsExamplesBase
         for (int page = 1; page <= doc.getPageCount(); page++)
         {
             Document pageDoc = splitter.getDocumentOfPage(page);
-            pageDoc.save(Path.combine(getArtifactsDir(),
-                $"{fileName} - page{page} Out{extensionName}"));
+            pageDoc.save(getArtifactsDir()+ MessageFormat.format("{0} - page{1} Out{2}", fileName, page, extensionName));
         }
     }
 
@@ -95,11 +73,6 @@ class DocumentPageSplitter
     }
 
     /// <summary>
-    /// Gets the document this instance works with.
-    /// </summary>
-    private Document Document => private pageNumberFinder.DocumentpageNumberFinder;
-
-    /// <summary>
     /// Gets the document of a page.
     /// </summary>
     /// <param name="pageIndex">
@@ -108,8 +81,7 @@ class DocumentPageSplitter
     /// <returns>
     /// The <see cref="Document"/>.
     /// </returns>
-    public Document getDocumentOfPage(int pageIndex)
-    {
+    public Document getDocumentOfPage(int pageIndex) throws Exception {
         return getDocumentOfPageRange(pageIndex, pageIndex);
     }
 
@@ -125,11 +97,9 @@ class DocumentPageSplitter
     /// <returns>
     /// The <see cref="Document"/>.
     /// </returns>
-    public Document getDocumentOfPageRange(int startIndex, int endIndex)
-    {
-        Document result = (Document) Document.deepClone(false);
-        for (Node section : pageNumberFinder.RetrieveAllNodesOnPages(startIndex, endIndex,
-            NodeType.SECTION) !!Autoporter error: Undefined expression type )
+    public Document getDocumentOfPageRange(int startIndex, int endIndex) throws Exception {
+        Document result = (Document) pageNumberFinder.Document.deepClone(false);
+        for (Node section : pageNumberFinder.retrieveAllNodesOnPages(startIndex, endIndex, NodeType.SECTION))
         {
             result.appendChild(result.importNode(section, true));
         }
@@ -162,11 +132,6 @@ public class PageNumberFinder
     }
 
     /// <summary>
-    /// Gets the document this instance works with.
-    /// </summary>
-    public Document Document => private collector.Documentcollector;
-
-    /// <summary>
     /// Retrieves 1-based index of a page that the node begins on.
     /// </summary>
     /// <param name="node">
@@ -175,11 +140,10 @@ public class PageNumberFinder
     /// <returns>
     /// Page index.
     /// </returns>
-    public int getPage(Node node)
-    {
+    public int getPage(Node node) throws Exception {
         return nodeStartPageLookup.containsKey(node)
             ? nodeStartPageLookup.get(node)
-            : collector.GetStartPageIndex(node);
+            : collector.getStartPageIndex(node);
     }
 
     /// <summary>
@@ -191,11 +155,10 @@ public class PageNumberFinder
     /// <returns>
     /// Page index.
     /// </returns>
-    public int getPageEnd(Node node)
-    {
+    public int getPageEnd(Node node) throws Exception {
         return nodeEndPageLookup.containsKey(node)
             ? nodeEndPageLookup.get(node)
-            : collector.GetEndPageIndex(node);
+            : collector.getEndPageIndex(node);
     }
 
     /// <summary>
@@ -207,8 +170,7 @@ public class PageNumberFinder
     /// <returns>
     /// Page index.
     /// </returns>
-    public int pageSpan(Node node)
-    {
+    public int pageSpan(Node node) throws Exception {
         return getPageEnd(node) - getPage(node) + 1;
     }
 
@@ -229,19 +191,19 @@ public class PageNumberFinder
     /// </returns>
     public ArrayList<Node> retrieveAllNodesOnPages(int startPage, int endPage, /*NodeType*/int nodeType) throws Exception
     {
-        if (startPage < 1 || startPage > Document.getPageCount())
+        if (startPage < 1 || startPage > collector.getDocument().getPageCount())
         {
             throw new IllegalStateException("'startPage' is out of range");
         }
 
-        if (endPage < 1 || endPage > Document.getPageCount() || endPage < startPage)
+        if (endPage < 1 || endPage > collector.getDocument().getPageCount() || endPage < startPage)
         {
             throw new IllegalStateException("'endPage' is out of range");
         }
 
         checkPageListsPopulated();
 
-        ArrayList<Node> pageNodes = new ArrayList<Node>();
+        ArrayList<Node> pageNodes = new ArrayList<>();
         for (int page = startPage; page <= endPage; page++)
         {
             // Some pages can be empty.
@@ -270,7 +232,7 @@ public class PageNumberFinder
     /// </summary>
     public void splitNodesAcrossPages() throws Exception
     {
-        for (Paragraph paragraph : (Iterable<Paragraph>) Document.getChildNodes(NodeType.PARAGRAPH, true))
+        for (Paragraph paragraph : (Iterable<Paragraph>) collector.getDocument().getChildNodes(NodeType.PARAGRAPH, true))
         {
             if (getPage(paragraph) != getPageEnd(paragraph))
             {
@@ -281,7 +243,7 @@ public class PageNumberFinder
         clearCollector();
 
         // Visit any composites which are possibly split across pages and split them into separate nodes.
-        Document.accept(new SectionSplitter(this));
+        collector.getDocument().accept(new SectionSplitter(this));
     }
 
     /// <summary>
@@ -314,8 +276,7 @@ public class PageNumberFinder
         return node.getNodeType() == NodeType.HEADER_FOOTER || node.getAncestor(NodeType.HEADER_FOOTER) != null;
     }
 
-    private void checkPageListsPopulated()
-    {
+    private void checkPageListsPopulated() throws Exception {
         if (reversePageLookup != null)
         {
             return;
@@ -324,7 +285,7 @@ public class PageNumberFinder
         reversePageLookup = new HashMap<Integer, ArrayList<Node>>();
 
         // Add each node to a list that represent the nodes found on each page.
-        for (Node node : (Iterable<Node>) Document.getChildNodes(NodeType.ANY, true))
+        for (Node node : (Iterable<Node>) collector.getDocument().getChildNodes(NodeType.ANY, true))
         {
             // Headers/Footers follow sections and are not split by themselves.
             if (isHeaderFooterType(node))
@@ -338,7 +299,7 @@ public class PageNumberFinder
             {
                 if (!reversePageLookup.containsKey(page))
                 {
-                    msDictionary.add(reversePageLookup, page, new ArrayList<Node>());
+                    reversePageLookup.put(page, new ArrayList<Node>());
                 }
 
                 reversePageLookup.get(page).add(node);
@@ -346,9 +307,8 @@ public class PageNumberFinder
         }
     }
 
-    private void splitRunsByWords(Paragraph paragraph)
-    {
-        for (Run run : (Iterable<Run>) paragraph.getRuns())
+    private void splitRunsByWords(Paragraph paragraph) throws Exception {
+        for (Run run : paragraph.getRuns())
         {
             if (getPage(run) == getPageEnd(run))
             {
@@ -361,7 +321,7 @@ public class PageNumberFinder
 
     private void splitRunByWords(Run run)
     {
-        Iterable<String> words = msString.split(run.getText(), ' ').Reverse();
+        String[] words = reverseWord(run.getText());
 
         for (String word : words)
         {
@@ -371,6 +331,19 @@ public class PageNumberFinder
                 splitRun(run, run.getText().length() - word.length() - 1);
             }
         }
+    }
+
+    private static String[] reverseWord(String str) {
+        String words[] = str.split(" ");
+        String reverseWord = "";
+
+        for (String w : words) {
+            StringBuilder sb = new StringBuilder(w);
+            sb.reverse();
+            reverseWord += sb.toString() + " ";
+        }
+
+        return reverseWord.split(" ");
     }
 
     /// <summary>
@@ -387,8 +360,8 @@ public class PageNumberFinder
 
     private void clearCollector() throws Exception
     {
-        collector.Clear();
-        Document.updatePageLayout();
+        collector.clear();
+        collector.getDocument().updatePageLayout();
 
         nodeStartPageLookup.clear();
         nodeEndPageLookup.clear();
@@ -412,45 +385,38 @@ class PageNumberFinderFactory
 /// </summary>
 class SectionSplitter extends DocumentVisitor
 {
-    private /*final*/ PageNumberFinder pageNumberFinder;
+    private PageNumberFinder pageNumberFinder;
 
     public SectionSplitter(PageNumberFinder pageNumberFinder)
     {
         this.pageNumberFinder = pageNumberFinder;
     }
 
-    public /*override*/ /*VisitorAction*/int visitParagraphStart(Paragraph paragraph)
-    {
+    public int visitParagraphStart(Paragraph paragraph) throws Exception {
         return continueIfCompositeAcrossPageElseSkip(paragraph);
     }
 
-    public /*override*/ /*VisitorAction*/int visitTableStart(Table table)
-    {
+    public int visitTableStart(Table table) throws Exception {
         return continueIfCompositeAcrossPageElseSkip(table);
     }
 
-    public /*override*/ /*VisitorAction*/int visitRowStart(Row row)
-    {
+    public int visitRowStart(Row row) throws Exception {
         return continueIfCompositeAcrossPageElseSkip(row);
     }
 
-    public /*override*/ /*VisitorAction*/int visitCellStart(Cell cell)
-    {
+    public int visitCellStart(Cell cell) throws Exception {
         return continueIfCompositeAcrossPageElseSkip(cell);
     }
 
-    public /*override*/ /*VisitorAction*/int visitStructuredDocumentTagStart(StructuredDocumentTag sdt)
-    {
+    public int visitStructuredDocumentTagStart(StructuredDocumentTag sdt) throws Exception {
         return continueIfCompositeAcrossPageElseSkip(sdt);
     }
 
-    public /*override*/ /*VisitorAction*/int visitSmartTagStart(SmartTag smartTag)
-    {
+    public int visitSmartTagStart(SmartTag smartTag) throws Exception {
         return continueIfCompositeAcrossPageElseSkip(smartTag);
     }
 
-    public /*override*/ /*VisitorAction*/int visitSectionStart(Section section)
-    {
+    public int visitSectionStart(Section section) throws Exception {
         Section previousSection = (Section) section.getPreviousSibling();
 
         // If there is a previous section, attempt to copy any linked header footers.
@@ -479,38 +445,32 @@ class SectionSplitter extends DocumentVisitor
         return continueIfCompositeAcrossPageElseSkip(section);
     }
 
-    public /*override*/ /*VisitorAction*/int visitSmartTagEnd(SmartTag smartTag)
-    {
+    public int visitSmartTagEnd(SmartTag smartTag) throws Exception {
         splitComposite(smartTag);
         return VisitorAction.CONTINUE;
     }
 
-    public /*override*/ /*VisitorAction*/int visitStructuredDocumentTagEnd(StructuredDocumentTag sdt)
-    {
+    public int visitStructuredDocumentTagEnd(StructuredDocumentTag sdt) throws Exception {
         splitComposite(sdt);
         return VisitorAction.CONTINUE;
     }
 
-    public /*override*/ /*VisitorAction*/int visitCellEnd(Cell cell)
-    {
+    public int visitCellEnd(Cell cell) throws Exception {
         splitComposite(cell);
         return VisitorAction.CONTINUE;
     }
 
-    public /*override*/ /*VisitorAction*/int visitRowEnd(Row row)
-    {
+    public int visitRowEnd(Row row) throws Exception {
         splitComposite(row);
         return VisitorAction.CONTINUE;
     }
 
-    public /*override*/ /*VisitorAction*/int visitTableEnd(Table table)
-    {
+    public int visitTableEnd(Table table) throws Exception {
         splitComposite(table);
         return VisitorAction.CONTINUE;
     }
 
-    public /*override*/ /*VisitorAction*/int visitParagraphEnd(Paragraph paragraph)
-    {
+    public int visitParagraphEnd(Paragraph paragraph) throws Exception {
         // If the paragraph contains only section break, add fake run into.
         if (paragraph.isEndOfSection() && paragraph.getChildNodes().getCount() == 1 &&
             "\f".equals(paragraph.getChildNodes().get(0).getText()))
@@ -521,8 +481,9 @@ class SectionSplitter extends DocumentVisitor
             pageNumberFinder.addPageNumbersForNode(run, currentEndPageNum, currentEndPageNum);
         }
 
-        for (Paragraph clonePara : (Iterable<Paragraph>) splitComposite(paragraph))
+        for (Node cloneNode : splitComposite(paragraph))
         {
+            Paragraph clonePara = (Paragraph) cloneNode;
             // Remove list numbering from the cloned paragraph but leave the indent the same 
             // as the paragraph is supposed to be part of the item before.
             if (paragraph.isListItem())
@@ -543,10 +504,11 @@ class SectionSplitter extends DocumentVisitor
         return VisitorAction.CONTINUE;
     }
 
-    public /*override*/ /*VisitorAction*/int visitSectionEnd(Section section)
-    {
-        for (Section cloneSection : (Iterable<Section>) splitComposite(section))
+    public int visitSectionEnd(Section section) throws Exception {
+        for (Node cloneNode : splitComposite(section))
         {
+            Section cloneSection = (Section) cloneNode;
+
             cloneSection.getPageSetup().setSectionStart(SectionStart.NEW_PAGE);
             cloneSection.getPageSetup().setRestartPageNumbering(true);
             cloneSection.getPageSetup().setPageStartingNumber(section.getPageSetup().getPageStartingNumber() +
@@ -566,16 +528,14 @@ class SectionSplitter extends DocumentVisitor
         return VisitorAction.CONTINUE;
     }
 
-    private /*VisitorAction*/int continueIfCompositeAcrossPageElseSkip(CompositeNode composite)
-    {
+    private /*VisitorAction*/int continueIfCompositeAcrossPageElseSkip(CompositeNode composite) throws Exception {
         return pageNumberFinder.pageSpan(composite) > 1
             ? VisitorAction.CONTINUE
             : VisitorAction.SKIP_THIS_NODE;
     }
 
-    private ArrayList<Node> splitComposite(CompositeNode composite)
-    {
-        ArrayList<Node> splitNodes = new ArrayList<Node>();
+    private ArrayList<Node> splitComposite(CompositeNode composite) throws Exception {
+        ArrayList<Node> splitNodes = new ArrayList<>();
         for (Node splitNode : findChildSplitPositions(composite))
         {
             splitNodes.add(splitCompositeAtNode(composite, splitNode));
@@ -584,8 +544,7 @@ class SectionSplitter extends DocumentVisitor
         return splitNodes;
     }
 
-    private Iterable<Node> findChildSplitPositions(CompositeNode node)
-    {
+    private Iterable<Node> findChildSplitPositions(CompositeNode node) throws Exception {
         // A node may span across multiple pages, so a list of split positions is returned.
         // The split node is the first node on the next page.
         ArrayList<Node> splitList = new ArrayList<Node>();
@@ -623,8 +582,7 @@ class SectionSplitter extends DocumentVisitor
         return splitList;
     }
 
-    private CompositeNode splitCompositeAtNode(CompositeNode baseNode, Node targetNode)
-    {
+    private CompositeNode splitCompositeAtNode(CompositeNode baseNode, Node targetNode) throws Exception {
         CompositeNode cloneNode = (CompositeNode) baseNode.deepClone(false);
         Node node = targetNode;
         int currentPageNum = pageNumberFinder.getPage(baseNode);
@@ -709,9 +667,9 @@ class SplitPageBreakCorrector
             return;
         }
 
-        Body lastBody = section.getChildNodes().<Body>OfType().LastOrDefault();
+        Body lastBody = section.getChildNodes();
 
-        Run run = lastBody?.GetChildNodes(NodeType.Run, true).OfType<Run>()
+        Run run = lastBody.getChildNodes(NodeType.Run, true).OfType<Run>()
             .FirstOrDefault(p => p.Text.EndsWith(PageBreakStr));
 
         if (run != null)
@@ -751,7 +709,7 @@ class SplitPageBreakCorrector
         }
         else if (run.getText().endsWith(PAGE_BREAK_STR))
         {
-            run.setText(msString.trimEnd(run.getText(), PAGE_BREAK));
+            run.setText(StringUtils.stripEnd(run.getText(), String.valueOf(PAGE_BREAK)));
         }
 
         if (paragraph.getChildNodes().getCount() == 0)

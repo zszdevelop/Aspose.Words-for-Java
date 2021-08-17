@@ -1,27 +1,16 @@
-package DocsExamples.Programming_with_Documents.Protect_or_Encrypt_Document;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Programming_with_documents.Protect_or_encrypt_document;
 
 import DocsExamples.DocsExamplesBase;
+import com.aspose.words.*;
+import org.apache.commons.io.FileUtils;
 import org.testng.annotations.Test;
-import com.aspose.words.CertificateHolder;
-import com.aspose.words.DigitalSignatureUtil;
-import com.aspose.words.SignOptions;
-import com.aspose.words.Document;
-import com.aspose.words.DocumentBuilder;
-import com.aspose.words.SignatureLine;
-import com.aspose.words.SignatureLineOptions;
-import com.aspose.ms.System.IO.File;
-import com.aspose.words.Shape;
-import com.aspose.words.NodeType;
-import com.aspose.ms.System.Guid;
+
+import java.io.File;
 import java.util.Date;
-import com.aspose.ms.System.DateTime;
-import com.aspose.words.DigitalSignature;
-import com.aspose.ms.System.msConsole;
+import java.util.UUID;
 
-
-class WorkingWithDigitalSinatures extends DocsExamplesBase
+@Test
+public class WorkingWithDigitalSinatures extends DocsExamplesBase
 {
     @Test
     public void signDocument() throws Exception
@@ -60,8 +49,8 @@ class WorkingWithDigitalSinatures extends DocsExamplesBase
 
         SignOptions signOptions = new SignOptions();
         {
-            signOptions.setSignatureLineId(signatureLine.getIdInternal());
-            signOptions.setSignatureLineImage(File.readAllBytes(getImagesDir() + "Enhanced Windows MetaFile.emf"));
+            signOptions.setSignatureLineId(signatureLine.getId());
+            signOptions.setSignatureLineImage(FileUtils.readFileToByteArray(new File(getImagesDir() + "Enhanced Windows MetaFile.emf")));
         }
 
         CertificateHolder certHolder = CertificateHolder.create(getMyDir() + "morzal.pfx", "aw");
@@ -82,8 +71,8 @@ class WorkingWithDigitalSinatures extends DocsExamplesBase
 
         SignOptions signOptions = new SignOptions();
         {
-            signOptions.setSignatureLineId(signatureLine.getIdInternal());
-            signOptions.setSignatureLineImage(File.readAllBytes(getImagesDir() + "Enhanced Windows MetaFile.emf"));
+            signOptions.setSignatureLineId(signatureLine.getId());
+            signOptions.setSignatureLineImage(FileUtils.readFileToByteArray(new File(getImagesDir() + "Enhanced Windows MetaFile.emf")));
         }
 
         CertificateHolder certHolder = CertificateHolder.create(getMyDir() + "morzal.pfx", "aw");
@@ -104,7 +93,8 @@ class WorkingWithDigitalSinatures extends DocsExamplesBase
 
         SignOptions signOptions = new SignOptions();
         {
-            signOptions.setProviderId(signatureLine.getProviderIdInternal()); signOptions.setSignatureLineId(signatureLine.getIdInternal());
+            signOptions.setProviderId(signatureLine.getProviderId());
+            signOptions.setSignatureLineId(signatureLine.getId());
         }
 
         CertificateHolder certHolder = CertificateHolder.create(getMyDir() + "morzal.pfx", "aw");
@@ -133,14 +123,14 @@ class WorkingWithDigitalSinatures extends DocsExamplesBase
         }
 
         SignatureLine signatureLine = builder.insertSignatureLine(signatureLineOptions).getSignatureLine();
-        signatureLine.setProviderIdInternal(Guid.parse("CF5A7BB4-8F3C-4756-9DF6-BEF7F13259A2"));
+        signatureLine.setProviderId(UUID.fromString("CF5A7BB4-8F3C-4756-9DF6-BEF7F13259A2"));
         
         doc.save(getArtifactsDir() + "SignDocuments.SignatureLineProviderId.docx");
 
         SignOptions signOptions = new SignOptions();
         {
-            signOptions.setSignatureLineId(signatureLine.getIdInternal());
-            signOptions.setProviderId(signatureLine.getProviderIdInternal());
+            signOptions.setSignatureLineId(signatureLine.getId());
+            signOptions.setProviderId(signatureLine.getProviderId());
             signOptions.setComments("Document was signed by vderyushev");
             signOptions.setSignTime(new Date());
         }
@@ -164,10 +154,10 @@ class WorkingWithDigitalSinatures extends DocsExamplesBase
             System.out.println("Is valid: " + signature.isValid());
             // This property is available in MS Word documents only.
             System.out.println("Reason for signing: " + signature.getComments()); 
-            System.out.println("Time of signing: " + signature.getSignTimeInternal());
-            System.out.println("Subject name: " + signature.getCertificateHolder().getCertificateInternal().getSubjectName().Name);
-            System.out.println("Issuer name: " + signature.getCertificateHolder().getCertificateInternal().getIssuerName().Name);
-            msConsole.writeLine();
+            System.out.println("Time of signing: " + signature.getSignTime());
+            System.out.println("Subject name: " + signature.getSubjectName());
+            System.out.println("Issuer name: " + signature.getIssuerName());
+            System.out.println();
         }
         //ExEnd:AccessAndVerifySignature
     }

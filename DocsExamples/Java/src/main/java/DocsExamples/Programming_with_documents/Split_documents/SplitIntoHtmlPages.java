@@ -1,31 +1,15 @@
-package DocsExamples.Programming_with_Documents.Split_Documents;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Programming_with_documents.Split_documents;
 
 import DocsExamples.DocsExamplesBase;
-import org.testng.annotations.Test;
-import com.aspose.ms.System.IO.Path;
-import com.aspose.ms.System.IO.Directory;
-import com.aspose.words.Document;
-import java.util.ArrayList;
-import com.aspose.words.Paragraph;
-import com.aspose.words.NodeCollection;
-import com.aspose.words.NodeType;
-import com.aspose.words.StyleIdentifier;
-import com.aspose.words.DocumentBuilder;
-import com.aspose.words.Section;
-import com.aspose.words.BreakType;
-import com.aspose.words.ImportFormatMode;
-import com.aspose.words.HtmlSaveOptions;
-import com.aspose.words.ExportHeadersFootersMode;
-import com.aspose.words.IFieldMergingCallback;
-import com.aspose.words.FieldMergingArgs;
-import com.aspose.words.ImageFieldMergingArgs;
-import com.aspose.words.IMailMergeDataSource;
+import com.aspose.words.*;
 import com.aspose.words.ref.Ref;
+import org.testng.annotations.Test;
 
+import java.io.File;
+import java.util.ArrayList;
 
-class SplitIntoHtmlPages extends DocsExamplesBase
+@Test
+public class SplitIntoHtmlPages extends DocsExamplesBase
 {
     @Test
     public void htmlPages() throws Exception
@@ -33,8 +17,8 @@ class SplitIntoHtmlPages extends DocsExamplesBase
         String srcFileName = getMyDir() + "Footnotes and endnotes.docx";
         String tocTemplate = getMyDir() + "Table of content template.docx";
 
-        String outDir = Path.combine(getArtifactsDir(), "HtmlPages");
-        Directory.createDirectory(outDir);
+        String outDir = getArtifactsDir() + "HtmlPages";
+        new File(outDir).mkdir();
 
         WordToHtmlConverter w = new WordToHtmlConverter();
         w.execute(srcFileName, tocTemplate, outDir);
@@ -122,7 +106,7 @@ class WordToHtmlConverter
             if ("".equals(fileName))
                 fileName = "UNTITLED SECTION " + sectionIdx;
 
-            fileName = Path.combine(mDstDir, fileName + ".html");
+            fileName = mDstDir + fileName + ".html";
 
             // Use the text of the heading paragraph to generate the title for the TOC.
             String title = makeTopicTitle(paraText);
@@ -199,7 +183,7 @@ class WordToHtmlConverter
         tocDoc.getMailMerge().setFieldMergingCallback(new HandleTocMergeField());
         tocDoc.getMailMerge().executeWithRegions(new TocMailMergeDataSource(topics));
 
-        tocDoc.save(Path.combine(mDstDir, "contents.html"));
+        tocDoc.save(mDstDir + "contents.html");
     }
 
     private static class HandleTocMergeField implements IFieldMergingCallback
@@ -257,6 +241,11 @@ class TocMailMergeDataSource implements IMailMergeDataSource
         mIndex = -1;
     }
 
+    @Override
+    public String getTableName() throws Exception {
+        return "TOC";
+    }
+
     public boolean moveNext()
     {
         if (mIndex < mTopics.size() - 1)
@@ -281,13 +270,11 @@ class TocMailMergeDataSource implements IMailMergeDataSource
         return false;
     }
 
-    public String TableName => "TOC";
-
     public IMailMergeDataSource getChildDataSource(String tableName)
     {
         return null;
     }
 
-    private /*final*/ ArrayList<Topic> mTopics;
+    private ArrayList<Topic> mTopics;
     private int mIndex;
 }

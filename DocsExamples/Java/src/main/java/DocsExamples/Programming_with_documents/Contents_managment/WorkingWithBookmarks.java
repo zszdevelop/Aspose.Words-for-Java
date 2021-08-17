@@ -4,6 +4,8 @@ import DocsExamples.DocsExamplesBase;
 import com.aspose.words.*;
 import org.testng.annotations.Test;
 
+import java.text.MessageFormat;
+
 @Test
 public class WorkingWithBookmarks extends DocsExamplesBase
 {
@@ -71,12 +73,12 @@ public class WorkingWithBookmarks extends DocsExamplesBase
         //ExStart:BookmarkTableColumns
         for (Bookmark bookmark : doc.getRange().getBookmarks())
         {
-            System.out.println("Bookmark: {0}{1}",bookmark.getName(),bookmark.isColumn() ? " (Column)" : "");
+            System.out.println(MessageFormat.format("Bookmark: {0}{1}", bookmark.getName(), bookmark.isColumn() ? " (Column)" : ""));
 
             if (bookmark.isColumn())
             {
-                if (bookmark.getBookmarkStart().getAncestor(NodeType.ROW) instanceof Row row && bookmark.FirstColumn < row.Cells.Count)
-                    Console.WriteLine(row.Cells[bookmark.FirstColumn].GetText().TrimEnd(ControlChar.CellChar));
+                if (bookmark.getBookmarkStart().getAncestor(Row.class) instanceof Row row && bookmark.getFirstColumn() < row.getCells().toArray().length)
+                    System.out.println(row.getCells().get(bookmark.getFirstColumn()).getText().trim());
             }
         }
         //ExEnd:BookmarkTableColumns
@@ -265,8 +267,8 @@ public class WorkingWithBookmarks extends DocsExamplesBase
     {
         Bookmark bookmark = doc.getRange().getBookmarks().get(bookmarkName);
 
-        Row row = (Row) bookmark?.BookmarkStart.GetAncestor(typeof(Row));
-        row?.Remove();
+        Row row = (Row) bookmark.getBookmarkStart().getAncestor(Row.class);
+        row.remove();
     }
 }
 
