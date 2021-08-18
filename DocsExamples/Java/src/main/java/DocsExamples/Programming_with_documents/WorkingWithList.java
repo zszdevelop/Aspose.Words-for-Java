@@ -1,6 +1,4 @@
-package DocsExamples.Programming_with_Documents;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Programming_with_documents;
 
 import DocsExamples.DocsExamplesBase;
 import org.testng.annotations.Test;
@@ -12,10 +10,12 @@ import com.aspose.words.BreakType;
 import com.aspose.words.OoxmlSaveOptions;
 import com.aspose.words.OoxmlCompliance;
 import java.awt.Color;
+import java.text.MessageFormat;
+
 import com.aspose.words.ListLevelAlignment;
 
-
-class WorkingWithList extends DocsExamplesBase
+@Test
+public class WorkingWithList extends DocsExamplesBase
 {
     @Test
     public void restartListAtEachSection() throws Exception
@@ -33,7 +33,7 @@ class WorkingWithList extends DocsExamplesBase
 
         for (int i = 1; i < 45; i++)
         {
-            builder.writeln($"List Item {i}");
+            builder.writeln(MessageFormat.format("List Item {0}", i));
 
             if (i == 15)
                 builder.insertBreak(BreakType.SECTION_BREAK_NEW_PAGE);

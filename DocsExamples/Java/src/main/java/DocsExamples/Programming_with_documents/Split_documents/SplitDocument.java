@@ -2,9 +2,13 @@ package DocsExamples.Programming_with_documents.Split_documents;
 
 import DocsExamples.DocsExamplesBase;
 import com.aspose.words.*;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.testng.annotations.Test;
 
+import java.io.File;
 import java.text.MessageFormat;
+import java.util.Collection;
 
 @Test
 public class SplitDocument extends DocsExamplesBase
@@ -84,10 +88,11 @@ public class SplitDocument extends DocsExamplesBase
     private void mergeDocuments() throws Exception
     {
         // Find documents using for merge.
-        FileSystemInfo[] documentPaths = new DirectoryInfo(getArtifactsDir())
-            .GetFileSystemInfos("SplitDocument.PageByPage_*.docx").OrderBy(f => f.CreationTime).ToArray();
+        File directory = new File(getArtifactsDir());
+        Collection<File> documentPaths = FileUtils.listFiles(directory, new WildcardFileFilter("SplitDocument.PageByPage_*.docx"), null);
+
         String sourceDocumentPath =
-            Directory.getFiles(getArtifactsDir(), "SplitDocument.PageByPage_1.docx", SearchOption.TOP_DIRECTORY_ONLY)[0];
+                FileUtils.getFile(getArtifactsDir(), "SplitDocument.PageByPage_1.docx").getPath();
 
         // Open the first part of the resulting document.
         Document sourceDoc = new Document(sourceDocumentPath);
@@ -97,14 +102,14 @@ public class SplitDocument extends DocsExamplesBase
         DocumentBuilder mergedDocBuilder = new DocumentBuilder(mergedDoc);
 
         // Merge document parts one by one.
-        for (FileSystemInfo documentPath : documentPaths)
+        for (File documentPath : documentPaths)
         {
-            if (msString.equals(documentPath.getFullName(), sourceDocumentPath))
+            if (documentPath.getName().equals(sourceDocumentPath))
                 continue;
 
             mergedDocBuilder.moveToDocumentEnd();
             mergedDocBuilder.insertDocument(sourceDoc, ImportFormatMode.KEEP_SOURCE_FORMATTING);
-            sourceDoc = new Document(documentPath.getFullName());
+            sourceDoc = new Document(documentPath.getName());
         }
 
         mergedDoc.save(getArtifactsDir() + "SplitDocument.MergeDocuments.docx");

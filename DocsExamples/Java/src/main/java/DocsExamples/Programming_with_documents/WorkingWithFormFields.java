@@ -1,6 +1,4 @@
-package DocsExamples.Programming_with_Documents;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Programming_with_documents;
 
 import DocsExamples.DocsExamplesBase;
 import org.testng.annotations.Test;
@@ -11,8 +9,8 @@ import com.aspose.words.FieldType;
 import com.aspose.words.FormFieldCollection;
 import java.awt.Color;
 
-
-class WorkingWithFormFields extends DocsExamplesBase
+@Test
+public class WorkingWithFormFields extends DocsExamplesBase
 {
     @Test
     public void insertFormFields() throws Exception

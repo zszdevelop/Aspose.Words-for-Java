@@ -6,6 +6,14 @@ import com.aspose.words.SaveFormat;
 import com.aspose.words.net.System.Data.DataTable;
 import org.testng.annotations.Test;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.sql.*;
+import java.text.MessageFormat;
+
 @Test
 public class WorkingWithDocumentInDatabase extends DocsExamplesBase
 {
@@ -14,10 +22,9 @@ public class WorkingWithDocumentInDatabase extends DocsExamplesBase
     {
         Document doc = new Document(getMyDir() + "Document.docx");
         //ExStart:OpenDatabaseConnection 
-        String connString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + getDatabaseDir() + "Northwind.mdb";
-        
-        OleDbConnection connection = new OleDbConnection(connString);
-        connection.Open();
+        String connString = "jdbc:ucanaccess://" + getDatabaseDir() + "Northwind.mdb";
+
+        Connection connection = DriverManager.getConnection(connString, "Admin", "");
         //ExEnd:OpenDatabaseConnection
         
         //ExStart:OpenRetrieveAndDelete 
@@ -28,45 +35,37 @@ public class WorkingWithDocumentInDatabase extends DocsExamplesBase
 
         deleteFromDatabase("Document.docx", connection);
 
-        connection.Close();
+        connection.close();
         //ExEnd:OpenRetrieveAndDelete 
     }
 
     //ExStart:StoreToDatabase 
-    public void storeToDatabase(Document doc, OleDbConnection connection) throws Exception
-    {
-        MemoryStream stream = new MemoryStream();
+    public void storeToDatabase(Document doc, Connection connection) throws Exception {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
         doc.save(stream, SaveFormat.DOCX);
 
-        String fileName = Path.getFileName(doc.getOriginalFileName());
-        String commandString = "INSERT INTO Documents (Name, Data) VALUES('" + fileName + "', @Doc)";
-        
-        OleDbCommand command = new OleDbCommand(commandString, connection);
-        command.Parameters.AddWithValue("Doc", stream.toArray());
-        command.ExecuteNonQuery();
+        String fileName = Paths.get(doc.getOriginalFileName()).getFileName().toString();
+        Statement statement = connection.createStatement();
+        statement.executeQuery("INSERT INTO Documents (Name, Data) VALUES('" + fileName + "', @Doc)");
     }
     //ExEnd:StoreToDatabase
     
     //ExStart:ReadFromDatabase 
-    public Document readFromDatabase(String fileName, OleDbConnection connection) throws Exception
-    {
-        String commandString = "SELECT * FROM Documents WHERE Name='" + fileName + "'";
-        
-        OleDbCommand command = new OleDbCommand(commandString, connection);
-        OleDbDataAdapter adapter = new OleDbDataAdapter(command);
+    public Document readFromDatabase(String fileName, Connection connection) throws Exception {
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM Documents WHERE Name='" + fileName + "'");
 
-        DataTable dataTable = new DataTable();
-        adapter.Fill(dataTable);
+        DataTable dataTable = new DataTable(resultSet, "Documents");
 
         if (dataTable.getRows().getCount() == 0)
             throw new IllegalArgumentException(
-                $"Could not find any record matching the document \"{fileName}\" in the database.");
+                    MessageFormat.format("Could not find any record matching the document \"{0}\" in the database.", fileName));
 
         // The document is stored in byte form in the FileContent column.
         // Retrieve these bytes of the first matching record to a new buffer.
         byte[] buffer = (byte[]) dataTable.getRows().get(0).get("Data");
 
-        MemoryStream newStream = new MemoryStream(buffer);
+        ByteArrayInputStream newStream = new ByteArrayInputStream(buffer);
 
         Document doc = new Document(newStream);
 
@@ -75,12 +74,9 @@ public class WorkingWithDocumentInDatabase extends DocsExamplesBase
     //ExEnd:ReadFromDatabase
     
     //ExStart:DeleteFromDatabase 
-    public void deleteFromDatabase(String fileName, OleDbConnection connection)
-    {
-        String commandString = "DELETE * FROM Documents WHERE Name='" + fileName + "'";
-        
-        OleDbCommand command = new OleDbCommand(commandString, connection);
-        command.ExecuteNonQuery();
+    public void deleteFromDatabase(String fileName, Connection connection) throws SQLException {
+        Statement statement = connection.createStatement();
+        statement.executeQuery("DELETE * FROM Documents WHERE Name='" + fileName + "'");
     }
     //ExEnd:DeleteFromDatabase
 }

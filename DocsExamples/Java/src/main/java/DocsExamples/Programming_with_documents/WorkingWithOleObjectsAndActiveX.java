@@ -1,24 +1,16 @@
-package DocsExamples.Programming_with_Documents;
+package DocsExamples.Programming_with_documents;
 
-// ********* THIS FILE IS AUTO PORTED *********
-
-import com.aspose.ms.System.msString;
 import DocsExamples.DocsExamplesBase;
+import com.aspose.words.*;
+import org.apache.commons.io.FileUtils;
 import org.testng.annotations.Test;
-import com.aspose.words.Document;
-import com.aspose.words.DocumentBuilder;
-import com.aspose.ms.System.IO.File;
-import com.aspose.ms.System.IO.Stream;
-import com.aspose.ms.System.IO.MemoryStream;
-import com.aspose.words.Shape;
-import com.aspose.words.OlePackage;
-import com.aspose.words.NodeType;
-import com.aspose.words.OleControl;
-import com.aspose.words.Forms2OleControl;
-import com.aspose.ms.System.msConsole;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 
-class WorkingWithOleObjectsAndActiveX extends DocsExamplesBase
+@Test
+public class WorkingWithOleObjectsAndActiveX extends DocsExamplesBase
 {
     @Test
     public void insertOleObject() throws Exception
@@ -27,7 +19,7 @@ class WorkingWithOleObjectsAndActiveX extends DocsExamplesBase
         Document doc = new Document();
         DocumentBuilder builder = new DocumentBuilder(doc);
 
-        builder.insertOleObjectInternal("http://www.aspose.com", "htmlfile", true, true, null);
+        builder.insertOleObject("http://www.aspose.com", "htmlfile", true, true, null);
 
         doc.save(getArtifactsDir() + "WorkingWithOleObjectsAndActiveX.InsertOleObject.docx");
         //ExEnd:DocumentBuilderInsertOleObject
@@ -40,18 +32,17 @@ class WorkingWithOleObjectsAndActiveX extends DocsExamplesBase
         Document doc = new Document();
         DocumentBuilder builder = new DocumentBuilder(doc);
 
-        byte[] bs = File.readAllBytes(getMyDir() + "Zip file.zip");
-        Stream stream = new MemoryStream(bs);
-        try /*JAVA: was using*/
+        byte[] bs = FileUtils.readFileToByteArray(new File(getMyDir() + "Zip file.zip"));
+
+        try (ByteArrayInputStream stream = new ByteArrayInputStream(bs))
         {
-            Shape shape = builder.insertOleObjectInternal(stream, "Package", true, null);
+            Shape shape = builder.insertOleObject(stream, "Package", true, null);
             OlePackage olePackage = shape.getOleFormat().getOlePackage();
             olePackage.setFileName("filename.zip");
             olePackage.setDisplayName("displayname.zip");
 
             doc.save(getArtifactsDir() + "WorkingWithOleObjectsAndActiveX.InsertOleObjectWithOlePackage.docx");
         }
-        finally { if (stream != null) stream.close(); }
         //ExEnd:InsertOleObjectwithOlePackage
 
         //ExStart:GetAccessToOLEObjectRawData
@@ -81,12 +72,10 @@ class WorkingWithOleObjectsAndActiveX extends DocsExamplesBase
         Document doc = new Document();
         DocumentBuilder builder = new DocumentBuilder(doc);
 
-        MemoryStream stream = new MemoryStream(File.readAllBytes(getMyDir() + "Presentation.pptx"));
-        try /*JAVA: was using*/
+        try(ByteArrayInputStream stream = new ByteArrayInputStream(FileUtils.readFileToByteArray(new File(getMyDir() + "Presentation.pptx"))))
     	{
-            builder.insertOleObjectAsIconInternal(stream, "Package", getImagesDir() + "Logo icon.ico", "My embedded file");
+            builder.insertOleObjectAsIcon(stream, "Package", getImagesDir() + "Logo icon.ico", "My embedded file");
     	}
-        finally { if (stream != null) stream.close(); }
 
         doc.save(getArtifactsDir() + "WorkingWithOleObjectsAndActiveX.InsertOleObjectAsIconUsingStream.docx");
         //ExEnd:InsertOLEObjectAsIconUsingStream

@@ -1,21 +1,11 @@
-package DocsExamples.Programming_with_Documents;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Programming_with_documents;
 
 import DocsExamples.DocsExamplesBase;
+import com.aspose.words.*;
 import org.testng.annotations.Test;
-import com.aspose.words.Document;
-import com.aspose.words.DocumentBuilder;
-import com.aspose.words.Style;
-import com.aspose.words.StyleType;
-import com.aspose.words.Paragraph;
-import com.aspose.words.WarningInfoCollection;
-import com.aspose.words.WarningInfo;
-import com.aspose.words.WarningSource;
-import com.aspose.ms.System.msConsole;
 
-
-class WorkingWithMarkdown extends DocsExamplesBase
+@Test
+public class WorkingWithMarkdown extends DocsExamplesBase
 {
     @Test
     public void createMarkdownDocument() throws Exception

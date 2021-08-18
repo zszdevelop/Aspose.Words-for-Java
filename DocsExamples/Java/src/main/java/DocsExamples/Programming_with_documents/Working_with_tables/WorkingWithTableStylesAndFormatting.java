@@ -1,36 +1,13 @@
-package DocsExamples.Programming_with_Documents.Working_with_Tables;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Programming_with_documents.Working_with_tables;
 
 import DocsExamples.DocsExamplesBase;
+import com.aspose.words.*;
 import org.testng.annotations.Test;
-import com.aspose.words.Document;
-import com.aspose.ms.System.msConsole;
-import com.aspose.words.Table;
-import com.aspose.words.NodeType;
-import com.aspose.words.TableAlignment;
-import com.aspose.words.BorderType;
-import com.aspose.words.LineStyle;
-import com.aspose.ms.System.Drawing.msColor;
-import java.awt.Color;
-import com.aspose.words.TextureIndex;
-import com.aspose.words.Row;
-import com.aspose.words.HeightRule;
-import com.aspose.words.DocumentBuilder;
-import com.aspose.words.RowFormat;
-import com.aspose.words.Cell;
-import com.aspose.words.TextOrientation;
-import com.aspose.words.OoxmlSaveOptions;
-import com.aspose.words.OoxmlCompliance;
-import com.aspose.words.StyleIdentifier;
-import com.aspose.words.TableStyleOptions;
-import com.aspose.words.AutoFitBehavior;
-import com.aspose.words.TableStyle;
-import com.aspose.words.StyleType;
-import com.aspose.words.CellFormat;
 
+import java.awt.*;
 
-class WorkingWithTableStylesAndFormatting extends DocsExamplesBase
+@Test
+public class WorkingWithTableStylesAndFormatting extends DocsExamplesBase
 {
     @Test
     public void getDistanceBetweenTableSurroundingText() throws Exception
@@ -41,10 +18,10 @@ class WorkingWithTableStylesAndFormatting extends DocsExamplesBase
         System.out.println("\nGet distance between table left, right, bottom, top and the surrounding text.");
         Table table = (Table) doc.getChild(NodeType.TABLE, 0, true);
 
-        msConsole.writeLine(table.getDistanceTop());
-        msConsole.writeLine(table.getDistanceBottom());
-        msConsole.writeLine(table.getDistanceRight());
-        msConsole.writeLine(table.getDistanceLeft());
+        System.out.println(table.getDistanceTop());
+        System.out.println(table.getDistanceBottom());
+        System.out.println(table.getDistanceRight());
+        System.out.println(table.getDistanceLeft());
         //ExEnd:GetDistancebetweenTableSurroundingText
     }
 
@@ -61,13 +38,13 @@ class WorkingWithTableStylesAndFormatting extends DocsExamplesBase
         table.clearBorders();
 
         // Set a green border around the table but not inside.
-        table.setBorder(BorderType.LEFT, LineStyle.SINGLE, 1.5, msColor.getGreen(), true);
-        table.setBorder(BorderType.RIGHT, LineStyle.SINGLE, 1.5, msColor.getGreen(), true);
-        table.setBorder(BorderType.TOP, LineStyle.SINGLE, 1.5, msColor.getGreen(), true);
-        table.setBorder(BorderType.BOTTOM, LineStyle.SINGLE, 1.5, msColor.getGreen(), true);
+        table.setBorder(BorderType.LEFT, LineStyle.SINGLE, 1.5, Color.GREEN, true);
+        table.setBorder(BorderType.RIGHT, LineStyle.SINGLE, 1.5, Color.GREEN, true);
+        table.setBorder(BorderType.TOP, LineStyle.SINGLE, 1.5, Color.GREEN, true);
+        table.setBorder(BorderType.BOTTOM, LineStyle.SINGLE, 1.5, Color.GREEN, true);
 
         // Fill the cells with a light green solid color.
-        table.setShading(TextureIndex.TEXTURE_SOLID, msColor.getLightGreen(), msColor.Empty);
+        table.setShading(TextureIndex.TEXTURE_SOLID, Color.lightGray, null);
 
         doc.save(getArtifactsDir() + "WorkingWithTableStylesAndFormatting.ApplyOutlineBorder.docx");
         //ExEnd:ApplyOutlineBorder
@@ -85,7 +62,7 @@ class WorkingWithTableStylesAndFormatting extends DocsExamplesBase
         table.clearBorders();
         
         // Set a green border around and inside the table.
-        table.setBorders(LineStyle.SINGLE, 1.5, msColor.getGreen());
+        table.setBorders(LineStyle.SINGLE, 1.5, Color.GREEN);
 
         doc.save(getArtifactsDir() + "WorkingWithTableStylesAndFormatting.BuildTableWithBorders.docx");
         //ExEnd:BuildTableWithBorders
@@ -170,7 +147,7 @@ class WorkingWithTableStylesAndFormatting extends DocsExamplesBase
         Cell firstCell = table.getFirstRow().getFirstCell();
         firstCell.getCellFormat().setWidth(30.0);
         firstCell.getCellFormat().setOrientation(TextOrientation.DOWNWARD);
-        firstCell.getCellFormat().getShading().setForegroundPatternColor(msColor.getLightGreen());
+        firstCell.getCellFormat().getShading().setForegroundPatternColor(Color.GREEN);
         //ExEnd:ModifyCellFormatting
     }
 
@@ -194,7 +171,7 @@ class WorkingWithTableStylesAndFormatting extends DocsExamplesBase
         builder.insertCell();
         
         // Specify a different cell shading for the second cell.
-        builder.getCellFormat().getShading().setBackgroundPatternColor(msColor.getGreen());
+        builder.getCellFormat().getShading().setBackgroundPatternColor(Color.GREEN);
         builder.writeln("Cell #2");
 
         builder.endRow();
@@ -372,7 +349,7 @@ class WorkingWithTableStylesAndFormatting extends DocsExamplesBase
         builder.endTable();
 
         TableStyle tableStyle = (TableStyle) doc.getStyles().add(StyleType.TABLE, "MyTableStyle1");
-        tableStyle.getConditionalStyles().getFirstRow().getShading().setBackgroundPatternColor(msColor.getGreenYellow());
+        tableStyle.getConditionalStyles().getFirstRow().getShading().setBackgroundPatternColor(Color.yellow);
         tableStyle.getConditionalStyles().getFirstRow().getShading().setTexture(TextureIndex.TEXTURE_NONE);
 
         table.setStyle(tableStyle);

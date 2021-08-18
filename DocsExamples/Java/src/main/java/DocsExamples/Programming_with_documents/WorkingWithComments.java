@@ -1,26 +1,16 @@
-package DocsExamples.Programming_with_Documents;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Programming_with_documents;
 
 import DocsExamples.DocsExamplesBase;
+import com.aspose.words.*;
 import org.testng.annotations.Test;
-import com.aspose.words.Document;
-import com.aspose.words.DocumentBuilder;
-import com.aspose.words.Comment;
-import com.aspose.ms.System.DateTime;
-import com.aspose.words.Paragraph;
-import com.aspose.words.Run;
-import com.aspose.words.CommentRangeStart;
-import com.aspose.words.CommentRangeEnd;
-import com.aspose.words.NodeType;
-import com.aspose.ms.System.msConsole;
+
 import java.util.ArrayList;
-import com.aspose.words.NodeCollection;
-import com.aspose.words.SaveFormat;
-import com.aspose.ms.System.msString;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
-
-class WorkingWithComments extends DocsExamplesBase
+@Test
+public class WorkingWithComments extends DocsExamplesBase
 {
     @Test
     public void addComments() throws Exception
@@ -33,7 +23,7 @@ class WorkingWithComments extends DocsExamplesBase
         builder.write("Some text is added.");
         //ExEnd:CreateSimpleDocumentUsingDocumentBuilder
         
-        Comment comment = new Comment(doc, "Awais Hafeez", "AH", DateTime.getToday());
+        Comment comment = new Comment(doc, "Awais Hafeez", "AH", new Date());
 
         builder.getCurrentParagraph().appendChild(comment);
 
@@ -64,7 +54,7 @@ class WorkingWithComments extends DocsExamplesBase
         para2.appendChild(run4);
         doc.getFirstSection().getBody().appendChild(para2);
 
-        Comment comment = new Comment(doc, "Awais Hafeez", "AH", DateTime.getToday());
+        Comment comment = new Comment(doc, "Awais Hafeez", "AH", new Date());
         comment.getParagraphs().add(new Paragraph(doc));
         comment.getFirstParagraph().getRuns().add(new Run(doc, "Comment text."));
 
@@ -88,7 +78,12 @@ class WorkingWithComments extends DocsExamplesBase
         Comment comment = (Comment) doc.getChild(NodeType.COMMENT, 0, true);
         comment.removeReply(comment.getReplies().get(0));
 
-        comment.addReplyInternal("John Doe", "JD", new DateTime(2017, 9, 25, 12, 15, 0), "New reply");
+        Calendar calendar = new GregorianCalendar(2017, Calendar.SEPTEMBER, 25);
+        calendar.set(Calendar.HOUR, 12);
+        calendar.set(Calendar.MINUTE, 15);
+        calendar.set(Calendar.SECOND, 0);
+
+        comment.addReply("John Doe", "JD", calendar.getTime(), "New reply");
 
         doc.save(getArtifactsDir() + "WorkingWithComments.AddRemoveCommentReply.docx");
         //ExEnd:AddRemoveCommentReply
@@ -102,7 +97,7 @@ class WorkingWithComments extends DocsExamplesBase
 
         // Extract the information about the comments of all the authors.
         for (String comment : extractComments(doc))
-            msConsole.write(comment);
+            System.out.println(comment);
 
         // Remove comments by the "pm" author.
         removeComments(doc, "pm");
@@ -110,7 +105,7 @@ class WorkingWithComments extends DocsExamplesBase
 
         // Extract the information about the comments of the "ks" author.
         for (String comment : extractComments(doc, "ks"))
-            msConsole.write(comment);
+            System.out.println(comment);
 
         // Read the comment's reply and resolve them.
         commentResolvedAndReplies(doc);
@@ -131,7 +126,7 @@ class WorkingWithComments extends DocsExamplesBase
 
         for (Comment comment : (Iterable<Comment>) comments)
         {
-            collectedComments.add(comment.getAuthor() + " " + comment.getDateTimeInternal() + " " +
+            collectedComments.add(comment.getAuthor() + " " + comment.getDateTime() + " " +
                                   comment.toString(SaveFormat.TEXT));
         }
 
@@ -147,8 +142,8 @@ class WorkingWithComments extends DocsExamplesBase
 
         for (Comment comment : (Iterable<Comment>) comments)
         {
-            if (msString.equals(comment.getAuthor(), authorName))
-                collectedComments.add(comment.getAuthor() + " " + comment.getDateTimeInternal() + " " +
+            if (comment.getAuthor().equals(authorName))
+                collectedComments.add(comment.getAuthor() + " " + comment.getDateTime() + " " +
                                       comment.toString(SaveFormat.TEXT));
         }
 
@@ -174,7 +169,7 @@ class WorkingWithComments extends DocsExamplesBase
         for (int i = comments.getCount() - 1; i >= 0; i--)
         {
             Comment comment = (Comment) comments.get(i);
-            if (msString.equals(comment.getAuthor(), authorName))
+            if (comment.getAuthor().equals(authorName))
                 comment.remove();
         }
     }
@@ -186,11 +181,11 @@ class WorkingWithComments extends DocsExamplesBase
         NodeCollection comments = doc.getChildNodes(NodeType.COMMENT, true);
 
         Comment parentComment = (Comment) comments.get(0);
-        for (Comment childComment : (Iterable<Comment>) parentComment.getReplies())
+        for (Comment childComment : parentComment.getReplies())
         {
             // Get comment parent and status.
-            msConsole.writeLine(childComment.getAncestor().getId());
-            msConsole.writeLine(childComment.getDone());
+            System.out.println(childComment.getAncestor().getId());
+            System.out.println(childComment.getDone());
 
             // And update comment Done mark.
             childComment.setDone(true);

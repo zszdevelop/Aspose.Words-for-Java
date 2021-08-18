@@ -7,6 +7,8 @@ import com.aspose.words.DocumentBuilder;
 import com.aspose.words.net.System.Data.DataTable;
 import com.aspose.words.net.System.Data.DataRow;
 import com.aspose.words.net.System.Data.DataView;
+
+import java.sql.*;
 import java.text.MessageFormat;
 import com.aspose.words.net.System.Data.DataSet;
 import java.util.ArrayList;
@@ -89,53 +91,53 @@ public class BaseOperations extends DocsExamplesBase
         doc.getMailMerge().executeWithRegions(orderTable);
 
         // Instead of using DataTable, you can create a DataView for custom sort or filter and then mail merge.
-        DataView orderDetailsView = new DataView(getTestOrderDetails(orderId));
-        orderDetailsView.setSort("ExtendedPrice DESC");
-
-        // Execute the mail merge operation.
-        doc.getMailMerge().executeWithRegions(orderDetailsView);
+        DataTable orderDetailsTable = getTestOrderDetails(orderId, "ExtendedPrice DESC");
+        doc.getMailMerge().executeWithRegions(orderDetailsTable);
 
         doc.save(getArtifactsDir() + "MailMerge.ExecuteWithRegions.docx");
         //ExEnd:ExecuteWithRegionsDataTable
     }
 
     //ExStart:ExecuteWithRegionsDataTableMethods
-    private DataTable getTestOrder(int orderId)
-    {
+    private DataTable getTestOrder(int orderId) throws SQLException {
         DataTable table = executeDataTable(MessageFormat.format("SELECT * FROM AsposeWordOrders WHERE OrderId = {0}", orderId));
         table.setTableName("Orders");
         
         return table;
     }
 
-    private DataTable getTestOrderDetails(int orderId)
+    private static DataTable getTestOrderDetails(int orderId, String orderBy) throws Exception
     {
-        DataTable table = executeDataTable(
-            MessageFormat.format("SELECT * FROM AsposeWordOrderDetails WHERE OrderId = {0} ORDER BY ProductID", orderId));
-        table.setTableName("OrderDetails");
-        
-        return table;
+        StringBuilder builder = new StringBuilder();
+
+        builder.append(java.text.MessageFormat.format("SELECT * FROM AsposeWordOrderDetails WHERE OrderId = {0}", orderId));
+
+        if ((orderBy != null) && (orderBy.length() > 0))
+        {
+            builder.append(" ORDER BY ");
+            builder.append(orderBy);
+        }
+
+        java.sql.ResultSet resultSet = (ResultSet) executeDataTable(builder.toString());
+        return new DataTable(resultSet, "OrderDetails");
     }
 
     /// <summary>
     /// Utility function that creates a connection, command, executes the command and returns the result in a DataTable.
     /// </summary>
-    private DataTable executeDataTable(String commandText)
-    {
-        String connString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + getDatabaseDir() + "Northwind.mdb";
+    private static DataTable executeDataTable(String commandText) throws SQLException {
+        String connString = "jdbc:ucanaccess://" + getDatabaseDir() + "Northwind.mdb";
 
-        OleDbConnection conn = new OleDbConnection(connString);
-        conn.Open();
+        Connection connection = DriverManager.getConnection(connString, "Admin", "");
 
-        OleDbCommand cmd = new OleDbCommand(commandText, conn);
-        OleDbDataAdapter da = new OleDbDataAdapter(cmd);
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(commandText);
 
-        DataTable table = new DataTable();
-        da.Fill(table);
+        DataTable dataTable = new DataTable(resultSet);
 
-        conn.Close();
+        connection.close();
 
-        return table;
+        return dataTable;
     }
     //ExEnd:ExecuteWithRegionsDataTableMethods
 
@@ -143,18 +145,16 @@ public class BaseOperations extends DocsExamplesBase
     public void produceMultipleDocuments() throws Exception
     {
         //ExStart:ProduceMultipleDocuments
-        String connString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + getDatabaseDir() + "Northwind.mdb";
+        String connString = "jdbc:ucanaccess://" + getDatabaseDir() + "Northwind.mdb";
 
         Document doc = new Document(getMyDir() + "Mail merge destination - Northwind suppliers.docx");
 
-        OleDbConnection conn = new OleDbConnection(connString);
-        conn.Open();
-        
-        OleDbCommand cmd = new OleDbCommand("SELECT * FROM Customers", conn);
-        OleDbDataAdapter da = new OleDbDataAdapter(cmd);
-        
-        DataTable data = new DataTable();
-        da.Fill(data);
+        Connection connection = DriverManager.getConnection(connString, "Admin", "");
+
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM Customers");
+
+        DataTable dataTable = new DataTable(resultSet, "Customers");
 
         // Perform a loop through each DataRow to iterate through the DataTable. Clone the template document
         // instead of loading it from disk for better speed performance before the mail merge operation.
@@ -162,7 +162,7 @@ public class BaseOperations extends DocsExamplesBase
         // only once and then clone it in memory before each mail merge operation.
         
         int counter = 1;
-        for (DataRow row : (Iterable<DataRow>) data.getRows())
+        for (DataRow row : dataTable.getRows())
         {
             Document dstDoc = (Document) doc.deepClone(true);
 

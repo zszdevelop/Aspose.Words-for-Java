@@ -6,13 +6,14 @@ import com.aspose.words.RtfLoadOptions;
 import com.aspose.words.Document;
 
 @Test
-public class WorkingWithRtfLoadOptions extends DocsExamplesBase
-{
+public class WorkingWithRtfLoadOptions extends DocsExamplesBase {
     @Test
-    public void recognizeUtf8Text() throws Exception
-    {
+    public void recognizeUtf8Text() throws Exception {
         //ExStart:RecognizeUtf8Text
-        RtfLoadOptions loadOptions = new RtfLoadOptions(); { loadOptions.setRecognizeUtf8Text(true); }
+        RtfLoadOptions loadOptions = new RtfLoadOptions();
+        {
+            loadOptions.setRecognizeUtf8Text(true);
+        }
 
         Document doc = new Document(getMyDir() + "UTF-8 characters.rtf", loadOptions);
 

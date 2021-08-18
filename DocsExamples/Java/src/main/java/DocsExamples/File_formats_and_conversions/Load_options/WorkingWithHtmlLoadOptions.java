@@ -14,12 +14,14 @@ import java.nio.charset.StandardCharsets;
 public class WorkingWithHtmlLoadOptions extends DocsExamplesBase
 {
     @Test
-    public void preferredControlType() throws Exception
-    {
+    public void preferredControlType() throws Exception {
         //ExStart:LoadHtmlElementsWithPreferredControlType
         final String HTML = "\r\n                <html>\r\n                    <select name='ComboBox' size='1'>\r\n                        <option value='val1'>item1</option>\r\n                        <option value='val2'></option>                        \r\n                    </select>\r\n                </html>\r\n            ";
 
-        HtmlLoadOptions loadOptions = new HtmlLoadOptions(); { loadOptions.setPreferredControlType(HtmlControlType.STRUCTURED_DOCUMENT_TAG); }
+        HtmlLoadOptions loadOptions = new HtmlLoadOptions();
+        {
+            loadOptions.setPreferredControlType(HtmlControlType.STRUCTURED_DOCUMENT_TAG);
+        }
 
         Document doc = new Document(new ByteArrayInputStream(HTML.getBytes(StandardCharsets.UTF_8)), loadOptions);
 

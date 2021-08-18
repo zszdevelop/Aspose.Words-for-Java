@@ -1,14 +1,12 @@
-package DocsExamples.Programming_with_Documents;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Programming_with_documents;
 
 import DocsExamples.DocsExamplesBase;
 import org.testng.annotations.Test;
 import com.aspose.words.Document;
 import com.aspose.words.shaping.harfbuzz.HarfBuzzTextShaperFactory;
 
-
-class WorkingWithHarfBuzz extends DocsExamplesBase
+@Test
+public class WorkingWithHarfBuzz extends DocsExamplesBase
 {
     @Test
     public void openTypeFeatures() throws Exception
@@ -18,7 +16,7 @@ class WorkingWithHarfBuzz extends DocsExamplesBase
 
         // When we set the text shaper factory, the layout starts to use OpenType features.
         // An Instance property returns BasicTextShaperCache object wrapping HarfBuzzTextShaperFactory.
-        doc.getLayoutOptions().setTextShaperFactory(com.aspose.words.shaping.harfbuzz.HarfBuzzTextShaperFactory.getInstance());
+        doc.getLayoutOptions().setTextShaperFactory(HarfBuzzTextShaperFactory.getInstance());
 
         doc.save(getArtifactsDir() + "WorkingWithHarfBuzz.OpenTypeFeatures.pdf");
         //ExEnd:OpenTypeFeatures

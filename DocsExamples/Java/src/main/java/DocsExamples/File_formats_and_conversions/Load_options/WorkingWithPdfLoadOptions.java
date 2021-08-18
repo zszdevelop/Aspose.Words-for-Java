@@ -10,11 +10,9 @@ import com.aspose.words.PdfLoadOptions;
 import com.aspose.words.LoadFormat;
 
 @Test
-public class WorkingWithPdfLoadOptions extends DocsExamplesBase
-{
+public class WorkingWithPdfLoadOptions extends DocsExamplesBase {
     @Test
-    public void loadEncryptedPdf() throws Exception
-    {
+    public void loadEncryptedPdf() throws Exception {
         //ExStart:LoadEncryptedPdf  
         Document doc = new Document(getMyDir() + "Pdf Document.pdf");
 
@@ -25,17 +23,24 @@ public class WorkingWithPdfLoadOptions extends DocsExamplesBase
 
         doc.save(getArtifactsDir() + "WorkingWithPdfLoadOptions.LoadEncryptedPdf.pdf", saveOptions);
 
-        PdfLoadOptions loadOptions = new PdfLoadOptions(); { loadOptions.setPassword("Aspose"); loadOptions.setLoadFormat(LoadFormat.PDF); }
+        PdfLoadOptions loadOptions = new PdfLoadOptions();
+        {
+            loadOptions.setPassword("Aspose");
+            loadOptions.setLoadFormat(LoadFormat.PDF);
+        }
 
         doc = new Document(getArtifactsDir() + "WorkingWithPdfLoadOptions.LoadEncryptedPdf.pdf", loadOptions);
         //ExEnd:LoadEncryptedPdf
     }
 
     @Test
-    public void loadPageRangeOfPdf() throws Exception
-    {
+    public void loadPageRangeOfPdf() throws Exception {
         //ExStart:LoadPageRangeOfPdf  
-        PdfLoadOptions loadOptions = new PdfLoadOptions(); { loadOptions.setPageIndex(0); loadOptions.setPageCount(1); }
+        PdfLoadOptions loadOptions = new PdfLoadOptions();
+        {
+            loadOptions.setPageIndex(0);
+            loadOptions.setPageCount(1);
+        }
 
         //ExStart:LoadPDF
         Document doc = new Document(getMyDir() + "Pdf Document.pdf", loadOptions);

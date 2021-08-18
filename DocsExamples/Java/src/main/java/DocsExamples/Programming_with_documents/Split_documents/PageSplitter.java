@@ -111,7 +111,7 @@ class DocumentPageSplitter
 /// <summary>
 /// Provides methods for extracting nodes of a document which are rendered on a specified pages.
 /// </summary>
-public class PageNumberFinder
+class PageNumberFinder
 {
     // Maps node to a start/end page numbers.
     // This is used to override baseline page numbers provided by the collector when the document is split.

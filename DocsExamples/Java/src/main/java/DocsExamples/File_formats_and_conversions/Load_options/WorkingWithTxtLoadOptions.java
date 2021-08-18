@@ -12,36 +12,37 @@ import com.aspose.words.Paragraph;
 import java.io.ByteArrayInputStream;
 
 @Test
-public class WorkingWithTxtLoadOptions extends DocsExamplesBase
-{
+public class WorkingWithTxtLoadOptions extends DocsExamplesBase {
     @Test
-    public void detectNumberingWithWhitespaces() throws Exception
-    {
+    public void detectNumberingWithWhitespaces() throws Exception {
         //ExStart:DetectNumberingWithWhitespaces
         // Create a plaintext document in the form of a string with parts that may be interpreted as lists.
         // Upon loading, the first three lists will always be detected by Aspose.Words,
         // and List objects will be created for them after loading.
         final String TEXT_DOC = "Full stop delimiters:\n" +
-                               "1. First list item 1\n" +
-                               "2. First list item 2\n" +
-                               "3. First list item 3\n\n" +
-                               "Right bracket delimiters:\n" +
-                               "1) Second list item 1\n" +
-                               "2) Second list item 2\n" +
-                               "3) Second list item 3\n\n" +
-                               "Bullet delimiters:\n" +
-                               "• Third list item 1\n" +
-                               "• Third list item 2\n" +
-                               "• Third list item 3\n\n" +
-                               "Whitespace delimiters:\n" +
-                               "1 Fourth list item 1\n" +
-                               "2 Fourth list item 2\n" +
-                               "3 Fourth list item 3";
+                "1. First list item 1\n" +
+                "2. First list item 2\n" +
+                "3. First list item 3\n\n" +
+                "Right bracket delimiters:\n" +
+                "1) Second list item 1\n" +
+                "2) Second list item 2\n" +
+                "3) Second list item 3\n\n" +
+                "Bullet delimiters:\n" +
+                "• Third list item 1\n" +
+                "• Third list item 2\n" +
+                "• Third list item 3\n\n" +
+                "Whitespace delimiters:\n" +
+                "1 Fourth list item 1\n" +
+                "2 Fourth list item 2\n" +
+                "3 Fourth list item 3";
 
         // The fourth list, with whitespace inbetween the list number and list item contents,
         // will only be detected as a list if "DetectNumberingWithWhitespaces" in a LoadOptions object is set to true,
         // to avoid paragraphs that start with numbers being mistakenly detected as lists.
-        TxtLoadOptions loadOptions = new TxtLoadOptions(); { loadOptions.setDetectNumberingWithWhitespaces(true); }
+        TxtLoadOptions loadOptions = new TxtLoadOptions();
+        {
+            loadOptions.setDetectNumberingWithWhitespaces(true);
+        }
 
         // Load the document while applying LoadOptions as a parameter and verify the result.
         Document doc = new Document(new ByteArrayInputStream(TEXT_DOC.getBytes()), loadOptions);
@@ -51,12 +52,11 @@ public class WorkingWithTxtLoadOptions extends DocsExamplesBase
     }
 
     @Test
-    public void handleSpacesOptions() throws Exception
-    {
+    public void handleSpacesOptions() throws Exception {
         //ExStart:HandleSpacesOptions
         final String TEXT_DOC = "      Line 1 \n" +
-                               "    Line 2   \n" +
-                               " Line 3       ";
+                "    Line 2   \n" +
+                " Line 3       ";
 
         TxtLoadOptions loadOptions = new TxtLoadOptions();
         {
@@ -71,10 +71,12 @@ public class WorkingWithTxtLoadOptions extends DocsExamplesBase
     }
 
     @Test
-    public void documentTextDirection() throws Exception
-    {
+    public void documentTextDirection() throws Exception {
         //ExStart:DocumentTextDirection
-        TxtLoadOptions loadOptions = new TxtLoadOptions(); { loadOptions.setDocumentDirection(DocumentDirection.AUTO); }
+        TxtLoadOptions loadOptions = new TxtLoadOptions();
+        {
+            loadOptions.setDocumentDirection(DocumentDirection.AUTO);
+        }
 
         Document doc = new Document(getMyDir() + "Hebrew text.txt", loadOptions);
 

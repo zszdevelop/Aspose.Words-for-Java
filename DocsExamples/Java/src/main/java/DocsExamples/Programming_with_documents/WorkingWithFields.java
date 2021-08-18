@@ -1,49 +1,20 @@
-package DocsExamples.Programming_with_Documents;
+package DocsExamples.Programming_with_documents;
 
-// ********* THIS FILE IS AUTO PORTED *********
-
-import com.aspose.ms.java.collections.StringSwitchMap;
 import DocsExamples.DocsExamplesBase;
+import com.aspose.words.*;
 import org.testng.annotations.Test;
-import com.aspose.words.Document;
-import com.aspose.words.DocumentBuilder;
-import com.aspose.words.FieldUpdateCultureSource;
-import com.aspose.ms.System.DateTime;
-import com.aspose.words.Field;
-import com.aspose.words.FieldType;
-import com.aspose.words.FieldHyperlink;
-import com.aspose.words.NodeCollection;
-import com.aspose.words.NodeType;
-import com.aspose.words.FieldStart;
-import com.aspose.ms.ms;
-import com.aspose.words.Run;
-import com.aspose.ms.System.Text.RegularExpressions.Match;
+
 import java.text.MessageFormat;
-import com.aspose.words.Node;
-import com.aspose.ms.System.Text.RegularExpressions.Regex;
-import com.aspose.words.Paragraph;
-import com.aspose.words.FieldTA;
-import com.aspose.words.FieldToa;
-import com.aspose.words.BreakType;
-import com.aspose.words.HeaderFooterType;
-import com.aspose.words.FieldMergeField;
-import com.aspose.words.FieldAddressBlock;
-import com.aspose.words.FieldIncludeText;
-import com.aspose.words.FieldUnknown;
-import com.aspose.words.FieldAuthor;
-import com.aspose.words.FieldAsk;
-import com.aspose.words.FieldAdvance;
-import com.aspose.ms.System.msConsole;
-import com.aspose.words.IFieldUpdateCultureProvider;
-import com.aspose.ms.System.Globalization.msCultureInfo;
-import com.aspose.ms.System.Globalization.msDateTimeFormatInfo;
-import com.aspose.words.FieldIf;
-import com.aspose.words.FieldIfComparisonResult;
-import com.aspose.ms.System.Threading.CurrentThread;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.Date;
+import java.util.regex.Pattern;
 
+import static DocsExamples.DocsExamplesBase.getArtifactsDir;
+import static DocsExamples.DocsExamplesBase.getMyDir;
 
-class WorkingWithFields extends DocsExamplesBase
+@Test
+public class WorkingWithFields extends DocsExamplesBase
 {
     @Test
     public void changeFieldUpdateCultureSource() throws Exception
@@ -63,7 +34,7 @@ class WorkingWithFields extends DocsExamplesBase
         // Shows how to specify where the culture used for date formatting during field update and mail merge is chosen from
         // set the culture used during field update to the culture used by the field.
         doc.getFieldOptions().setFieldUpdateCultureSource(FieldUpdateCultureSource.FIELD_CODE);
-        doc.getMailMerge().execute(new String[] { "Date2" }, new Object[] { new DateTime(2011, 1, 1) });
+        doc.getMailMerge().execute(new String[] { "Date2" }, new Object[] { LocalDate.of(2011, Month.JANUARY, 1) });
         
         doc.save(getArtifactsDir() + "WorkingWithFields.ChangeFieldUpdateCultureSource.docx");
         //ExEnd:ChangeFieldUpdateCultureSource
@@ -124,7 +95,7 @@ class WorkingWithFields extends DocsExamplesBase
             if (fieldStart.getFieldType() == FieldType.FIELD_MERGE_FIELD)
             {
                 MergeField mergeField = new MergeField(fieldStart);
-                mergeField.(mergeField.getName() + "_Renamed");
+                mergeField.mName = mergeField.getName() + "_Renamed";
             }
         }
 
@@ -141,7 +112,7 @@ class WorkingWithFields extends DocsExamplesBase
         MergeField(FieldStart fieldStart)
         {
             if (fieldStart == null)
-                throw new NullPointerException(ms.nameof("fieldStart"));
+                throw new NullPointerException("fieldStart");
             if (fieldStart.getFieldType() != FieldType.FIELD_MERGE_FIELD)
                 throw new IllegalArgumentException("Field start type must be FieldMergeField.");
 
@@ -211,7 +182,7 @@ class WorkingWithFields extends DocsExamplesBase
         private /*final*/ Node mFieldSeparator;
         private /*final*/ Node mFieldEnd;
 
-        private /*final*/ Regex gRegex = new Regex("\\s*(?<start>MERGEFIELD\\s|)(\\s|)(?<name>\\S+)\\s+");
+        private /*final*/ Pattern gRegex = Pattern.compile("\\s*(?<start>MERGEFIELD\\s|)(\\s|)(?<name>\\S+)\\s+");
     }
     //ExEnd:MergeField
 

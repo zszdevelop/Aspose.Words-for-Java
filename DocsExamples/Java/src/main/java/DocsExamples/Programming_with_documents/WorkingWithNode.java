@@ -1,24 +1,11 @@
-package DocsExamples.Programming_with_Documents;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Programming_with_documents;
 
 import DocsExamples.DocsExamplesBase;
+import com.aspose.words.*;
 import org.testng.annotations.Test;
-import com.aspose.words.Document;
-import com.aspose.words.NodeType;
-import com.aspose.words.Node;
-import com.aspose.ms.System.msConsole;
-import com.aspose.words.Paragraph;
-import com.aspose.words.NodeCollection;
-import com.aspose.words.Run;
-import com.aspose.words.CompositeNode;
-import com.aspose.words.Section;
-import com.aspose.words.Body;
-import com.aspose.words.TableCollection;
-import com.aspose.words.Table;
 
-
-class WorkingWithNode extends DocsExamplesBase
+@Test
+public class WorkingWithNode extends DocsExamplesBase
 {
     @Test
     public void useNodeType() throws Exception
@@ -26,7 +13,7 @@ class WorkingWithNode extends DocsExamplesBase
         //ExStart:UseNodeType            
         Document doc = new Document();
         
-        /*NodeType*/int type = doc.getNodeType();
+        int type = doc.getNodeType();
         //ExEnd:UseNodeType
     }
 
@@ -131,13 +118,13 @@ class WorkingWithNode extends DocsExamplesBase
         // Quick typed access to all Table child nodes contained in the Body.
         TableCollection tables = body.getTables();
 
-        for (Table table : (Iterable<Table>) tables)
+        for (Table table : tables)
         {
             // Quick typed access to the first row of the table.
-            table.getFirstRow()?.Remove();
+            table.getFirstRow().remove();
 
             // Quick typed access to the last row of the table.
-            table.getLastRow()?.Remove();
+            table.getLastRow().remove();
         }
         //ExEnd:TypedAccess
     }

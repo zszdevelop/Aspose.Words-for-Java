@@ -1,56 +1,20 @@
-package DocsExamples.Programming_with_Documents.Working_with_Tables;
+package DocsExamples.Programming_with_documents.Working_with_tables;
 
-// ********* THIS FILE IS AUTO PORTED *********
-
-import com.aspose.ms.java.collections.StringSwitchMap;
 import DocsExamples.DocsExamplesBase;
-import org.testng.annotations.Test;
-import com.aspose.words.Document;
-import com.aspose.words.Table;
-import com.aspose.words.NodeType;
-import com.aspose.ms.System.msConsole;
-import com.aspose.words.Cell;
-import com.aspose.words.Run;
-import com.aspose.ms.System.Text.msStringBuilder;
-import com.aspose.words.SaveFormat;
-import java.util.ArrayList;
-import com.aspose.words.Row;
-import com.aspose.words.AutoFitBehavior;
-import com.aspose.words.DocumentBuilder;
-import com.aspose.words.Orientation;
-import com.aspose.words.net.System.Data.DataSet;
-import com.aspose.words.net.System.Data.DataTable;
-import com.aspose.words.StyleIdentifier;
-import com.aspose.words.TableStyleOptions;
-import com.aspose.words.ParagraphAlignment;
+import com.aspose.words.*;
 import com.aspose.words.net.System.Data.DataColumn;
 import com.aspose.words.net.System.Data.DataRow;
-import com.aspose.ms.System.DateTime;
-import com.aspose.words.Paragraph;
-import com.aspose.words.NodeCollection;
-import java.awt.Color;
-import com.aspose.words.HeightRule;
-import com.aspose.words.CellVerticalAlignment;
-import com.aspose.words.CellMerge;
-import com.aspose.ms.System.Drawing.msPoint;
-import com.aspose.ms.System.Drawing.Rectangle;
-import com.aspose.words.DocumentVisitor;
-import com.aspose.ms.System.IO.MemoryStream;
-import com.aspose.words.HtmlSaveOptions;
-import com.aspose.ms.System.IO.Path;
-import com.aspose.XmlUtilPal;
-import java.lang.Integer;
-import com.aspose.words.VisitorAction;
-import com.aspose.words.PreferredWidth;
-import com.aspose.ms.System.Drawing.msColor;
-import com.aspose.words.PreferredWidthType;
-import com.aspose.words.TextWrapping;
-import com.aspose.words.VerticalAlignment;
-import com.aspose.words.RelativeHorizontalPosition;
-import com.aspose.words.RelativeVerticalPosition;
+import com.aspose.words.net.System.Data.DataSet;
+import com.aspose.words.net.System.Data.DataTable;
+import org.testng.annotations.Test;
 
+import java.awt.*;
+import java.awt.geom.Point2D;
+import java.text.MessageFormat;
+import java.util.ArrayList;
 
-class WorkingWithTables extends DocsExamplesBase
+@Test
+public class WorkingWithTables extends DocsExamplesBase
 {
     @Test
     public void removeColumn() throws Exception
@@ -83,7 +47,7 @@ class WorkingWithTables extends DocsExamplesBase
         // This is the same as using the "Insert Column Before" command in Microsoft Word.
         Column newColumn = column.insertColumnBefore();
 
-        for (Cell cell : newColumn.Cells !!Autoporter error: Undefined expression type )
+        for (Cell cell : newColumn.getColumnCells())
             cell.getFirstParagraph().appendChild(new Run(doc, "Column Text " + newColumn.indexOf(cell)));
         //ExEnd:InsertBlankColumn
     }
@@ -96,7 +60,7 @@ class WorkingWithTables extends DocsExamplesBase
     {
         private Column(Table table, int columnIndex)
         {
-            mTable =  !!Autoporter warning: Not supported language construction  throw new IllegalArgumentException("table");
+            mTable = throw new IllegalArgumentException("table");
             mColumnIndex = columnIndex;
         }
 
@@ -711,18 +675,18 @@ class WorkingWithTables extends DocsExamplesBase
         boolean isVerticallyMerged = cell.getCellFormat().getVerticalMerge() != CellMerge.NONE;
         
         String cellLocation =
-            $"R{cell.ParentRow.ParentTable.IndexOf(cell.ParentRow) + 1}, C{cell.ParentRow.IndexOf(cell) + 1}";
+                MessageFormat.format("R{0}, C{1}", cell.getParentRow().getParentTable().indexOf(cell.getParentRow()) + 1, cell.getParentRow().indexOf(cell) + 1);
 
         if (isHorizontallyMerged && isVerticallyMerged)
-            return $"The cell at {cellLocation} is both horizontally and vertically merged";
+            return MessageFormat.format("The cell at {0} is both horizontally and vertically merged", cellLocation);
         
         if (isHorizontallyMerged)
-            return $"The cell at {cellLocation} is horizontally merged.";
+            return MessageFormat.format("The cell at {0} is horizontally merged.", cellLocation);
         
         if (isVerticallyMerged)
-            return $"The cell at {cellLocation} is vertically merged";
+            return MessageFormat.format("The cell at {0} is vertically merged", cellLocation);
         
-        return $"The cell at {cellLocation} is not merged";
+        return MessageFormat.format("The cell at {0} is not merged", cellLocation);
     }
     //ExEnd:PrintCellMergeType
     
@@ -833,7 +797,7 @@ class WorkingWithTables extends DocsExamplesBase
         Table parentTable = startCell.getParentRow().getParentTable();
 
         // Find the row and cell indices for the start and end cell.
-        /*Point*/long startCellPos = msPoint.ctor(startCell.getParentRow().indexOf(startCell),
+        /*Point*/long startCellPos = new Point2D.Float(startCell.getParentRow().indexOf(startCell),
             parentTable.indexOf(startCell.getParentRow()));
         /*Point*/long endCellPos = msPoint.ctor(endCell.getParentRow().indexOf(endCell), parentTable.indexOf(endCell.getParentRow()));
 

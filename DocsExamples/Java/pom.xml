@@ -103,7 +103,7 @@
         <dependency>
             <groupId>net.sf.ucanaccess</groupId>
             <artifactId>ucanaccess</artifactId>
-            <version>3.0.6</version>
+            <version>5.0.1</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>

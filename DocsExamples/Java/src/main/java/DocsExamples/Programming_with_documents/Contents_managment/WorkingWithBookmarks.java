@@ -77,7 +77,7 @@ public class WorkingWithBookmarks extends DocsExamplesBase
 
             if (bookmark.isColumn())
             {
-                if (bookmark.getBookmarkStart().getAncestor(Row.class) instanceof Row row && bookmark.getFirstColumn() < row.getCells().toArray().length)
+                if (Row.class.isInstance(bookmark.getBookmarkStart()) && bookmark.getFirstColumn() < row.getCells().toArray().length)
                     System.out.println(row.getCells().get(bookmark.getFirstColumn()).getText().trim());
             }
         }

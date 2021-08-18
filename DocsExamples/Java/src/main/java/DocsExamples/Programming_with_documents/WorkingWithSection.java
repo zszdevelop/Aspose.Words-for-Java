@@ -1,6 +1,4 @@
-package DocsExamples.Programming_with_Documents;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Programming_with_documents;
 
 import DocsExamples.DocsExamplesBase;
 import org.testng.annotations.Test;
@@ -9,8 +7,8 @@ import com.aspose.words.DocumentBuilder;
 import com.aspose.words.Section;
 import com.aspose.words.PaperSize;
 
-
-class WorkingWithSection extends DocsExamplesBase
+@Test
+public class WorkingWithSection extends DocsExamplesBase
 {
     @Test
     public void addSection() throws Exception
@@ -150,7 +148,7 @@ class WorkingWithSection extends DocsExamplesBase
 
         // It is important to understand that a document can contain many sections,
         // and each section has its page setup. In this case, we want to modify them all.
-        for (Section section : (Iterable<Section>) doc)
+        for (Section section : doc.getSections())
             section.getPageSetup().setPaperSize(PaperSize.LETTER);
 
         doc.save(getArtifactsDir() + "WorkingWithSection.ModifyPageSetupInAllSections.doc");

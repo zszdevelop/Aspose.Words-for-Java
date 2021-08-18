@@ -1,21 +1,17 @@
-package DocsExamples.Programming_with_Documents;
+package DocsExamples.Programming_with_documents;
 
-// ********* THIS FILE IS AUTO PORTED *********
-
-import com.aspose.ms.java.collections.StringSwitchMap;
 import DocsExamples.DocsExamplesBase;
-import org.testng.annotations.Test;
 import com.aspose.words.Document;
 import com.aspose.words.Hyphenation;
-import com.aspose.ms.System.IO.Stream;
-import java.io.FileInputStream;
-import com.aspose.ms.System.IO.File;
-import com.aspose.ms.System.msConsole;
 import com.aspose.words.IHyphenationCallback;
-import com.aspose.ms.System.IO.Path;
+import org.testng.annotations.Test;
 
+import java.io.FileInputStream;
+import java.nio.file.Paths;
+import java.text.MessageFormat;
 
-class WorkingWithHyphenation extends DocsExamplesBase
+@Test
+public class WorkingWithHyphenation extends DocsExamplesBase
 {
     @Test
     public void hyphenateWordsOfLanguages() throws Exception
@@ -36,8 +32,8 @@ class WorkingWithHyphenation extends DocsExamplesBase
         //ExStart:LoadHyphenationDictionaryForLanguage
         Document doc = new Document(getMyDir() + "German text.docx");
         
-        Stream stream = new FileInputStream(getMyDir() + "hyph_de_CH.dic");
-        Hyphenation.registerDictionaryInternal("de-CH", stream);
+        FileInputStream stream = new FileInputStream(getMyDir() + "hyph_de_CH.dic");
+        Hyphenation.registerDictionary("de-CH", stream);
 
         doc.save(getArtifactsDir() + "WorkingWithHyphenation.LoadHyphenationDictionaryForLanguage.pdf");
         //ExEnd:LoadHyphenationDictionaryForLanguage
@@ -57,7 +53,7 @@ class WorkingWithHyphenation extends DocsExamplesBase
         }
         catch (Exception e) when (e.Message.StartsWith("Missing hyphenation dictionary"))
         {
-            msConsole.WriteLine(e.Message);
+            System.out.println(e.Message);
         }
         finally
         {
@@ -71,28 +67,20 @@ class WorkingWithHyphenation extends DocsExamplesBase
         {
             String dictionaryFolder = getMyDir();
             String dictionaryFullFileName;
-            switch (gStringSwitchMap.of(language))
+            switch (language)
             {
-                case /*"en-US"*/0:
-                    dictionaryFullFileName = Path.combine(dictionaryFolder, "hyph_en_US.dic");
+                case "en-US":
+                    dictionaryFullFileName = Paths.get(dictionaryFolder, "hyph_en_US.dic").toString();
                     break;
-                case /*"de-CH"*/1:
-                    dictionaryFullFileName = Path.combine(dictionaryFolder, "hyph_de_CH.dic");
+                case "de-CH":
+                    dictionaryFullFileName = Paths.get(dictionaryFolder, "hyph_de_CH.dic").toString();
                     break;
                 default:
-                    throw new Exception($"Missing hyphenation dictionary for {language}.");
+                    throw new Exception(MessageFormat.format("Missing hyphenation dictionary for {0}.", language));
             }
             // Register dictionary for requested language.
             Hyphenation.registerDictionary(language, dictionaryFullFileName);
         }
     }
-
-	//JAVA-added for string switch emulation
-	private static final StringSwitchMap gStringSwitchMap = new StringSwitchMap
-	(
-		"en-US",
-		"de-CH"
-	);
-
     //ExEnd:CustomHyphenation
 }

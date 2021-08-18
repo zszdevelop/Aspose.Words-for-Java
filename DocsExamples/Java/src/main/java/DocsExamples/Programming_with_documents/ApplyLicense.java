@@ -1,18 +1,16 @@
-package DocsExamples.Programming_with_Documents;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Programming_with_documents;
 
 import DocsExamples.DocsExamplesBase;
 import org.testng.annotations.Test;
 import com.aspose.words.License;
-import com.aspose.ms.System.msConsole;
-import com.aspose.ms.System.IO.MemoryStream;
-import com.aspose.ms.System.IO.File;
 import com.aspose.words.Metered;
 import com.aspose.words.Document;
 
+import java.io.File;
+import java.io.FileInputStream;
 
-class ApplyLicense extends DocsExamplesBase
+@Test
+public class ApplyLicense extends DocsExamplesBase
 {
     @Test
     public void applyLicenseFromFile() throws Exception
@@ -46,7 +44,7 @@ class ApplyLicense extends DocsExamplesBase
 
         try
         {
-            license.setLicenseInternal(new MemoryStream(File.readAllBytes("Aspose.Words.lic")));
+            license.setLicense(new FileInputStream(new File("Aspose.Words.lic")));
             
             System.out.println("License set successfully.");
         }
@@ -60,8 +58,7 @@ class ApplyLicense extends DocsExamplesBase
     }
 
     @Test
-    public void applyMeteredLicense() throws Exception
-    {
+    public void applyMeteredLicense() {
         //ExStart:ApplyMeteredLicense
         try
         {
@@ -70,7 +67,7 @@ class ApplyLicense extends DocsExamplesBase
 
             Document doc = new Document(getMyDir() + "Document.docx");
 
-            msConsole.writeLine(doc.getPageCount());
+            System.out.println(doc.getPageCount());
         }
         catch (Exception e)
         {

@@ -1,38 +1,19 @@
-package DocsExamples.Programming_with_Documents;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Programming_with_documents;
 
 import DocsExamples.DocsExamplesBase;
-import org.testng.annotations.Test;
-import com.aspose.words.Document;
-import com.aspose.words.DocumentBuilder;
 import com.aspose.words.Font;
-import java.awt.Color;
-import com.aspose.words.Underline;
-import com.aspose.ms.System.msConsole;
-import com.aspose.words.RunCollection;
-import com.aspose.words.TextDmlEffect;
-import com.aspose.ms.System.Drawing.msColor;
-import com.aspose.words.EmphasisMark;
-import com.aspose.words.FontSettings;
-import com.aspose.words.FontSourceBase;
-import com.aspose.words.SystemFontSource;
-import com.aspose.words.FolderFontSource;
-import java.util.ArrayList;
-import com.aspose.ms.System.Collections.msArrayList;
-import com.aspose.words.TableSubstitutionRule;
-import com.aspose.words.LoadOptions;
-import com.aspose.words.PhysicalFontInfo;
-import com.aspose.words.IWarningCallback;
-import com.aspose.words.WarningInfo;
-import com.aspose.words.WarningType;
-import com.aspose.words.StreamFontSource;
-import com.aspose.ms.System.IO.Stream;
+import com.aspose.words.*;
 import org.testng.Assert;
-import com.aspose.words.WarningInfoCollection;
+import org.testng.annotations.Test;
 
+import java.awt.*;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-class WorkingWithFonts extends DocsExamplesBase
+@Test
+public class WorkingWithFonts extends DocsExamplesBase
 {
     @Test
     public void fontFormatting() throws Exception
@@ -79,11 +60,11 @@ class WorkingWithFonts extends DocsExamplesBase
         Font runFont = runs.get(0).getFont();
 
         // One run might have several Dml text effects applied.
-        msConsole.writeLine(runFont.hasDmlEffect(TextDmlEffect.SHADOW));
-        msConsole.writeLine(runFont.hasDmlEffect(TextDmlEffect.EFFECT_3_D));
-        msConsole.writeLine(runFont.hasDmlEffect(TextDmlEffect.REFLECTION));
-        msConsole.writeLine(runFont.hasDmlEffect(TextDmlEffect.OUTLINE));
-        msConsole.writeLine(runFont.hasDmlEffect(TextDmlEffect.FILL));
+        System.out.println(runFont.hasDmlEffect(TextDmlEffect.SHADOW));
+        System.out.println(runFont.hasDmlEffect(TextDmlEffect.EFFECT_3_D));
+        System.out.println(runFont.hasDmlEffect(TextDmlEffect.REFLECTION));
+        System.out.println(runFont.hasDmlEffect(TextDmlEffect.OUTLINE));
+        System.out.println(runFont.hasDmlEffect(TextDmlEffect.FILL));
         //ExEnd:CheckDMLTextEffect
     }
 
@@ -96,7 +77,7 @@ class WorkingWithFonts extends DocsExamplesBase
 
         Font font = builder.getFont();
         font.setBold(true);
-        font.setColor(msColor.getDarkBlue());
+        font.setColor(Color.BLUE);
         font.setItalic(true);
         font.setName("Arial");
         font.setSize(24.0);
@@ -226,7 +207,7 @@ class WorkingWithFonts extends DocsExamplesBase
         // Retrieve the array of environment-dependent font sources that are searched by default.
         // For example this will contain a "Windows\Fonts\" source on a Windows machines.
         // We add this array to a new List to make adding or removing font entries much easier.
-        ArrayList<FontSourceBase> fontSources = msArrayList.ctor(fontSettings.getFontsSources());
+        List<FontSourceBase> fontSources = Arrays.asList(fontSettings.getFontsSources());
 
         // Add a new folder source which will instruct Aspose.Words to search the following folder for fonts.
         FolderFontSource folderFontSource = new FolderFontSource("C:\\MyFonts\\", true);
@@ -234,7 +215,7 @@ class WorkingWithFonts extends DocsExamplesBase
         // Add the custom folder which contains our fonts to the list of existing font sources.
         fontSources.add(folderFontSource);
 
-        FontSourceBase[] updatedFontSources = msArrayList.toArray(fontSources, new FontSourceBase[0]);
+        FontSourceBase[] updatedFontSources = (FontSourceBase[]) fontSources.toArray();
         fontSettings.setFontsSources(updatedFontSources);
         
         doc.setFontSettings(fontSettings);
@@ -358,14 +339,14 @@ class WorkingWithFonts extends DocsExamplesBase
     {
         //ExStart:GetListOfAvailableFonts
         FontSettings fontSettings = new FontSettings();
-        ArrayList<FontSourceBase> fontSources = msArrayList.ctor(fontSettings.getFontsSources());
+        List<FontSourceBase> fontSources = Arrays.asList(fontSettings.getFontsSources());
 
         // Add a new folder source which will instruct Aspose.Words to search the following folder for fonts.
         FolderFontSource folderFontSource = new FolderFontSource(getMyDir(), true);
         // Add the custom folder which contains our fonts to the list of existing font sources.
         fontSources.add(folderFontSource);
 
-        FontSourceBase[] updatedFontSources = msArrayList.toArray(fontSources, new FontSourceBase[0]);
+        FontSourceBase[] updatedFontSources = (FontSourceBase[]) fontSources.toArray();
 
         for (PhysicalFontInfo fontInfo : updatedFontSources[0].getAvailableFonts())
         {
@@ -453,7 +434,7 @@ class WorkingWithFonts extends DocsExamplesBase
 
     static class ResourceSteamFontSource extends StreamFontSource
     {
-        public /*override*/ Stream openFontDataStream()
+        public /*override*/ InputStream openFontDataStream()
         {
             return Assembly.GetExecutingAssembly().GetManifestResourceStream("resourceName");
         }
@@ -469,12 +450,12 @@ class WorkingWithFonts extends DocsExamplesBase
         DocumentSubstitutionWarnings substitutionWarningHandler = new DocumentSubstitutionWarnings();
         doc.setWarningCallback(substitutionWarningHandler);
 
-        ArrayList<FontSourceBase> fontSources = msArrayList.ctor(FontSettings.getDefaultInstance().getFontsSources());
+        List<FontSourceBase> fontSources = Arrays.asList(FontSettings.getDefaultInstance().getFontsSources());
 
         FolderFontSource folderFontSource = new FolderFontSource(getFontsDir(), true);
         fontSources.add(folderFontSource);
 
-        FontSourceBase[] updatedFontSources = msArrayList.toArray(fontSources, new FontSourceBase[0]);
+        FontSourceBase[] updatedFontSources = (FontSourceBase[]) fontSources.toArray();
         FontSettings.getDefaultInstance().setFontsSources(updatedFontSources);
 
         doc.save(getArtifactsDir() + "WorkingWithFonts.GetSubstitutionWithoutSuffixes.pdf");

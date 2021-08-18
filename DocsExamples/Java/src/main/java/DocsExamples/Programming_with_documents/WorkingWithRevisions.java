@@ -1,36 +1,16 @@
-package DocsExamples.Programming_with_Documents;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Programming_with_documents;
 
 import DocsExamples.DocsExamplesBase;
-import org.testng.annotations.Test;
-import com.aspose.words.Document;
-import com.aspose.words.Body;
-import com.aspose.words.Paragraph;
-import com.aspose.words.Run;
-import java.util.Date;
-import com.aspose.ms.System.DateTime;
+import com.aspose.words.*;
 import org.testng.Assert;
-import com.aspose.words.ParagraphCollection;
-import com.aspose.ms.System.msConsole;
-import com.aspose.words.RevisionGroup;
-import com.aspose.words.CommentDisplayMode;
-import com.aspose.words.ShowInBalloons;
-import com.aspose.words.MeasurementUnits;
-import com.aspose.words.HorizontalAlignment;
-import com.aspose.words.Revision;
-import com.aspose.words.SaveFormat;
-import com.aspose.words.RevisionsView;
-import com.aspose.words.NodeType;
-import com.aspose.words.DocumentBuilder;
-import com.aspose.words.Node;
-import com.aspose.words.Shape;
-import com.aspose.words.ShapeType;
-import com.aspose.words.WrapType;
+import org.testng.annotations.Test;
+
+import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
-
-class WorkingWithRevisions extends DocsExamplesBase
+@Test
+public class WorkingWithRevisions extends DocsExamplesBase
 {
     @Test
     public void acceptRevisions() throws Exception
@@ -48,7 +28,7 @@ class WorkingWithRevisions extends DocsExamplesBase
         // We have three paragraphs, none of which registered as any type of revision
         // If we add/remove any content in the document while tracking revisions,
         // they will be displayed as such in the document and can be accepted/rejected.
-        doc.startTrackRevisionsInternal("John Doe", new Date());
+        doc.startTrackRevisions("John Doe", new Date());
 
         // This paragraph is a revision and will have the according "IsInsertRevision" flag set.
         para = body.appendParagraph("Paragraph 4. ");
@@ -68,7 +48,7 @@ class WorkingWithRevisions extends DocsExamplesBase
         // The delete revision paragraph is removed once we accept changes.
         doc.acceptAllRevisions();
         Assert.assertEquals(3, paragraphs.getCount());
-        Assert.That(para, Is.Empty);
+        Assert.assertNull(para); //was Is.Empty
 
         // Stopping the tracking of revisions makes this text appear as normal text.
         // Revisions are not counted when the document is changed.
@@ -89,9 +69,9 @@ class WorkingWithRevisions extends DocsExamplesBase
         for (int i = 0; i < paragraphs.getCount(); i++)
         {
             if (paragraphs.get(i).isMoveFromRevision())
-                System.out.println("The paragraph {0} has been moved (deleted).",i);
+                System.out.println(MessageFormat.format("The paragraph {0} has been moved (deleted).", i));
             if (paragraphs.get(i).isMoveToRevision())
-                System.out.println("The paragraph {0} has been moved (inserted).",i);
+                System.out.println(MessageFormat.format("The paragraph {0} has been moved (inserted).", i));
         }
         //ExEnd:GetRevisionTypes
     }
@@ -104,7 +84,7 @@ class WorkingWithRevisions extends DocsExamplesBase
 
         for (RevisionGroup group : doc.getRevisions().getGroups())
         {
-            System.out.println("{0}, {1}:",group.getAuthor(),group.getRevisionType());
+            System.out.println(MessageFormat.format("{0}, {1}:", group.getAuthor(),group.getRevisionType()));
             System.out.println(group.getText());
         }
         //ExEnd:GetRevisionGroups
@@ -157,7 +137,7 @@ class WorkingWithRevisions extends DocsExamplesBase
 
             System.out.println("Type: " + revision.getRevisionType());
             System.out.println("Author: " + revision.getAuthor());
-            System.out.println("Date: " + revision.getDateTimeInternal());
+            System.out.println("Date: " + revision.getDateTime());
             System.out.println("Revision text: " + revision.getParentNode().toString(SaveFormat.TEXT));
             System.out.println(groupText);
         }
@@ -202,10 +182,10 @@ class WorkingWithRevisions extends DocsExamplesBase
         builder.writeln("Paragraph 5");
         builder.writeln("Paragraph 6");
         Body body = doc.getFirstSection().getBody();
-        System.out.println("Paragraph count: {0}",body.getParagraphs().getCount());
+        System.out.println(MessageFormat.format("Paragraph count: {0}", body.getParagraphs().getCount()));
 
         // Start tracking revisions.
-        doc.startTrackRevisionsInternal("Author", new DateTime(2020, 12, 23, 14, 0, 0));
+        doc.startTrackRevisions("Author", new DateTime(2020, 12, 23, 14, 0, 0));
 
         // Generate revisions when moving a node from one location to another.
         Node node = body.getParagraphs().get(3);
@@ -222,7 +202,7 @@ class WorkingWithRevisions extends DocsExamplesBase
         doc.stopTrackRevisions();
 
         // There are 3 additional paragraphs in the move-from range.
-        System.out.println("Paragraph count: {0}",body.getParagraphs().getCount());
+        System.out.println(MessageFormat.format("Paragraph count: {0}", body.getParagraphs().getCount()));
         doc.save(getArtifactsDir() + "WorkingWithRevisions.MoveNodeInTrackedDocument.docx");
         //ExEnd:MoveNodeInTrackedDocument
     }
@@ -250,7 +230,7 @@ class WorkingWithRevisions extends DocsExamplesBase
         doc.getFirstSection().getBody().getFirstParagraph().appendChild(shape);
 
         // Get the document's shape collection which includes just the two shapes we added.
-        ArrayList<Shape> shapes = doc.getChildNodes(NodeType.SHAPE, true).<Shape>Cast().ToList();
+        ArrayList<Shape> shapes = doc.getChildNodes(NodeType.SHAPE, true).toArray(); //need cast to shape
         Assert.assertEquals(2, shapes.size());
 
         // Remove the first shape.

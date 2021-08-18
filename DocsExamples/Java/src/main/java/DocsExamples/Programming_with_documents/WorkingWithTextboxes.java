@@ -1,16 +1,13 @@
-package DocsExamples.Programming_with_Documents;
+package DocsExamples.Programming_with_documents;
 
-// ********* THIS FILE IS AUTO PORTED *********
-
-import org.testng.annotations.Test;
 import com.aspose.words.Document;
 import com.aspose.words.Shape;
 import com.aspose.words.ShapeType;
 import com.aspose.words.TextBox;
-import com.aspose.ms.System.msConsole;
+import org.testng.annotations.Test;
 
-
-class WorkingWithTextboxes
+@Test
+public class WorkingWithTextboxes
 {
     @Test
     public void createALink() throws Exception
@@ -71,7 +68,7 @@ class WorkingWithTextboxes
         textBox.setNext(null);
 
         // Break a link, which leads to this textbox.
-        textBox.getPrevious()?.BreakForwardLink();
+        textBox.getPrevious().breakForwardLink();
         //ExEnd:BreakALink
     }
 }

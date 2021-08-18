@@ -1,21 +1,11 @@
-package DocsExamples.Programming_with_Documents;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Programming_with_documents;
 
 import DocsExamples.DocsExamplesBase;
+import com.aspose.words.*;
 import org.testng.annotations.Test;
-import com.aspose.words.Document;
-import com.aspose.words.VbaProject;
-import com.aspose.words.VbaModule;
-import com.aspose.words.VbaModuleType;
-import com.aspose.ms.System.msConsole;
-import com.aspose.words.VbaReferenceCollection;
-import com.aspose.words.VbaReference;
-import com.aspose.words.VbaReferenceType;
-import com.aspose.ms.System.msString;
 
-
-class WorkingWithVba extends DocsExamplesBase
+@Test
+public class WorkingWithVba extends DocsExamplesBase
 {
     @Test
     public void createVbaProject() throws Exception
@@ -108,7 +98,7 @@ class WorkingWithVba extends DocsExamplesBase
         VbaReferenceCollection references = doc.getVbaProject().getReferences();
         for (int i = references.getCount() - 1; i >= 0; i--)
         {
-            VbaReference reference = doc.getVbaProject().getReferences().ElementAt(i);
+            VbaReference reference = doc.getVbaProject().getReferences().get(i);
 
             String path = getLibIdPath(reference);
             if (BROKEN_PATH.equals(path))
@@ -147,7 +137,7 @@ class WorkingWithVba extends DocsExamplesBase
     {
         if (libIdReference != null)
         {
-            String[] refParts = msString.split(libIdReference, '#');
+            String[] refParts = libIdReference.split("#");
             if (refParts.length > 3)
                 return refParts[3];
         }

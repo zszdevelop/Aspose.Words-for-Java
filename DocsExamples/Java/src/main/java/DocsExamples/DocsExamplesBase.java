@@ -140,7 +140,7 @@ public class DocsExamplesBase
     /**
      * Gets the path of the free fonts. Ends with a back slash.
      */
-    static String getFontsDir()
+    public static String getFontsDir()
     {
         return mFontsDir;
     }

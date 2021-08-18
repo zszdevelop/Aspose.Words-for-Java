@@ -1,6 +1,4 @@
-package DocsExamples.Programming_with_Documents;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Programming_with_documents;
 
 import DocsExamples.DocsExamplesBase;
 import org.testng.annotations.Test;
@@ -12,8 +10,8 @@ import com.aspose.words.FootnoteType;
 import com.aspose.words.EndnoteOptions;
 import com.aspose.words.FootnoteNumberingRule;
 
-
-class WorkingWithFootnotes extends DocsExamplesBase
+@Test
+public class WorkingWithFootnoteAndEndnote extends DocsExamplesBase
 {
     @Test
     public void setFootNoteColumns() throws Exception

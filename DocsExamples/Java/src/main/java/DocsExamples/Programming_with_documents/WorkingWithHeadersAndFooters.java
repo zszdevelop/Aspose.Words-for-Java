@@ -1,6 +1,4 @@
-package DocsExamples.Programming_with_Documents;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Programming_with_documents;
 
 import DocsExamples.DocsExamplesBase;
 import org.testng.annotations.Test;
@@ -19,8 +17,8 @@ import com.aspose.words.Orientation;
 import com.aspose.words.HeaderFooter;
 import com.aspose.words.Row;
 
-
-class WorkingWithHeadersAndFooters extends DocsExamplesBase
+@Test
+public class WorkingWithHeadersAndFooters extends DocsExamplesBase
 {
     @Test
     public void createHeaderFooter() throws Exception
