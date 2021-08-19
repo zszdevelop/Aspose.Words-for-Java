@@ -1,28 +1,17 @@
 package DocsExamples.Rendering_and_printing.Complex_examples_and_helpers;
 
-// ********* THIS FILE IS AUTO PORTED *********
-
 import DocsExamples.DocsExamplesBase;
+import com.aspose.pdf.internal.imaging.RectangleF;
+import com.aspose.words.*;
 import org.testng.annotations.Test;
-import com.aspose.words.Document;
-import com.aspose.ms.System.msConsole;
-import com.aspose.words.Paragraph;
-import com.aspose.words.LayoutEntityType;
-import com.aspose.words.LayoutCollector;
-import com.aspose.words.LayoutEnumerator;
-import com.aspose.words.Node;
-import com.aspose.words.NodeType;
+
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-import com.aspose.words.Row;
-import com.aspose.ms.System.Collections.msDictionary;
 import java.util.HashMap;
-import com.aspose.ms.System.Text.msStringBuilder;
-import com.aspose.ms.System.Collections.msArrayList;
-import com.aspose.ms.System.Drawing.RectangleF;
 import java.util.Iterator;
 
-
-class DocumentLayoutHelper extends DocsExamplesBase
+@Test
+public class DocumentLayoutHelper extends DocsExamplesBase
 {
     @Test
     public void wrapperToAccessLayoutEntities() throws Exception
@@ -43,10 +32,10 @@ class DocumentLayoutHelper extends DocsExamplesBase
 
         // Retrieve all the text that appears on the first page in plain text format (including headers and footers).
         String pageText = layoutDoc.Pages[0].Text;
-        msConsole.writeLine();
+        System.out.println();
 
         // Loop through each page in the document and print how many lines appear on each page.
-        for (RenderedPage page : layoutDoc.Pages !!Autoporter error: Undefined expression type )
+        for (RenderedPage page : layoutDoc.Pages)
         {
             LayoutCollection<LayoutEntity> lines = page.getChildEntities(LayoutEntityType.LINE, true);
             msConsole.WriteLine("Page {0} has {1} lines.", page.PageIndex, lines.Count);
@@ -116,7 +105,7 @@ public class RenderedDocument extends LayoutEntity
                 entities.add(entity);
 
             // There is no table entity in rendered output, so manually check if rows belong to a table node.
-            if (entity.Type == LayoutEntityType.ROW)
+            if (entity.mType == LayoutEntityType.ROW)
             {
                 RenderedRow row = (RenderedRow) entity;
                 if (row.Table == node)
@@ -140,7 +129,7 @@ public class RenderedDocument extends LayoutEntity
                 processLayoutElements(current);
                 mEnumerator.moveParent();
 
-                current = current.Parent;
+                current = current.mParent;
             }
         } while (mEnumerator.moveNext());
     }
@@ -155,14 +144,14 @@ public class RenderedDocument extends LayoutEntity
     {
         ArrayList<RenderedLine> collectedLines = new ArrayList<RenderedLine>();
 
-        for (RenderedPage page : Pages !!Autoporter error: Undefined expression type )
+        for (RenderedPage page : Pages)
         {
             for (LayoutEntity story : page.getChildEntities(type, false))
             {
-                for (RenderedLine line : (Iterable<RenderedLine>) story.getChildEntities(LayoutEntityType.LINE, true))
+                for (RenderedLine line : (Iterable<RenderedLine>) story.getChildEntities(LayoutEntityType.LINE, true).iterator())
                 {
                     collectedLines.add(line);
-                    for (RenderedSpan span : line.Spans !!Autoporter error: Undefined expression type )
+                    for (RenderedSpan span : line.Spans)
                     {
                         if (mLayoutToNodeLookup.containsKey(span.getLayoutObject()))
                         {
@@ -197,7 +186,7 @@ public class RenderedDocument extends LayoutEntity
             Object entity = mLayoutCollector.getEntity(node);
 
             if (entity != null)
-                msDictionary.add(mLayoutToNodeLookup, entity, node);
+                mLayoutToNodeLookup.put(entity, node);
         }
     }
 
@@ -212,12 +201,14 @@ public class RenderedDocument extends LayoutEntity
 /// Provides the base class for rendered elements of a document.
 /// </summary>
 public abstract class LayoutEntity
-{private mPageIndexmPageIndex;
+{
+    private mPageIndex;
 
     /// <summary>
     /// Returns bounding rectangle of the entity relative to the page top left corner (in points).
     /// </summary>
-    public RectangleF Rectangle => private mRectanglemRectangle;private mTypemType;
+    public RectangleF Rectangle => private mRectangle;
+    private mType;
 
     /// <summary>
     /// Exports the contents of the entity into a string in plain text format.
@@ -227,18 +218,18 @@ public abstract class LayoutEntity
         StringBuilder builder = new StringBuilder();
         for (LayoutEntity entity : mChildEntities)
         {
-            msStringBuilder.append(builder, entity.getText());
+            builder.append(entity.getText());
         }
 
         return builder.toString();
-    }private mParentmParent;
+    }private mParent;
 
     /// <summary>
     /// Returns the node that corresponds to this layout entity.  
     /// </summary>
     /// <remarks>This property may return null for spans that originate
     /// from Run nodes or nodes inside the header or footer.</remarks>
-    public /*virtual*/ Node ParentNode => private mParentNodemParentNode;
+    public /*virtual*/ Node ParentNode => private mParentNode;
 
     /// <summary>
     /// Internal method separate from ParentNode property to make code autoportable to VB.NET.
@@ -313,7 +304,7 @@ public abstract class LayoutEntity
 
         childEntity.mKind = it.getKind();
         childEntity.mPageIndex = it.getPageIndex();
-        childEntity.mRectangle = it.getRectangleInternal();
+        childEntity.mRectangle = it.getRectangle();
         childEntity.mType = it.getType();
         childEntity.setLayoutObject(it.getCurrent());
         childEntity.mParent = this;
@@ -354,7 +345,7 @@ public abstract class LayoutEntity
     protected String mKind;
     protected int mPageIndex;
     protected Node mParentNode;
-    protected RectangleF mRectangle;
+    protected Rectangle2D.Float mRectangle;
     protected /*LayoutEntityType*/int mType;
     protected LayoutEntity mParent;
     protected ArrayList<LayoutEntity> mChildEntities = new ArrayList<LayoutEntity>();

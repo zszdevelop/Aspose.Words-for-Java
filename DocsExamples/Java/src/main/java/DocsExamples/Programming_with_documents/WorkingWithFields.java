@@ -2,16 +2,18 @@ package DocsExamples.Programming_with_documents;
 
 import DocsExamples.DocsExamplesBase;
 import com.aspose.words.*;
+import com.aspose.words.net.System.Globalization.CultureInfo;
+import com.aspose.words.net.System.Globalization.DateTimeFormatInfo;
 import org.testng.annotations.Test;
 
 import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.Locale;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static DocsExamples.DocsExamplesBase.getArtifactsDir;
-import static DocsExamples.DocsExamplesBase.getMyDir;
 
 @Test
 public class WorkingWithFields extends DocsExamplesBase
@@ -95,7 +97,7 @@ public class WorkingWithFields extends DocsExamplesBase
             if (fieldStart.getFieldType() == FieldType.FIELD_MERGE_FIELD)
             {
                 MergeField mergeField = new MergeField(fieldStart);
-                mergeField.mName = mergeField.getName() + "_Renamed";
+                mergeField.setName(mergeField.getName() + "_Renamed");
             }
         }
 
@@ -107,10 +109,8 @@ public class WorkingWithFields extends DocsExamplesBase
     /// <summary>
     /// Represents a facade object for a merge field in a Microsoft Word document.
     /// </summary>
-    static class MergeField
-    {
-        MergeField(FieldStart fieldStart)
-        {
+    static class MergeField {
+        MergeField(FieldStart fieldStart) {
             if (fieldStart == null)
                 throw new NullPointerException("fieldStart");
             if (fieldStart.getFieldType() != FieldType.FIELD_MERGE_FIELD)
@@ -129,31 +129,29 @@ public class WorkingWithFields extends DocsExamplesBase
         /// <summary>
         /// Gets or sets the name of the merge field.
         /// </summary>
-        String getName() { return mName; }
-
-        private String mName; => ((FieldStart) mFieldStart).GetField().Result.Replace("«", "").Replace("»", "");
-            set
-            {
-                // Merge field name is stored in the field result which is a Run
-                // node between field separator and field end.
-                Run fieldResult = (Run) mFieldSeparator.NextSibling;
-                fieldResult.Text = String.Format("«{0}»", value);
-
-                // But sometimes the field result can consist of more than one run, delete these runs.
-                RemoveSameParent(fieldResult.NextSibling, mFieldEnd);
-
-                UpdateFieldCode(value);
-            }
+        String getName() {
+            return ((FieldStart) mFieldStart).getField().getResult().replace("«", "").replace("»", "");
         }
 
-        private void updateFieldCode(String fieldName)
-        {
+        void setName(String value) {
+            // Merge field name is stored in the field result which is a Run
+            // node between field separator and field end.
+            Run fieldResult = (Run) mFieldSeparator.getNextSibling();
+            fieldResult.setText(String.format("«{0}»", value));
+
+            // But sometimes the field result can consist of more than one run, delete these runs.
+            removeSameParent(fieldResult.getNextSibling(), mFieldEnd);
+
+            updateFieldCode(value);
+        }
+
+        private void updateFieldCode(String fieldName) {
             // Field code is stored in a Run node between field start and field separator.
             Run fieldCode = (Run) mFieldStart.getNextSibling();
 
-            Match match = gRegex.match(((FieldStart) mFieldStart).getField().getFieldCode());
+            Matcher match = pattern.matcher(((FieldStart) mFieldStart).getField().getFieldCode());
 
-            String newFieldCode = MessageFormat.format(" {0}{1} ", match.getGroups().get("start").getValue(), fieldName);
+            String newFieldCode = MessageFormat.format(" {0}{1} ", match.group("start"), fieldName);
             fieldCode.setText(newFieldCode);
 
             // But sometimes the field code can consist of more than one run, delete these runs.
@@ -164,25 +162,23 @@ public class WorkingWithFields extends DocsExamplesBase
         /// Removes nodes from start up to but not including the end node.
         /// Start and end are assumed to have the same parent.
         /// </summary>
-        private void removeSameParent(Node startNode, Node endNode)
-        {
+        private void removeSameParent(Node startNode, Node endNode) {
             if (endNode != null && startNode.getParentNode() != endNode.getParentNode())
                 throw new IllegalArgumentException("Start and end nodes are expected to have the same parent.");
 
             Node curChild = startNode;
-            while (curChild != null && curChild != endNode)
-            {
+            while (curChild != null && curChild != endNode) {
                 Node nextChild = curChild.getNextSibling();
                 curChild.remove();
                 curChild = nextChild;
             }
         }
 
-        private /*final*/ Node mFieldStart;
-        private /*final*/ Node mFieldSeparator;
-        private /*final*/ Node mFieldEnd;
+        private Node mFieldStart;
+        private Node mFieldSeparator;
+        private Node mFieldEnd;
 
-        private /*final*/ Pattern gRegex = Pattern.compile("\\s*(?<start>MERGEFIELD\\s|)(\\s|)(?<name>\\S+)\\s+");
+        private Pattern pattern = Pattern.compile("\\s*(?<start>MERGEFIELD\\s|)(\\s|)(?<name>\\S+)\\s+");
     }
     //ExEnd:MergeField
 
@@ -515,13 +511,13 @@ public class WorkingWithFields extends DocsExamplesBase
     //ExStart:FieldUpdateCultureProviderGetCulture
     private static class FieldUpdateCultureProvider implements IFieldUpdateCultureProvider
     {
-        public msCultureInfo getCulture(String name, Field field)
+        public CultureInfo getCulture(String name, Field field)
         {
-            switch (gStringSwitchMap.of(name))
+            switch (name)
             {
-                case /*"ru-RU"*/0:
-                    msCultureInfo culture = new msCultureInfo(name, false);
-                    msDateTimeFormatInfo format = culture.getDateTimeFormat();
+                case "ru-RU":
+                    CultureInfo culture = new CultureInfo(new Locale(name));
+                    DateTimeFormatInfo format = culture.getDateTimeFormat();
 
                     format.setMonthNames(new String[]
                     {
@@ -555,8 +551,8 @@ public class WorkingWithFields extends DocsExamplesBase
                     format.setShortTimePattern(PATTERN);
 
                     return culture;
-                case /*"en-US"*/1:
-                    return new msCultureInfo(name, false);
+                case "en-US":
+                    return new CultureInfo(new Locale(name));
                 default:
                     return null;
             }
@@ -586,7 +582,7 @@ public class WorkingWithFields extends DocsExamplesBase
         DocumentBuilder builder = new DocumentBuilder();
 
         FieldIf field = (FieldIf) builder.insertField("IF 1 = 1", null);
-        /*FieldIfComparisonResult*/int actualResult = field.evaluateCondition();
+        int actualResult = field.evaluateCondition();
 
         System.out.println(actualResult);
         //ExEnd:EvaluateIFCondition
@@ -600,21 +596,27 @@ public class WorkingWithFields extends DocsExamplesBase
 
         // Pass the appropriate parameters to convert all IF fields to text that are encountered only in the last 
         // paragraph of the document.
-        doc.getFirstSection().getBody().getLastParagraph().getRange().getFields().Where(f => f.Type == FieldType.FieldIf).ToList()
-            .ForEach(f => f.Unlink());
+        for (Field field : doc.getFirstSection().getBody().getLastParagraph().getRange().getFields()) {
+            if (field.getType() == FieldType.FIELD_IF) {
+                field.unlink();
+            }
+        }
 
         doc.save(getArtifactsDir() + "WorkingWithFields.TestFile.docx");
         //ExEnd:ConvertFieldsInParagraph
     }
 
     @Test
-    public void convertFieldsInDocument() throws Exception
-    {
+    public void convertFieldsInDocument() throws Exception {
         //ExStart:ConvertFieldsInDocument
         Document doc = new Document(getMyDir() + "Linked fields.docx");
 
         // Pass the appropriate parameters to convert all IF fields encountered in the document (including headers and footers) to text.
-        doc.getRange().getFields().Where(f => f.Type == FieldType.FieldIf).ToList().ForEach(f => f.Unlink());
+        for (Field field : doc.getRange().getFields()) {
+            if (field.getType() == FieldType.FIELD_IF) {
+                field.unlink();
+            }
+        }
 
         // Save the document with fields transformed to disk
         doc.save(getArtifactsDir() + "WorkingWithFields.ConvertFieldsInDocument.docx");
@@ -628,7 +630,11 @@ public class WorkingWithFields extends DocsExamplesBase
         Document doc = new Document(getMyDir() + "Linked fields.docx");
 
         // Pass the appropriate parameters to convert PAGE fields encountered to text only in the body of the first section.
-        doc.getFirstSection().getBody().getRange().getFields().Where(f => f.Type == FieldType.FieldPage).ToList().ForEach(f => f.Unlink());
+        for (Field field : doc.getRange().getFields()) {
+            if (field.getType() == FieldType.FIELD_PAGE) {
+                field.unlink();
+            }
+        }
 
         doc.save(getArtifactsDir() + "WorkingWithFields.ConvertFieldsInBody.docx");
         //ExEnd:ConvertFieldsInBody
@@ -644,23 +650,15 @@ public class WorkingWithFields extends DocsExamplesBase
         builder.insertField("MERGEFIELD Date");
 
         // Store the current culture so it can be set back once mail merge is complete.
-        msCultureInfo currentCulture = CurrentThread.getCurrentCulture();
+        CultureInfo currentCulture = new CultureInfo("");
         // Set to German language so dates and numbers are formatted using this culture during mail merge.
-        CurrentThread.setCurrentCulture(new msCultureInfo("de-DE"));
+        Locale.setDefault(new Locale("de-DE"));
 
         doc.getMailMerge().execute(new String[] { "Date" }, new Object[] { new Date() });
-        
-        CurrentThread.setCurrentCulture(currentCulture);
+
+        Locale.setDefault(currentCulture.getLocale(currentCulture));
         
         doc.save(getArtifactsDir() + "WorkingWithFields.ChangeLocale.docx");
         //ExEnd:ChangeLocale
     }
-
-	//JAVA-added for string switch emulation
-	private static final StringSwitchMap gStringSwitchMap = new StringSwitchMap
-	(
-		"ru-RU",
-		"en-US"
-	);
-
 }

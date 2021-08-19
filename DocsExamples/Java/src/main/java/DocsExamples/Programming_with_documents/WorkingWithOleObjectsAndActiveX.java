@@ -89,7 +89,7 @@ public class WorkingWithOleObjectsAndActiveX extends DocsExamplesBase
         String properties = "";
         for (Shape shape : (Iterable<Shape>) doc.getChildNodes(NodeType.SHAPE, true))
         {
-            if (shape.getOleFormat() instanceof null) break;
+            if (shape.getOleFormat() == null) break;
 
             OleControl oleControl = shape.getOleFormat().getOleControl();
             if (oleControl.isForms2OleControl())
@@ -104,7 +104,7 @@ public class WorkingWithOleObjectsAndActiveX extends DocsExamplesBase
                     properties = properties + "\nChildNodes: " + checkBox.getChildNodes();
                 }
 
-                properties = msString.plusEqOperator(properties, "\n");
+                properties += "\n";
             }
         }
 

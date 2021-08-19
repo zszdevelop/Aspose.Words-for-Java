@@ -51,9 +51,12 @@ public class WorkingWithHyphenation extends DocsExamplesBase
             Document document = new Document(getMyDir() + "German text.docx");
             document.save(getArtifactsDir() + "WorkingWithHyphenation.HyphenationCallback.pdf");
         }
-        catch (Exception e) when (e.Message.StartsWith("Missing hyphenation dictionary"))
+        catch (Exception e)
         {
-            System.out.println(e.Message);
+            if (e.getMessage().startsWith("Missing hyphenation dictionary")) {
+            System.out.println(e.getMessage());
+        }
+
         }
         finally
         {

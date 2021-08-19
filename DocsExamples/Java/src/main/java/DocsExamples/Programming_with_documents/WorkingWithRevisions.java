@@ -6,8 +6,8 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.*;
+import java.util.List;
 
 @Test
 public class WorkingWithRevisions extends DocsExamplesBase
@@ -184,8 +184,13 @@ public class WorkingWithRevisions extends DocsExamplesBase
         Body body = doc.getFirstSection().getBody();
         System.out.println(MessageFormat.format("Paragraph count: {0}", body.getParagraphs().getCount()));
 
+        Calendar calendar = new GregorianCalendar(2020, Calendar.DECEMBER, 23);
+        calendar.set(Calendar.HOUR, 14);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+
         // Start tracking revisions.
-        doc.startTrackRevisions("Author", new DateTime(2020, 12, 23, 14, 0, 0));
+        doc.startTrackRevisions("Author", calendar.getTime());
 
         // Generate revisions when moving a node from one location to another.
         Node node = body.getParagraphs().get(3);
@@ -230,7 +235,7 @@ public class WorkingWithRevisions extends DocsExamplesBase
         doc.getFirstSection().getBody().getFirstParagraph().appendChild(shape);
 
         // Get the document's shape collection which includes just the two shapes we added.
-        ArrayList<Shape> shapes = doc.getChildNodes(NodeType.SHAPE, true).toArray(); //need cast to shape
+        List<Shape> shapes = (List<Shape>) doc.getChildNodes(NodeType.SHAPE, true).iterator();
         Assert.assertEquals(2, shapes.size());
 
         // Remove the first shape.
@@ -247,8 +252,8 @@ public class WorkingWithRevisions extends DocsExamplesBase
         // The document has one shape that was moved, but shape move revisions will have two instances of that shape.
         // One will be the shape at its arrival destination and the other will be the shape at its original location.
         doc = new Document(getMyDir() + "Revision shape.docx");
-        
-        shapes = doc.getChildNodes(NodeType.SHAPE, true).<Shape>Cast().ToList();
+
+        shapes = (List<Shape>) doc.getChildNodes(NodeType.SHAPE, true).iterator();
         Assert.assertEquals(2, shapes.size());
 
         // This is the move to revision, also the shape at its arrival destination.

@@ -7,6 +7,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.awt.*;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -434,9 +435,8 @@ public class WorkingWithFonts extends DocsExamplesBase
 
     static class ResourceSteamFontSource extends StreamFontSource
     {
-        public /*override*/ InputStream openFontDataStream()
-        {
-            return Assembly.GetExecutingAssembly().GetManifestResourceStream("resourceName");
+        public InputStream openFontDataStream() throws IOException {
+            return getClass().getClassLoader().getResource("resourceName").openStream();
         }
     }
     //ExEnd:ResourceSteamFontSourceExample
