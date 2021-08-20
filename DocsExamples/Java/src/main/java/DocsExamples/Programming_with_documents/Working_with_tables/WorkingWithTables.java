@@ -6,12 +6,21 @@ import com.aspose.words.net.System.Data.DataColumn;
 import com.aspose.words.net.System.Data.DataRow;
 import com.aspose.words.net.System.Data.DataSet;
 import com.aspose.words.net.System.Data.DataTable;
+import jdk.nashorn.internal.runtime.Undefined;
 import org.testng.annotations.Test;
+import org.w3c.dom.Attr;
 
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathFactory;
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.io.ByteArrayOutputStream;
 import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 @Test
 public class WorkingWithTables extends DocsExamplesBase
@@ -58,9 +67,13 @@ public class WorkingWithTables extends DocsExamplesBase
     /// </summary>
     static class Column
     {
-        private Column(Table table, int columnIndex)
-        {
-            mTable = throw new IllegalArgumentException("table");
+        private Column(Table table, int columnIndex) {
+            if (table != null) {
+                mTable = table;
+            } else {
+                throw new IllegalArgumentException("table");
+            }
+
             mColumnIndex = columnIndex;
         }
 
@@ -70,14 +83,18 @@ public class WorkingWithTables extends DocsExamplesBase
         public static Column fromIndex(Table table, int columnIndex)
         {
             return new Column(table, columnIndex);
-        }private GetColumnCellsgetColumnCells().private ToArraytoArray();
+        }
+
+        private Cell[] getCells() {
+            return (Cell[]) getColumnCells().toArray();
+        }
 
         /// <summary>
         /// Returns the index of the given cell in the column.
         /// </summary>
         public int indexOf(Cell cell)
         {
-            return GetColumnCells().IndexOf(cell);
+            return getColumnCells().indexOf(cell);
         }
 
         /// <summary>
@@ -85,7 +102,7 @@ public class WorkingWithTables extends DocsExamplesBase
         /// </summary>
         public Column insertColumnBefore()
         {
-            Cell[] columnCells = Cells;
+            Cell[] columnCells = getCells();
 
             if (columnCells.length == 0)
                 throw new IllegalArgumentException("Column must not be empty");
@@ -98,7 +115,7 @@ public class WorkingWithTables extends DocsExamplesBase
             Column column = new Column(columnCells[0].getParentRow().getParentTable(), mColumnIndex);
 
             // We want to make sure that the cells are all valid to work with (have at least one paragraph).
-            for (Cell cell : column.Cells !!Autoporter error: Undefined expression type )
+            for (Cell cell : column.getCells())
                 cell.ensureMinimum();
 
             // Increase the index which this column represents since there is now one extra column in front.
@@ -112,7 +129,7 @@ public class WorkingWithTables extends DocsExamplesBase
         /// </summary>
         public void remove()
         {
-            for (Cell cell : Cells !!Autoporter error: Undefined expression type )
+            for (Cell cell : getCells())
                 cell.remove();
         }
 
@@ -123,8 +140,8 @@ public class WorkingWithTables extends DocsExamplesBase
         {
             StringBuilder builder = new StringBuilder();
 
-            for (Cell cell : Cells !!Autoporter error: Undefined expression type )
-                msStringBuilder.append(builder, cell.toString(SaveFormat.TEXT));
+            for (Cell cell : getCells())
+                builder.append(cell.toString(SaveFormat.TEXT));
 
             return builder.toString();
         }
@@ -136,7 +153,7 @@ public class WorkingWithTables extends DocsExamplesBase
         {
             ArrayList<Cell> columnCells = new ArrayList<Cell>();
 
-            for (Row row : (Iterable<Row>) mTable.getRows())
+            for (Row row : mTable.getRows())
             {
                 Cell cell = row.getCells().get(mColumnIndex);
                 if (cell != null)
@@ -147,7 +164,7 @@ public class WorkingWithTables extends DocsExamplesBase
         }
 
         private int mColumnIndex;
-        private /*final*/ Table mTable;
+        private Table mTable;
     }
     //ExEnd:ColumnClass
 
@@ -237,14 +254,14 @@ public class WorkingWithTables extends DocsExamplesBase
         {
             // Store the original values of these properties before changing them.
             boolean boldValue = builder.getFont().getBold();
-            /*ParagraphAlignment*/int paragraphAlignmentValue = builder.getParagraphFormat().getAlignment();
+            int paragraphAlignmentValue = builder.getParagraphFormat().getAlignment();
 
             // Format the heading row with the appropriate properties.
             builder.getFont().setBold(true);
             builder.getParagraphFormat().setAlignment(ParagraphAlignment.CENTER);
 
             // Create a new row and insert the name of each column into the first row of the table.
-            for (DataColumn column : (Iterable<DataColumn>) dataTable.getColumns())
+            for (DataColumn column : dataTable.getColumns())
             {
                 builder.insertCell();
                 builder.writeln(column.getColumnName());
@@ -264,12 +281,13 @@ public class WorkingWithTables extends DocsExamplesBase
                 // Insert a new cell for each object.
                 builder.insertCell();
 
-                switch (gStringSwitchMap.of(item.getClass().getName()))
+                switch (item.getClass().getName())
                 {
-                    case /*"DateTime"*/0:
+                    case "DateTime":
                         // Define a custom format for dates and times.
-                        DateTime dateTime = (DateTime) item;
-                        builder.write(dateTime.toString("MMMM d, yyyy"));
+                        Date dateTime = (Date) item;
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMMM d, yyyy");
+                        builder.write(simpleDateFormat.format(dateTime));
                         break;
                     default:
                         // By default any other item will be inserted as text.
@@ -378,7 +396,7 @@ public class WorkingWithTables extends DocsExamplesBase
         table.autoFit(AutoFitBehavior.FIXED_COLUMN_WIDTHS);
 
         Cell cell = new Cell(doc);
-        cell.getCellFormat().getShading().setBackgroundPatternColor(Color.LightBlue);
+        cell.getCellFormat().getShading().setBackgroundPatternColor(Color.BLUE);
         cell.getCellFormat().setWidth(80.0);
         cell.appendChild(new Paragraph(doc));
         cell.getFirstParagraph().appendChild(new Run(doc, "Row 1, Cell 1 Text"));
@@ -797,28 +815,28 @@ public class WorkingWithTables extends DocsExamplesBase
         Table parentTable = startCell.getParentRow().getParentTable();
 
         // Find the row and cell indices for the start and end cell.
-        /*Point*/long startCellPos = new Point2D.Float(startCell.getParentRow().indexOf(startCell),
+        Point startCellPos = new Point(startCell.getParentRow().indexOf(startCell),
             parentTable.indexOf(startCell.getParentRow()));
-        /*Point*/long endCellPos = msPoint.ctor(endCell.getParentRow().indexOf(endCell), parentTable.indexOf(endCell.getParentRow()));
+        Point endCellPos = new Point(endCell.getParentRow().indexOf(endCell), parentTable.indexOf(endCell.getParentRow()));
 
         // Create a range of cells to be merged based on these indices.
         // Inverse each index if the end cell is before the start cell.
-        Rectangle mergeRange = new Rectangle(Math.min(msPoint.getX(startCellPos), msPoint.getX(endCellPos)),
-            Math.min(msPoint.getY(startCellPos), msPoint.getY(endCellPos)),
-            Math.abs(msPoint.getX(endCellPos) - msPoint.getX(startCellPos)) + 1, Math.abs(msPoint.getY(endCellPos) - msPoint.getY(startCellPos)) + 1);
+        Rectangle mergeRange = new Rectangle(Math.min(startCellPos.x, endCellPos.y),
+            Math.min(startCellPos.y, endCellPos.y),
+            Math.abs(endCellPos.x - startCellPos.x) + 1, Math.abs(endCellPos.y - startCellPos.y) + 1);
 
-        for (Row row : (Iterable<Row>) parentTable.getRows())
+        for (Row row : parentTable.getRows())
         {
-            for (Cell cell : (Iterable<Cell>) row.getCells())
+            for (Cell cell : row.getCells())
             {
-                /*Point*/long currentPos = msPoint.ctor(row.indexOf(cell), parentTable.indexOf(row));
+                Point currentPos = new Point(row.indexOf(cell), parentTable.indexOf(row));
 
                 // Check if the current cell is inside our merge range, then merge it.
                 if (mergeRange.contains(currentPos))
                 {
-                    cell.getCellFormat().setHorizontalMerge(msPoint.getX(currentPos) == mergeRange.getX() ? CellMerge.FIRST : CellMerge.PREVIOUS);
+                    cell.getCellFormat().setHorizontalMerge(currentPos.x == mergeRange.getX() ? CellMerge.FIRST : CellMerge.PREVIOUS);
 
-                    cell.getCellFormat().setVerticalMerge(msPoint.getY(currentPos) == mergeRange.getY() ? CellMerge.FIRST : CellMerge.PREVIOUS);
+                    cell.getCellFormat().setVerticalMerge(currentPos.y == mergeRange.getY() ? CellMerge.FIRST : CellMerge.PREVIOUS);
                 }
             }
         }
@@ -831,9 +849,9 @@ public class WorkingWithTables extends DocsExamplesBase
     /// </summary>
     public static class TableInfo
     {
-        public ArrayList<RowInfo> getRows() { return mRows; };
+        public ArrayList<RowInfo> getRows() { return mRows; }
 
-        private ArrayList<RowInfo> mRows; = /*new*/ ArrayList<RowInfo>list();
+        private ArrayList<RowInfo> mRows = new ArrayList<>();
     }
 
     /// <summary>
@@ -843,7 +861,7 @@ public class WorkingWithTables extends DocsExamplesBase
     {
         public ArrayList<CellInfo> getCells() { return mCells; };
 
-        private ArrayList<CellInfo> mCells; = /*new*/ ArrayList<CellInfo>list();
+        private ArrayList<CellInfo> mCells = new ArrayList<>();
     }
 
     /// <summary>
@@ -873,61 +891,59 @@ public class WorkingWithTables extends DocsExamplesBase
         /// <param name="doc">
         /// Is document which we should parse.
         /// </param>
-        public SpanVisitor(Document doc) throws Exception
-        {
+        public SpanVisitor(Document doc) throws Exception {
             mWordTables = doc.getChildNodes(NodeType.TABLE, true);
 
             // We will parse HTML to determine the rowspan and colspan of each cell.
-            MemoryStream htmlStream = new MemoryStream();
+            ByteArrayOutputStream htmlStream = new ByteArrayOutputStream();
 
             HtmlSaveOptions options = new HtmlSaveOptions();
             {
-                options.setImagesFolder(Path.getTempPath());
+                options.setImagesFolder(System.getProperty("java.io.tmpdir"));
             }
 
             doc.save(htmlStream, options);
 
+            TableInfo tableInf = new TableInfo();
+            RowInfo rowInf = new RowInfo();
+
             // Load HTML into the XML document.
-            org.w3c.dom.Document xmlDoc = XmlUtilPal.newXmlDocument();
-            htmlStream.setPosition(0);
-            xmlDoc.Load(htmlStream);
+            DocumentBuilderFactory documentBuildFactory = DocumentBuilderFactory.newInstance();
+            javax.xml.parsers.DocumentBuilder documentBuilder = documentBuildFactory.newDocumentBuilder();
+            org.w3c.dom.Document document =
+                    documentBuilder.parse(htmlStream.toString());
 
             // Get collection of tables in the HTML document.
-            org.w3c.dom.NodeList tables = xmlDoc.getDocumentElement().SelectNodes("// Table");
+            XPath xPath = XPathFactory.newInstance().newXPath();
+            org.w3c.dom.NodeList tables = (org.w3c.dom.NodeList) xPath.evaluate("//Table",
+                    doc, XPathConstants.NODESET);
 
-            for (org.w3c.dom.Node table : (Iterable<org.w3c.dom.Node>) tables)
-            {
-                TableInfo tableInf = new TableInfo();
-                // Get collection of rows in the table.
-                org.w3c.dom.NodeList rows = table.SelectNodes("tr");
+            // Get collection of rows in the table.
+            org.w3c.dom.NodeList rows = (org.w3c.dom.NodeList) xPath.evaluate("tr",
+                    tables, XPathConstants.NODESET);
 
-                for (org.w3c.dom.Node row : (Iterable<org.w3c.dom.Node>) rows)
-                {
-                    RowInfo rowInf = new RowInfo();
-                    // Get collection of cells.
-                    org.w3c.dom.NodeList cells = row.SelectNodes("td");
+            // Get collection of cells.
+            org.w3c.dom.NodeList cells =
+                    (org.w3c.dom.NodeList) xPath.evaluate("td", rows, XPathConstants.NODESET);
 
-                    for (org.w3c.dom.Node cell : (Iterable<org.w3c.dom.Node>) cells)
-                    {
-                        // Determine row span and colspan of the current cell.
-                        org.w3c.dom.Attr colSpanAttr = cell.getAttributes().getNamedItem("colspan");
-                        org.w3c.dom.Attr rowSpanAttr = cell.getAttributes().getNamedItem("rowspan");
+            for (org.w3c.dom.Node cell : (Iterable<org.w3c.dom.Node>) cells) {
+                // Determine row span and colspan of the current cell.
+                org.w3c.dom.Attr colSpanAttr = (Attr) cell.getAttributes().getNamedItem("colspan");
+                org.w3c.dom.Attr rowSpanAttr = (Attr) cell.getAttributes().getNamedItem("rowspan");
 
-                        int colSpan = colSpanAttr == null ? 0 : Integer.parseInt(colSpanAttr.getNodeValue());
-                        int rowSpan = rowSpanAttr == null ? 0 : Integer.parseInt(rowSpanAttr.getNodeValue());
+                int colSpan = colSpanAttr == null ? 0 : Integer.parseInt(colSpanAttr.getNodeValue());
+                int rowSpan = rowSpanAttr == null ? 0 : Integer.parseInt(rowSpanAttr.getNodeValue());
 
-                        CellInfo cellInf = new CellInfo(colSpan, rowSpan);
-                        rowInf.getCells().add(cellInf);
-                    }
-
-                    tableInf.getRows().add(rowInf);
-                }
-
-                mTables.add(tableInf);
+                CellInfo cellInf = new CellInfo(colSpan, rowSpan);
+                rowInf.getCells().add(cellInf);
             }
+
+            tableInf.getRows().add(rowInf);
+
+            mTables.add(tableInf);
         }
 
-        public /*override*/ /*VisitorAction*/int visitCellStart(Cell cell)
+        public int visitCellStart(Cell cell)
         {
             int tabIdx = mWordTables.indexOf(cell.getParentRow().getParentTable());
             int rowIdx = cell.getParentRow().getParentTable().indexOf(cell.getParentRow());
@@ -943,13 +959,13 @@ public class WorkingWithTables extends DocsExamplesBase
                 rowSpan = mTables.get(tabIdx).getRows().get(rowIdx).getCells().get(cellIdx).getRowSpan();
             }
 
-            msConsole.writeLine("{0}.{1}.{2} colspan={3}\t rowspan={4}", tabIdx, rowIdx, cellIdx, colSpan, rowSpan);
+            System.out.println(MessageFormat.format("{0}.{1}.{2} colspan={3}\t rowspan={4}", tabIdx, rowIdx, cellIdx, colSpan, rowSpan));
 
             return VisitorAction.CONTINUE;
         }
 
-        private /*final*/ ArrayList<TableInfo> mTables = new ArrayList<TableInfo>();
-        private /*final*/ NodeCollection mWordTables;
+        private ArrayList<TableInfo> mTables = new ArrayList<>();
+        private NodeCollection mWordTables;
     }
     //ExEnd:HorizontalAndVerticalMergeHelperClasses
 
@@ -1025,19 +1041,19 @@ public class WorkingWithTables extends DocsExamplesBase
         // Insert an absolute sized cell.
         builder.insertCell();
         builder.getCellFormat().setPreferredWidth(PreferredWidth.fromPoints(40.0));
-        builder.getCellFormat().getShading().setBackgroundPatternColor(Color.LightYellow);
+        builder.getCellFormat().getShading().setBackgroundPatternColor(Color.YELLOW);
         builder.writeln("Cell at 40 points width");
 
         // Insert a relative (percent) sized cell.
         builder.insertCell();
         builder.getCellFormat().setPreferredWidth(PreferredWidth.fromPercent(20.0));
-        builder.getCellFormat().getShading().setBackgroundPatternColor(Color.LightBlue);
+        builder.getCellFormat().getShading().setBackgroundPatternColor(Color.BLUE);
         builder.writeln("Cell at 20% width");
 
         // Insert a auto sized cell.
         builder.insertCell();
         builder.getCellFormat().setPreferredWidth(PreferredWidth.AUTO);
-        builder.getCellFormat().getShading().setBackgroundPatternColor(msColor.getLightGreen());
+        builder.getCellFormat().getShading().setBackgroundPatternColor(Color.GREEN);
         builder.writeln(
             "Cell automatically sized. The size of this cell is calculated from the table preferred width.");
         builder.writeln("In this case the cell will fill up the rest of the available space.");
@@ -1089,17 +1105,17 @@ public class WorkingWithTables extends DocsExamplesBase
         //ExStart:GetFloatingTablePosition
         Document doc = new Document(getMyDir() + "Table wrapped by text.docx");
         
-        for (Table table : (Iterable<Table>) doc.getFirstSection().getBody().getTables())
+        for (Table table : doc.getFirstSection().getBody().getTables())
         {
             // If the table is floating type, then print its positioning properties.
             if (table.getTextWrapping() == TextWrapping.AROUND)
             {
                 System.out.println(table.getHorizontalAnchor());
                 System.out.println(table.getVerticalAnchor());
-                msConsole.writeLine(table.getAbsoluteHorizontalDistance());
-                msConsole.writeLine(table.getAbsoluteVerticalDistance());
-                msConsole.writeLine(table.getAllowOverlap());
-                msConsole.writeLine(table.getAbsoluteHorizontalDistance());
+                System.out.println(table.getAbsoluteHorizontalDistance());
+                System.out.println(table.getAbsoluteVerticalDistance());
+                System.out.println(table.getAllowOverlap());
+                System.out.println(table.getAbsoluteHorizontalDistance());
                 System.out.println(table.getRelativeVerticalAlignment());
                 System.out.println("..............................");
             }
@@ -1134,11 +1150,4 @@ public class WorkingWithTables extends DocsExamplesBase
         doc.save(getArtifactsDir() + "WorkingWithTables.SetFloatingTablePosition.docx");
         //ExEnd:SetRelativeHorizontalOrVerticalPosition
     }
-
-	//JAVA-added for string switch emulation
-	private static final StringSwitchMap gStringSwitchMap = new StringSwitchMap
-	(
-		"DateTime"
-	);
-
 }

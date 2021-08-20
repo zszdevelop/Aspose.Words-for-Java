@@ -5,12 +5,17 @@ import com.aspose.words.Shape;
 import com.aspose.words.*;
 import com.aspose.words.net.System.Data.DataRow;
 import com.aspose.words.net.System.Data.DataTable;
+import com.aspose.words.net.System.Data.DataTableReader;
 import com.aspose.words.net.System.Data.IDataReader;
 import com.aspose.words.ref.Ref;
 import org.testng.annotations.Test;
 
 import java.awt.*;
 import java.io.ByteArrayInputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.text.MessageFormat;
 
 @Test
@@ -225,16 +230,19 @@ public class WorkingWithFields extends DocsExamplesBase
 
         doc.getMailMerge().setFieldMergingCallback(new HandleMergeImageFieldFromBlob());
 
-        String connString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + getDatabaseDir() + "Northwind.mdb";
-        OleDbConnection conn = new OleDbConnection(connString);
-        conn.Open();
+        String connString = "jdbc:ucanaccess://" + getDatabaseDir() + "Northwind.mdb";
 
-        OleDbCommand cmd = new OleDbCommand("SELECT * FROM Employees", conn);
-        IDataReader dataReader = cmd.ExecuteReader();
+        Connection connection = DriverManager.getConnection(connString, "Admin", "");
+
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM Employees");
+
+        DataTable dataTable = new DataTable(resultSet, "Employees");
+        IDataReader dataReader = new DataTableReader(dataTable);
 
         doc.getMailMerge().executeWithRegions(dataReader, "Employees");
 
-        conn.Close();
+        connection.close();
         
         doc.save(getArtifactsDir() + "WorkingWithFields.MailMergeImageFromBlob.docx");
         //ExEnd:MailMergeImageFromBlob

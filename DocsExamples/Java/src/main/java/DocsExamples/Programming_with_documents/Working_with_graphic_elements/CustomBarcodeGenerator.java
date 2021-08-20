@@ -194,10 +194,13 @@ public class CustomBarcodeGenerator extends DocsExamplesBase implements IBarcode
     /// Allows leading sign.
     /// Allows leading and trailing spaces.
     /// </summary>
-    public static int tryParseInt(String s)
-    {
-        return Double.parseDouble(s)
-            ? castDoubleToInt(temp) : Integer.MIN_VALUE;
+    public static int tryParseInt(String s) {
+        try {
+            double value = Double.parseDouble(s);
+            return castDoubleToInt(value);
+        } catch (NumberFormatException e) {
+            return Integer.MIN_VALUE;
+        }
     }
 
     /// <summary>
@@ -215,9 +218,11 @@ public class CustomBarcodeGenerator extends DocsExamplesBase implements IBarcode
     /// </summary>
     public static int tryParseHex(String s)
     {
-        return Integer.parseInt(s)
-            ? result
-            : Integer.MIN_VALUE;
+        try {
+            return Integer.parseInt(s);
+        } catch (NumberFormatException e) {
+            return Integer.MIN_VALUE;
+        }
     }
 }
 //ExEnd:GenerateACustomBarCodeImage_IBarcodeGenerator

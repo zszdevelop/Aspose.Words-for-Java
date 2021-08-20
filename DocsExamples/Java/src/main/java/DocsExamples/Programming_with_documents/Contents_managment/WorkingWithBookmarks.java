@@ -39,14 +39,13 @@ public class WorkingWithBookmarks extends DocsExamplesBase
     }
 
     @Test
-    public void bookmarkTableColumns() throws Exception
-    {
+    public void bookmarkTableColumns() throws Exception {
         //ExStart:BookmarkTable
         Document doc = new Document();
         DocumentBuilder builder = new DocumentBuilder(doc);
 
         builder.startTable();
-        
+
         builder.insertCell();
 
         builder.startBookmark("MyBookmark");
@@ -66,19 +65,21 @@ public class WorkingWithBookmarks extends DocsExamplesBase
 
         builder.endRow();
         builder.endTable();
-        
+
         builder.endBookmark("MyBookmark");
         //ExEnd:BookmarkTable
 
         //ExStart:BookmarkTableColumns
-        for (Bookmark bookmark : doc.getRange().getBookmarks())
-        {
+        for (Bookmark bookmark : doc.getRange().getBookmarks()) {
             System.out.println(MessageFormat.format("Bookmark: {0}{1}", bookmark.getName(), bookmark.isColumn() ? " (Column)" : ""));
 
-            if (bookmark.isColumn())
-            {
-                if (Row.class.isInstance(bookmark.getBookmarkStart()) && bookmark.getFirstColumn() < row.getCells().toArray().length)
-                    System.out.println(row.getCells().get(bookmark.getFirstColumn()).getText().trim());
+            if (bookmark.isColumn()) {
+                if (Row.class.isInstance(bookmark.getBookmarkStart().getAncestor(NodeType.ROW))) {
+                    Row row = (Row) bookmark.getBookmarkStart().getAncestor(NodeType.ROW);
+                    if (bookmark.getFirstColumn() < row.getCells().toArray().length) {
+                        System.out.println(row.getCells().get(bookmark.getFirstColumn()).getText().trim());
+                    }
+                }
             }
         }
         //ExEnd:BookmarkTableColumns

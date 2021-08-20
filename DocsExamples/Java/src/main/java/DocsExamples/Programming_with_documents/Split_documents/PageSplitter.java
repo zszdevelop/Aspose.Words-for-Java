@@ -3,15 +3,13 @@ package DocsExamples.Programming_with_documents.Split_documents;
 import DocsExamples.DocsExamplesBase;
 import com.aspose.words.*;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.testng.annotations.Test;
 
+import java.io.File;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Stream;
+import java.util.*;
+import java.util.regex.Pattern;
 
 @Test
 public class PageSplitter extends DocsExamplesBase
@@ -44,13 +42,28 @@ public class PageSplitter extends DocsExamplesBase
 
     public void splitAllDocumentsToPages(String folderName) throws Exception
     {
-        ArrayList<String> fileNames = Directory.getFiles(folderName, "*.doc", SearchOption.TOP_DIRECTORY_ONLY)
-            .Where(item => item.EndsWith(".doc")).ToList();
+        ArrayList<String> fileNames = directoryGetFiles(folderName, "*.doc");
 
         for (String fileName : fileNames)
         {
             splitDocumentToPages(fileName);
         }
+    }
+
+    static ArrayList<String> directoryGetFiles(final String dirname, final String filenamePattern) {
+        File dirFile = new File(dirname);
+        Pattern re = Pattern.compile(filenamePattern.replace("*", ".*").replace("?", ".?"));
+        ArrayList<String> dirFiles = new ArrayList<>();
+        for (File file : dirFile.listFiles()) {
+            if (file.isDirectory()) {
+                dirFiles.addAll(directoryGetFiles(file.getPath(), filenamePattern));
+            } else {
+                if (re.matcher(file.getName()).matches()) {
+                    dirFiles.add(file.getPath());
+                }
+            }
+        }
+        return dirFiles;
     }
 }
 
@@ -59,7 +72,7 @@ public class PageSplitter extends DocsExamplesBase
 /// </summary>
 class DocumentPageSplitter
 {
-    private /*final*/ PageNumberFinder pageNumberFinder;
+    private PageNumberFinder pageNumberFinder;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="DocumentPageSplitter"/> class.
@@ -70,6 +83,10 @@ class DocumentPageSplitter
     public DocumentPageSplitter(Document source) throws Exception
     {
         pageNumberFinder = PageNumberFinderFactory.create(source);
+    }
+
+    private Document getDocument() {
+        return pageNumberFinder.getDocument();
     }
 
     /// <summary>
@@ -98,7 +115,7 @@ class DocumentPageSplitter
     /// The <see cref="Document"/>.
     /// </returns>
     public Document getDocumentOfPageRange(int startIndex, int endIndex) throws Exception {
-        Document result = (Document) pageNumberFinder.Document.deepClone(false);
+        Document result = (Document) getDocument().deepClone(false);
         for (Node section : pageNumberFinder.retrieveAllNodesOnPages(startIndex, endIndex, NodeType.SECTION))
         {
             result.appendChild(result.importNode(section, true));
@@ -115,9 +132,9 @@ class PageNumberFinder
 {
     // Maps node to a start/end page numbers.
     // This is used to override baseline page numbers provided by the collector when the document is split.
-    private /*final*/ Map<Node, Integer> nodeStartPageLookup = new HashMap<Node, Integer>();
-    private /*final*/ Map<Node, Integer> nodeEndPageLookup = new HashMap<Node, Integer>();
-    private /*final*/ LayoutCollector collector;
+    private Map<Node, Integer> nodeStartPageLookup = new HashMap<>();
+    private Map<Node, Integer> nodeEndPageLookup = new HashMap<>();
+    private LayoutCollector collector;
 
     // Maps page number to a list of nodes found on that page.
     private Map<Integer, ArrayList<Node>> reversePageLookup;
@@ -129,6 +146,11 @@ class PageNumberFinder
     public PageNumberFinder(LayoutCollector collector)
     {
         this.collector = collector;
+    }
+
+    public Document getDocument()
+    {
+        return collector.getDocument();
     }
 
     /// <summary>
@@ -667,10 +689,11 @@ class SplitPageBreakCorrector
             return;
         }
 
-        Body lastBody = section.getChildNodes();
+        Body lastBody = (Body) Arrays.stream(new Iterator[]{section.getChildNodes().iterator()}).reduce((first, second) -> second)
+            .orElse(null);
 
-        Run run = lastBody.getChildNodes(NodeType.Run, true).OfType<Run>()
-            .FirstOrDefault(p => p.Text.EndsWith(PageBreakStr));
+        RunCollection runs = (RunCollection) lastBody.getChildNodes(NodeType.RUN, true).iterator();
+        Run run  = Arrays.stream(runs.toArray()).filter(p -> p.getText().endsWith(PAGE_BREAK_STR)).findFirst().get();
 
         if (run != null)
         {

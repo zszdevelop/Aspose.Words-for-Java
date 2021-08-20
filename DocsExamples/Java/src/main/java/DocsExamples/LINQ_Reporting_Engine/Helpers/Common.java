@@ -35,9 +35,11 @@ public class Common extends DocsExamplesBase
         for (Manager manager : getManagers())
         {
             for (Contract contract : manager.getContracts())
-                return (Iterable<Client>) contract.getClient();
+               return (Iterable<Client>) contract.getClient();
         }
         //ExEnd:GetClients
+
+        return null;
     }
 
     /// <summary>
@@ -148,9 +150,12 @@ public class Common extends DocsExamplesBase
 
         thirdManager.setContracts(contracts);
 
+        ArrayList<Manager> managers = new ArrayList<>();
         managers.add(firstManager);
         managers.add(secondManager);
         managers.add(thirdManager);
+
+        return managers;
         //ExEnd:GetManagers
     }
 
@@ -179,5 +184,7 @@ public class Common extends DocsExamplesBase
                 return (Iterable<Contract>) contract;
         }
         //ExEnd:GetContracts
+
+        return null;
     }
 }

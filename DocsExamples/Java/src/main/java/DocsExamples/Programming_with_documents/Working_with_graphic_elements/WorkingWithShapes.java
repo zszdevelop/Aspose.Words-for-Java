@@ -7,6 +7,7 @@ import org.testng.annotations.Test;
 
 import java.awt.*;
 import java.text.MessageFormat;
+import java.util.List;
 
 @Test
 public class WorkingWithShapes extends DocsExamplesBase
@@ -185,7 +186,8 @@ public class WorkingWithShapes extends DocsExamplesBase
         //ExStart:DetectSmartArtShape
         Document doc = new Document(getMyDir() + "SmartArt.docx");
 
-        int count = doc.getChildNodes(NodeType.SHAPE, true).<Shape>Cast().Count(shape => shape.HasSmartArt);
+        List<Shape> shapes = (List<Shape>) doc.getChildNodes(NodeType.SHAPE, true).iterator();
+        int count = (int) shapes.stream().filter(s -> s.hasSmartArt()).count();
 
         System.out.println(MessageFormat.format("The document has {0} shapes with SmartArt.", count));
         //ExEnd:DetectSmartArtShape
