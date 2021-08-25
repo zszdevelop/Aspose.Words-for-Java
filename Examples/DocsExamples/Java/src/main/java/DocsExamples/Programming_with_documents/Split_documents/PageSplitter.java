@@ -20,12 +20,12 @@ public class PageSplitter extends DocsExamplesBase
         splitAllDocumentsToPages(getMyDir());
     }
 
-    public void splitDocumentToPages(String docName) throws Exception
+    private void splitDocumentToPages(String docName) throws Exception
     {
-        String fileName = FilenameUtils.removeExtension(docName);
+        String fileName = FilenameUtils.getBaseName(docName);
         String extensionName = FilenameUtils.getExtension(docName);
 
-        System.out.println("Processing document: " + fileName + extensionName);
+        System.out.println("Processing document: " + fileName + "." + extensionName);
 
         Document doc = new Document(docName);
 
@@ -36,11 +36,11 @@ public class PageSplitter extends DocsExamplesBase
         for (int page = 1; page <= doc.getPageCount(); page++)
         {
             Document pageDoc = splitter.getDocumentOfPage(page);
-            pageDoc.save(getArtifactsDir()+ MessageFormat.format("{0} - page{1} Out{2}", fileName, page, extensionName));
+            pageDoc.save(getArtifactsDir()+ MessageFormat.format("{0} - page{1}.{2}", fileName, page, extensionName));
         }
     }
 
-    public void splitAllDocumentsToPages(String folderName) throws Exception
+    private void splitAllDocumentsToPages(String folderName) throws Exception
     {
         ArrayList<String> fileNames = directoryGetFiles(folderName, "*.doc");
 

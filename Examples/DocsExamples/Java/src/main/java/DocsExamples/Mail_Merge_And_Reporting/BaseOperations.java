@@ -79,72 +79,11 @@ public class BaseOperations extends DocsExamplesBase
         //ExEnd:MustacheSyntaxUsingDataTable
     }
 
-    @Test
-    public void executeWithRegionsDataTable() throws Exception
-    {
-        //ExStart:ExecuteWithRegionsDataTable
-        Document doc = new Document(getMyDir() + "Mail merge destinations - Orders.docx");
-
-        // Use DataTable as a data source.
-        int orderId = 10444;
-        DataTable orderTable = getTestOrder(orderId);
-        doc.getMailMerge().executeWithRegions(orderTable);
-
-        // Instead of using DataTable, you can create a DataView for custom sort or filter and then mail merge.
-        DataTable orderDetailsTable = getTestOrderDetails(orderId, "ExtendedPrice DESC");
-        doc.getMailMerge().executeWithRegions(orderDetailsTable);
-
-        doc.save(getArtifactsDir() + "MailMerge.ExecuteWithRegions.docx");
-        //ExEnd:ExecuteWithRegionsDataTable
-    }
-
-    //ExStart:ExecuteWithRegionsDataTableMethods
-    private DataTable getTestOrder(int orderId) throws SQLException {
-        DataTable table = executeDataTable(MessageFormat.format("SELECT * FROM AsposeWordOrders WHERE OrderId = {0}", orderId));
-        table.setTableName("Orders");
-        
-        return table;
-    }
-
-    private static DataTable getTestOrderDetails(int orderId, String orderBy) throws Exception
-    {
-        StringBuilder builder = new StringBuilder();
-
-        builder.append(java.text.MessageFormat.format("SELECT * FROM AsposeWordOrderDetails WHERE OrderId = {0}", orderId));
-
-        if ((orderBy != null) && (orderBy.length() > 0))
-        {
-            builder.append(" ORDER BY ");
-            builder.append(orderBy);
-        }
-
-        java.sql.ResultSet resultSet = (ResultSet) executeDataTable(builder.toString());
-        return new DataTable(resultSet, "OrderDetails");
-    }
-
-    /// <summary>
-    /// Utility function that creates a connection, command, executes the command and returns the result in a DataTable.
-    /// </summary>
-    private static DataTable executeDataTable(String commandText) throws SQLException {
-        String connString = "jdbc:ucanaccess://" + getDatabaseDir() + "Northwind.mdb";
-
-        Connection connection = DriverManager.getConnection(connString, "Admin", "");
-
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(commandText);
-
-        DataTable dataTable = new DataTable(resultSet);
-
-        connection.close();
-
-        return dataTable;
-    }
-    //ExEnd:ExecuteWithRegionsDataTableMethods
-
-    @Test
+    @Test (enabled = false)
     public void produceMultipleDocuments() throws Exception
     {
         //ExStart:ProduceMultipleDocuments
+        Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
         String connString = "jdbc:ucanaccess://" + getDatabaseDir() + "Northwind.mdb";
 
         Document doc = new Document(getMyDir() + "Mail merge destination - Northwind suppliers.docx");
@@ -160,7 +99,6 @@ public class BaseOperations extends DocsExamplesBase
         // instead of loading it from disk for better speed performance before the mail merge operation.
         // You can load the template document from a file or stream but it is faster to load the document
         // only once and then clone it in memory before each mail merge operation.
-        
         int counter = 1;
         for (DataRow row : dataTable.getRows())
         {
@@ -170,6 +108,8 @@ public class BaseOperations extends DocsExamplesBase
 
             dstDoc.save(MessageFormat.format(getArtifactsDir() + "BaseOperations.ProduceMultipleDocuments_{0}.docx", counter++));
         }
+
+        connection.close();
         //ExEnd:ProduceMultipleDocuments
     }
 

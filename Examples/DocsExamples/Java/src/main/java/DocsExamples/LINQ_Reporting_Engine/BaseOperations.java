@@ -2,13 +2,12 @@ package DocsExamples.LINQ_Reporting_Engine;
 
 import DocsExamples.DocsExamplesBase;
 import DocsExamples.LINQ_Reporting_Engine.Helpers.Common;
+import DocsExamples.LINQ_Reporting_Engine.Helpers.Data_Source_Objects.*;
 import org.testng.annotations.Test;
 import com.aspose.words.Document;
 import com.aspose.words.DocumentBuilder;
-import DocsExamples.LINQ_Reporting_Engine.Helpers.Data_Source_Objects.Sender;
 import com.aspose.words.ReportingEngine;
 import java.util.ArrayList;
-import DocsExamples.LINQ_Reporting_Engine.Helpers.Data_Source_Objects.BackgroundColor;
 import java.awt.Color;
 
 @Test
@@ -21,7 +20,7 @@ public class BaseOperations extends DocsExamplesBase
         Document doc = new Document();
         DocumentBuilder builder = new DocumentBuilder(doc);
         
-        builder.write("<<[sender.Name]>> says: <<[sender.Message]>>");
+        builder.write("<<[sender.getName()]>> says: <<[sender.getMessage()]>>");
 
         Sender sender = new Sender(); { sender.setName("LINQ Reporting Engine"); sender.setMessage("Hello World"); }
 
@@ -39,6 +38,7 @@ public class BaseOperations extends DocsExamplesBase
         Document doc = new Document(getMyDir() + "Reporting engine template - Table row.docx");
 
         ReportingEngine engine = new ReportingEngine();
+        engine.getKnownTypes().add(Manager.class);
         engine.buildReport(doc, Common.getManagers(), "Managers");
 
         doc.save(getArtifactsDir() + "ReportingEngine.SingleRow.docx");
@@ -52,6 +52,7 @@ public class BaseOperations extends DocsExamplesBase
         Document doc = new Document(getMyDir() + "Reporting engine template - Common master detail.docx");
 
         ReportingEngine engine = new ReportingEngine();
+        engine.getKnownTypes().add(Manager.class);
         engine.buildReport(doc, Common.getManagers(), "managers");
 
         doc.save(getArtifactsDir() + "ReportingEngine.CommonMasterDetail.docx");
@@ -65,6 +66,7 @@ public class BaseOperations extends DocsExamplesBase
         Document doc = new Document(getMyDir() + "Reporting engine template - Table row conditional blocks.docx");
 
         ReportingEngine engine = new ReportingEngine();
+        engine.getKnownTypes().add(Client.class);
         engine.buildReport(doc, Common.getClients(), "clients");
 
         doc.save(getArtifactsDir() + "ReportingEngine.ConditionalBlock.docx");
@@ -88,6 +90,7 @@ public class BaseOperations extends DocsExamplesBase
         }
 
         ReportingEngine engine = new ReportingEngine();
+        engine.getKnownTypes().add(BackgroundColor.class);
         engine.buildReport(doc, colors, "Colors");
 
         doc.save(getArtifactsDir() + "ReportingEngine.BackColor.docx");

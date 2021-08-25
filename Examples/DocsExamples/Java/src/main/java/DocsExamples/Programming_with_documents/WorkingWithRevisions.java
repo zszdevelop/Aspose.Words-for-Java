@@ -2,6 +2,7 @@ package DocsExamples.Programming_with_documents;
 
 import DocsExamples.DocsExamplesBase;
 import com.aspose.words.*;
+import org.apache.commons.collections4.IterableUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -48,7 +49,7 @@ public class WorkingWithRevisions extends DocsExamplesBase
         // The delete revision paragraph is removed once we accept changes.
         doc.acceptAllRevisions();
         Assert.assertEquals(3, paragraphs.getCount());
-        Assert.assertNull(para); //was Is.Empty
+        Assert.assertEquals(para.getRuns().getCount(), 0); //was Is.Empty
 
         // Stopping the tracking of revisions makes this text appear as normal text.
         // Revisions are not counted when the document is changed.
@@ -235,7 +236,7 @@ public class WorkingWithRevisions extends DocsExamplesBase
         doc.getFirstSection().getBody().getFirstParagraph().appendChild(shape);
 
         // Get the document's shape collection which includes just the two shapes we added.
-        List<Shape> shapes = (List<Shape>) doc.getChildNodes(NodeType.SHAPE, true).iterator();
+        List<Shape> shapes = IterableUtils.toList(doc.getChildNodes(NodeType.SHAPE, true));
         Assert.assertEquals(2, shapes.size());
 
         // Remove the first shape.
@@ -253,7 +254,7 @@ public class WorkingWithRevisions extends DocsExamplesBase
         // One will be the shape at its arrival destination and the other will be the shape at its original location.
         doc = new Document(getMyDir() + "Revision shape.docx");
 
-        shapes = (List<Shape>) doc.getChildNodes(NodeType.SHAPE, true).iterator();
+        shapes = IterableUtils.toList(doc.getChildNodes(NodeType.SHAPE, true));
         Assert.assertEquals(2, shapes.size());
 
         // This is the move to revision, also the shape at its arrival destination.

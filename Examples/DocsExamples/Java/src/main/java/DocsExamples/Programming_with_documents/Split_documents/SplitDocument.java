@@ -109,7 +109,7 @@ public class SplitDocument extends DocsExamplesBase
 
             mergedDocBuilder.moveToDocumentEnd();
             mergedDocBuilder.insertDocument(sourceDoc, ImportFormatMode.KEEP_SOURCE_FORMATTING);
-            sourceDoc = new Document(documentPath.getName());
+            sourceDoc = new Document(documentPath.getPath());
         }
 
         mergedDoc.save(getArtifactsDir() + "SplitDocument.MergeDocuments.docx");

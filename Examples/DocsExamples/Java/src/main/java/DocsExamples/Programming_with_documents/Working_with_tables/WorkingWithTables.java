@@ -6,9 +6,12 @@ import com.aspose.words.net.System.Data.DataColumn;
 import com.aspose.words.net.System.Data.DataRow;
 import com.aspose.words.net.System.Data.DataSet;
 import com.aspose.words.net.System.Data.DataTable;
+import com.sun.deploy.xml.XMLNode;
 import jdk.nashorn.internal.runtime.Undefined;
 import org.testng.annotations.Test;
 import org.w3c.dom.Attr;
+import org.w3c.dom.Element;
+import org.xml.sax.InputSource;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
@@ -17,6 +20,7 @@ import javax.xml.xpath.XPathFactory;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.io.ByteArrayOutputStream;
+import java.io.StringReader;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -85,8 +89,8 @@ public class WorkingWithTables extends DocsExamplesBase
             return new Column(table, columnIndex);
         }
 
-        private Cell[] getCells() {
-            return (Cell[]) getColumnCells().toArray();
+        private ArrayList<Cell> getCells() {
+            return getColumnCells();
         }
 
         /// <summary>
@@ -102,9 +106,9 @@ public class WorkingWithTables extends DocsExamplesBase
         /// </summary>
         public Column insertColumnBefore()
         {
-            Cell[] columnCells = getCells();
+            ArrayList<Cell> columnCells = getCells();
 
-            if (columnCells.length == 0)
+            if (columnCells.size() == 0)
                 throw new IllegalArgumentException("Column must not be empty");
 
             // Create a clone of this column.
@@ -112,7 +116,7 @@ public class WorkingWithTables extends DocsExamplesBase
                 cell.getParentRow().insertBefore(cell.deepClone(false), cell);
 
             // This is the new column.
-            Column column = new Column(columnCells[0].getParentRow().getParentTable(), mColumnIndex);
+            Column column = new Column(columnCells.get(0).getParentRow().getParentTable(), mColumnIndex);
 
             // We want to make sure that the cells are all valid to work with (have at least one paragraph).
             for (Cell cell : column.getCells())
@@ -911,12 +915,19 @@ public class WorkingWithTables extends DocsExamplesBase
             DocumentBuilderFactory documentBuildFactory = DocumentBuilderFactory.newInstance();
             javax.xml.parsers.DocumentBuilder documentBuilder = documentBuildFactory.newDocumentBuilder();
             org.w3c.dom.Document document =
-                    documentBuilder.parse(htmlStream.toString());
+                    documentBuilder.parse(new InputSource(new StringReader(htmlStream.toString())));
 
             // Get collection of tables in the HTML document.
             XPath xPath = XPathFactory.newInstance().newXPath();
             org.w3c.dom.NodeList tables = (org.w3c.dom.NodeList) xPath.evaluate("//Table",
-                    doc, XPathConstants.NODESET);
+                    document, XPathConstants.NODESET);
+
+            for (int i = 0; i < tables.getLength(); i++) {
+                org.w3c.dom.Node table = tables.item(i);
+
+                org.w3c.dom.NodeList rows = (org.w3c.dom.NodeList) xPath.evaluate("tr",
+                        table, XPathConstants.NODESET);
+            }
 
             // Get collection of rows in the table.
             org.w3c.dom.NodeList rows = (org.w3c.dom.NodeList) xPath.evaluate("tr",

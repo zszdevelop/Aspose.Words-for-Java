@@ -112,7 +112,7 @@ public class RemoveContent extends DocsExamplesBase
     /// </summary>
     /// <param name="doc">The document to remove the field from.</param>
     /// <param name="index">The zero-based index of the TOC to remove.</param>
-    public void removeTableOfContents(Document doc, int index)
+    private void removeTableOfContents(Document doc, int index)
     {
         // Store the FieldStart nodes of TOC fields in the document for quick access.
         ArrayList<FieldStart> fieldStarts = new ArrayList<>();

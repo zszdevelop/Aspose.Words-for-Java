@@ -141,25 +141,4 @@ public class BaseConversions extends DocsExamplesBase
         doc.save(getArtifactsDir() + "BaseConversions.TxtToDocx.docx");
         //ExEnd:TxtToDocx
     }
-
-    @Test
-    public void pdfToJpeg() throws Exception
-    {
-        //ExStart:PdfToJpeg
-        Document doc = new Document(getMyDir() + "Pdf Document.pdf");
-
-        doc.save(getArtifactsDir() + "BaseConversions.PdfToJpeg.jpeg");
-        //ExEnd:PdfToJpeg
-    }
-
-    @Test
-    public void pdfToDocx() throws Exception
-    {
-        //ExStart:PdfToDocx
-        Document doc = new Document(getMyDir() + "Pdf Document.pdf");
-
-        doc.save(getArtifactsDir() + "BaseConversions.PdfToDocx.docx");
-        //ExEnd:PdfToDocx
-    }
-
 }

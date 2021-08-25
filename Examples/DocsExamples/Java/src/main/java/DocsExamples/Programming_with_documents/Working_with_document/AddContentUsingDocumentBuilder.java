@@ -517,7 +517,7 @@ public class AddContentUsingDocumentBuilder extends DocsExamplesBase
         Table table = (Table)doc.getChild(NodeType.TABLE, 0, true);
 
         Assert.assertEquals(table.getRows().get(2).getCells().get(3), builder.getCurrentNode().getParentNode().getParentNode());
-        Assert.assertEquals("Cell contents added by DocumentBuilderCell 3 contents\u0007", table.getRows().get(2).getCells().get(3).getText().trim());
+        Assert.assertEquals("Cell contents added by DocumentBuilderCell 3 contents", table.getRows().get(2).getCells().get(3).getText().trim());
         //ExEnd:MoveToTableCell               
     }
 

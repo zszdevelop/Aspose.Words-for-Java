@@ -107,7 +107,7 @@ public class JoinAndAppendDocuments extends DocsExamplesBase
     }
 
     //ExStart:ConvertNumPageFieldsToPageRef
-    public void convertNumPageFieldsToPageRef(Document doc) throws Exception
+    private void convertNumPageFieldsToPageRef(Document doc) throws Exception
     {
         // This is the prefix for each bookmark, which signals where page numbering restarts.
         // The underscore "_" at the start inserts this bookmark as hidden in MS Word.

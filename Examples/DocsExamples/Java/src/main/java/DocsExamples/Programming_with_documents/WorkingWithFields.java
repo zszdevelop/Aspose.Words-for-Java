@@ -151,11 +151,15 @@ public class WorkingWithFields extends DocsExamplesBase
 
             Matcher match = pattern.matcher(((FieldStart) mFieldStart).getField().getFieldCode());
 
-            String newFieldCode = MessageFormat.format(" {0}{1} ", match.group("start"), fieldName);
-            fieldCode.setText(newFieldCode);
+            if (match.find()) {
+                String newFieldCode = MessageFormat.format(" {0}{1} ", match.group("start"), fieldName);
+                fieldCode.setText(newFieldCode);
 
-            // But sometimes the field code can consist of more than one run, delete these runs.
-            removeSameParent(fieldCode.getNextSibling(), mFieldSeparator);
+                // But sometimes the field code can consist of more than one run, delete these runs.
+                removeSameParent(fieldCode.getNextSibling(), mFieldSeparator);
+            } else {
+                System.out.println("Can't find FieldStart.");
+            }
         }
 
         /// <summary>

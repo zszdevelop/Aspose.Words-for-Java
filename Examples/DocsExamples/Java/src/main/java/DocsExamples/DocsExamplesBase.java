@@ -51,8 +51,7 @@ public class DocsExamplesBase
      * @throws Exception exception for setUnlimitedLicense()
      */
     @BeforeClass(alwaysRun = true)
-    public void setUp()
-    {
+    public void setUp() throws Exception {
         CurrentThreadSettings.setLocale(Locale.US);
 
         if (artifactsDirPath.exists())
@@ -60,6 +59,8 @@ public class DocsExamplesBase
             deleteDir(artifactsDirPath);
         }
         artifactsDirPath.mkdir();
+
+        setUnlimitedLicense();
     }
 
     /**

@@ -44,7 +44,7 @@ public class WorkingWithTableStylesAndFormatting extends DocsExamplesBase
         table.setBorder(BorderType.BOTTOM, LineStyle.SINGLE, 1.5, Color.GREEN, true);
 
         // Fill the cells with a light green solid color.
-        table.setShading(TextureIndex.TEXTURE_SOLID, Color.lightGray, null);
+        table.setShading(TextureIndex.TEXTURE_SOLID, Color.lightGray, new Color(0, true));
 
         doc.save(getArtifactsDir() + "WorkingWithTableStylesAndFormatting.ApplyOutlineBorder.docx");
         //ExEnd:ApplyOutlineBorder

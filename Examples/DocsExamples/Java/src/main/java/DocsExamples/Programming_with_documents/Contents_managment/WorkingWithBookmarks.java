@@ -183,7 +183,7 @@ public class WorkingWithBookmarks extends DocsExamplesBase
     }
 
     //ExStart:ShowHideBookmarkedContent
-    public void showHideBookmarkedContent(Document doc, String bookmarkName, boolean showHide) throws Exception
+    private void showHideBookmarkedContent(Document doc, String bookmarkName, boolean showHide) throws Exception
     {
         Bookmark bm = doc.getRange().getBookmarks().get(bookmarkName);
 

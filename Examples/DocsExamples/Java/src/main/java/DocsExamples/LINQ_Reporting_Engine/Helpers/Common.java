@@ -3,6 +3,8 @@ package DocsExamples.LINQ_Reporting_Engine.Helpers;
 import DocsExamples.DocsExamplesBase;
 import DocsExamples.LINQ_Reporting_Engine.Helpers.Data_Source_Objects.Manager;
 
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
@@ -10,50 +12,26 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import DocsExamples.LINQ_Reporting_Engine.Helpers.Data_Source_Objects.Client;
 import DocsExamples.LINQ_Reporting_Engine.Helpers.Data_Source_Objects.Contract;
+import org.apache.commons.io.FileUtils;
 
 public class Common extends DocsExamplesBase
 {
-    /// <summary>
-    /// Return the first manager from Managers, which is an enumeration of instances of the Manager class. 
-    /// </summary>        
-    public static Manager getManager() throws Exception
-    {
-        //ExStart:GetManager
-        Iterator<Manager> managers = getManagers().iterator();
-        managers.hasNext();
-        
-        return managers.next();
-        //ExEnd:GetManager
-    }
+    private static ArrayList<Manager> managers = new ArrayList<>();
+    private static ArrayList<Contract> contracts = new ArrayList<>();
+    private static ArrayList<Client> clients = new ArrayList<>();
 
-    /// <summary>
-    /// Return an enumeration of instances of the Client class. 
-    /// </summary>        
-    public static Iterable<Client> getClients() throws Exception
-    {
-        //ExStart:GetClients
-        for (Manager manager : getManagers())
-        {
-            for (Contract contract : manager.getContracts())
-               return (Iterable<Client>) contract.getClient();
-        }
-        //ExEnd:GetClients
-
-        return null;
-    }
-
-    /// <summary>
-    ///  Return an enumeration of instances of the Manager class.
-    /// </summary>
-    public static Iterable<Manager> getManagers() throws Exception
-    {
-        //ExStart:GetManagers
+    static {
         // --------------------------------------------------
         // First manager
         // --------------------------------------------------
         Manager firstManager = new Manager();
         firstManager.setName("John Smith");
         firstManager.setAge(36);
+        try {
+            firstManager.setPhoto(getPhoto());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         ArrayList<Contract> contracts = new ArrayList<>();
         {
@@ -88,6 +66,11 @@ public class Common extends DocsExamplesBase
         Manager secondManager = new Manager();
         secondManager.setName("Tony Anderson");
         secondManager.setAge(37);
+        try {
+            secondManager.setPhoto(getPhoto());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         contracts = new ArrayList<>();
         {
@@ -115,6 +98,11 @@ public class Common extends DocsExamplesBase
         Manager thirdManager = new Manager();
         thirdManager.setName("July James");
         thirdManager.setAge(38);
+        try {
+            thirdManager.setPhoto(getPhoto());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         contracts = new ArrayList<>();
         {
@@ -150,41 +138,42 @@ public class Common extends DocsExamplesBase
 
         thirdManager.setContracts(contracts);
 
-        ArrayList<Manager> managers = new ArrayList<>();
         managers.add(firstManager);
         managers.add(secondManager);
         managers.add(thirdManager);
-
-        return managers;
-        //ExEnd:GetManagers
     }
 
     /// <summary>
-    /// Return an array of photo bytes. 
+    /// Return an array of photo bytes.
     /// </summary>
-    private static byte[] photo() throws Exception
-    {
+    private static byte[] getPhoto() throws IOException {
         //ExStart:Photo
         // Load the photo and read all bytes
-        byte[] logo = Files.readAllBytes(Paths.get(getImagesDir() + "Logo.jpg"));
-        
+        byte[] logo = FileUtils.readFileToByteArray(new File(getImagesDir() + "Logo.jpg"));
+
         return logo;
         //ExEnd:Photo
     }
 
-    /// <summary>
-    ///  Return an enumeration of instances of the Contract class.
-    /// </summary>
-    public static Iterable<Contract> getContracts() throws Exception
-    {
-        //ExStart:GetContracts
-        for (Manager manager : getManagers())
-        {
-            for (Contract contract : manager.getContracts())
-                return (Iterable<Contract>) contract;
-        }
-        //ExEnd:GetContracts
+    public static ArrayList<Manager> getManagers() {
+        return managers;
+    }
 
-        return null;
+    public static ArrayList<Client> getClients() {
+        for (Manager manager : getManagers()) {
+            for (Contract contract : manager.getContracts())
+                clients.add(contract.getClient());
+        }
+
+        return clients;
+    }
+
+    public static ArrayList<Contract> getContracts() {
+        for (Manager manager : getManagers()) {
+            for (Contract contract : manager.getContracts())
+                contracts.add(contract);
+        }
+
+        return contracts;
     }
 }

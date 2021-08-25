@@ -3,6 +3,7 @@ package DocsExamples.Programming_with_documents.Working_with_graphic_elements;
 import DocsExamples.DocsExamplesBase;
 import com.aspose.words.*;
 import com.aspose.words.Shape;
+import org.apache.commons.collections4.IterableUtils;
 import org.testng.annotations.Test;
 
 import java.awt.*;
@@ -186,7 +187,7 @@ public class WorkingWithShapes extends DocsExamplesBase
         //ExStart:DetectSmartArtShape
         Document doc = new Document(getMyDir() + "SmartArt.docx");
 
-        List<Shape> shapes = (List<Shape>) doc.getChildNodes(NodeType.SHAPE, true).iterator();
+        List<Shape> shapes = IterableUtils.toList(doc.getChildNodes(NodeType.SHAPE, true));
         int count = (int) shapes.stream().filter(s -> s.hasSmartArt()).count();
 
         System.out.println(MessageFormat.format("The document has {0} shapes with SmartArt.", count));

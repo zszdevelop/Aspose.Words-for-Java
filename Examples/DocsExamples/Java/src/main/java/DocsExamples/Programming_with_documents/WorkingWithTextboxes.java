@@ -67,8 +67,9 @@ public class WorkingWithTextboxes
         // Break a forward link by setting a null.
         textBox.setNext(null);
 
-        // Break a link, which leads to this textbox.
-        textBox.getPrevious().breakForwardLink();
+        // Break a link, which leads to this textbox
+        if (textBox.getPrevious() != null)
+            textBox.getPrevious().breakForwardLink();
         //ExEnd:BreakALink
     }
 }

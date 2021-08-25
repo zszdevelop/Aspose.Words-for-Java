@@ -1,10 +1,16 @@
 package DocsExamples.LINQ_Reporting_Engine;
 
 import DocsExamples.DocsExamplesBase;
+import DocsExamples.LINQ_Reporting_Engine.Helpers.Data_Source_Objects.Contract;
+import DocsExamples.LINQ_Reporting_Engine.Helpers.Data_Source_Objects.Manager;
 import org.testng.annotations.Test;
 import com.aspose.words.Document;
 import com.aspose.words.ReportingEngine;
 import DocsExamples.LINQ_Reporting_Engine.Helpers.Common;
+
+import java.awt.*;
+import java.time.LocalDate;
+import java.util.Date;
 
 @Test
 public class Charts extends DocsExamplesBase
@@ -16,6 +22,7 @@ public class Charts extends DocsExamplesBase
         Document doc = new Document(getMyDir() + "Reporting engine template - Bubble chart.docx");
 
         ReportingEngine engine = new ReportingEngine();
+        engine.getKnownTypes().add(Manager.class);
         engine.buildReport(doc, Common.getManagers(), "managers");
         
         doc.save(getArtifactsDir() + "ReportingEngine.CreateBubbleChart.docx");
@@ -29,6 +36,7 @@ public class Charts extends DocsExamplesBase
         Document doc = new Document(getMyDir() + "Reporting engine template - Chart.docx");
 
         ReportingEngine engine = new ReportingEngine();
+        engine.getKnownTypes().add(Manager.class);
         engine.buildReport(doc, Common.getManagers(), "managers");
 
         doc.save(getArtifactsDir() + "ReportingEngine.SetChartSeriesNameDynamically.docx");
@@ -42,6 +50,7 @@ public class Charts extends DocsExamplesBase
         Document doc = new Document(getMyDir() + "Reporting engine template - Chart with filtering.docx");
 
         ReportingEngine engine = new ReportingEngine();
+        engine.getKnownTypes().add(Contract.class);
         engine.buildReport(doc, Common.getContracts(), "contracts");
 
         doc.save(getArtifactsDir() + "ReportingEngine.ChartWithFilteringGroupingOrdering.docx");
@@ -55,6 +64,7 @@ public class Charts extends DocsExamplesBase
         Document doc = new Document(getMyDir() + "Reporting engine template - Pie chart.docx");
 
         ReportingEngine engine = new ReportingEngine();
+        engine.getKnownTypes().add(Manager.class);
         engine.buildReport(doc, Common.getManagers(), "managers");
 
         doc.save(getArtifactsDir() + "ReportingEngine.PieChart.docx");
@@ -68,6 +78,7 @@ public class Charts extends DocsExamplesBase
         Document doc = new Document(getMyDir() + "Reporting engine template - Scatter chart.docx");
 
         ReportingEngine engine = new ReportingEngine();
+        engine.getKnownTypes().add(Contract.class);
         engine.buildReport(doc, Common.getContracts(), "contracts");
 
         doc.save(getArtifactsDir() + "ReportingEngine.ScatterChart.docx");

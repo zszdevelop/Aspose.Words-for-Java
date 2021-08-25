@@ -8,6 +8,7 @@ import com.aspose.words.FileFormatUtil;
 import com.aspose.words.LoadFormat;
 
 import java.io.File;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -17,8 +18,7 @@ import java.util.stream.Stream;
 public class WorkingWithFileFormat extends DocsExamplesBase
 {
     @Test
-    public void detectFileFormat() throws Exception
-    {
+    public void detectFileFormat() throws Exception {
         //ExStart:CheckFormatCompatibility
         File supportedDir = new File(getArtifactsDir() + "Supported");
         File unknownDir = new File(getArtifactsDir() + "Unknown");
@@ -37,21 +37,19 @@ public class WorkingWithFileFormat extends DocsExamplesBase
 
         //ExStart:GetListOfFilesInFolder
         Set<String> listFiles = Stream.of(new File(getMyDir()).listFiles())
-                .filter(file -> !file.getName().endsWith("Corrupted document.docx"))
-                .map(File::getName)
+                .filter(file -> !file.getName().endsWith("Corrupted document.docx") && !Files.isDirectory(file.toPath()))
+                .map(File::getPath)
                 .collect(Collectors.toSet());
         //ExEnd:GetListOfFilesInFolder
-        for (String fileName : listFiles)
-        {
+        for (String fileName : listFiles) {
             String nameOnly = Paths.get(fileName).getFileName().toString();
-            
+
             System.out.println(nameOnly);
             //ExStart:DetectFileFormat
             FileFormatInfo info = FileFormatUtil.detectFileFormat(fileName);
 
             // Display the document type
-            switch (info.getLoadFormat())
-            {
+            switch (info.getLoadFormat()) {
                 case LoadFormat.DOC:
                     System.out.println("\tMicrosoft Word 97-2003 document.");
                     break;
@@ -100,15 +98,11 @@ public class WorkingWithFileFormat extends DocsExamplesBase
             }
             //ExEnd:DetectFileFormat
 
-            if (info.isEncrypted())
-            {
+            if (info.isEncrypted()) {
                 System.out.println("\tAn encrypted document.");
                 FileUtils.copyFile(new File(fileName), new File(encryptedDir, nameOnly));
-            }
-            else
-            {
-                switch (info.getLoadFormat())
-                {
+            } else {
+                switch (info.getLoadFormat()) {
                     case LoadFormat.DOC_PRE_WORD_60:
                         FileUtils.copyFile(new File(fileName), new File(pre97Dir, nameOnly));
                         break;

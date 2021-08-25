@@ -17,11 +17,12 @@ import java.text.MessageFormat;
 @Test
 public class WorkingWithDocumentInDatabase extends DocsExamplesBase
 {
-    @Test (enabled = false, description = "Uses Microsoft.Jet.OLEDB.4.0")
+    @Test
     public void loadAndSaveDocToDatabase() throws Exception
     {
         Document doc = new Document(getMyDir() + "Document.docx");
-        //ExStart:OpenDatabaseConnection 
+        //ExStart:OpenDatabaseConnection
+        Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
         String connString = "jdbc:ucanaccess://" + getDatabaseDir() + "Northwind.mdb";
 
         Connection connection = DriverManager.getConnection(connString, "Admin", "");
@@ -40,18 +41,23 @@ public class WorkingWithDocumentInDatabase extends DocsExamplesBase
     }
 
     //ExStart:StoreToDatabase 
-    public void storeToDatabase(Document doc, Connection connection) throws Exception {
+    private void storeToDatabase(Document doc, Connection connection) throws Exception {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         doc.save(stream, SaveFormat.DOCX);
 
         String fileName = Paths.get(doc.getOriginalFileName()).getFileName().toString();
-        Statement statement = connection.createStatement();
-        statement.executeQuery("INSERT INTO Documents (Name, Data) VALUES('" + fileName + "', @Doc)");
+
+        String sql = "INSERT INTO Documents (Name, Data) VALUES(?, ?)";
+
+        PreparedStatement pStatement = connection.prepareStatement(sql);
+        pStatement.setString(1, fileName);
+        pStatement.setBytes(2, stream.toByteArray());
+        pStatement.execute();
     }
     //ExEnd:StoreToDatabase
     
     //ExStart:ReadFromDatabase 
-    public Document readFromDatabase(String fileName, Connection connection) throws Exception {
+    private Document readFromDatabase(String fileName, Connection connection) throws Exception {
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM Documents WHERE Name='" + fileName + "'");
 
@@ -74,9 +80,9 @@ public class WorkingWithDocumentInDatabase extends DocsExamplesBase
     //ExEnd:ReadFromDatabase
     
     //ExStart:DeleteFromDatabase 
-    public void deleteFromDatabase(String fileName, Connection connection) throws SQLException {
+    private void deleteFromDatabase(String fileName, Connection connection) throws SQLException {
         Statement statement = connection.createStatement();
-        statement.executeQuery("DELETE * FROM Documents WHERE Name='" + fileName + "'");
+        statement.execute("DELETE * FROM Documents WHERE Name='" + fileName + "'");
     }
     //ExEnd:DeleteFromDatabase
 }

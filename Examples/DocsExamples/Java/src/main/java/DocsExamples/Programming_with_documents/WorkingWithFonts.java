@@ -208,7 +208,7 @@ public class WorkingWithFonts extends DocsExamplesBase
         // Retrieve the array of environment-dependent font sources that are searched by default.
         // For example this will contain a "Windows\Fonts\" source on a Windows machines.
         // We add this array to a new List to make adding or removing font entries much easier.
-        List<FontSourceBase> fontSources = Arrays.asList(fontSettings.getFontsSources());
+        List<FontSourceBase> fontSources = new ArrayList<>(Arrays.asList(fontSettings.getFontsSources()));
 
         // Add a new folder source which will instruct Aspose.Words to search the following folder for fonts.
         FolderFontSource folderFontSource = new FolderFontSource("C:\\MyFonts\\", true);
@@ -216,7 +216,7 @@ public class WorkingWithFonts extends DocsExamplesBase
         // Add the custom folder which contains our fonts to the list of existing font sources.
         fontSources.add(folderFontSource);
 
-        FontSourceBase[] updatedFontSources = (FontSourceBase[]) fontSources.toArray();
+        FontSourceBase[] updatedFontSources = fontSources.toArray(new FontSourceBase[0]);
         fontSettings.setFontsSources(updatedFontSources);
         
         doc.setFontSettings(fontSettings);
@@ -339,15 +339,14 @@ public class WorkingWithFonts extends DocsExamplesBase
     public void getListOfAvailableFonts()
     {
         //ExStart:GetListOfAvailableFonts
-        FontSettings fontSettings = new FontSettings();
-        List<FontSourceBase> fontSources = Arrays.asList(fontSettings.getFontsSources());
+        List<FontSourceBase> fontSources = new ArrayList<>(Arrays.asList(FontSettings.getDefaultInstance().getFontsSources()));
 
         // Add a new folder source which will instruct Aspose.Words to search the following folder for fonts.
         FolderFontSource folderFontSource = new FolderFontSource(getMyDir(), true);
         // Add the custom folder which contains our fonts to the list of existing font sources.
         fontSources.add(folderFontSource);
 
-        FontSourceBase[] updatedFontSources = (FontSourceBase[]) fontSources.toArray();
+        FontSourceBase[] updatedFontSources = fontSources.toArray(new FontSourceBase[0]);
 
         for (PhysicalFontInfo fontInfo : updatedFontSources[0].getAvailableFonts())
         {
@@ -450,12 +449,12 @@ public class WorkingWithFonts extends DocsExamplesBase
         DocumentSubstitutionWarnings substitutionWarningHandler = new DocumentSubstitutionWarnings();
         doc.setWarningCallback(substitutionWarningHandler);
 
-        List<FontSourceBase> fontSources = Arrays.asList(FontSettings.getDefaultInstance().getFontsSources());
+        List<FontSourceBase> fontSources = new ArrayList<>(Arrays.asList(FontSettings.getDefaultInstance().getFontsSources()));
 
         FolderFontSource folderFontSource = new FolderFontSource(getFontsDir(), true);
         fontSources.add(folderFontSource);
 
-        FontSourceBase[] updatedFontSources = (FontSourceBase[]) fontSources.toArray();
+        FontSourceBase[] updatedFontSources = fontSources.toArray(new FontSourceBase[0]);
         FontSettings.getDefaultInstance().setFontsSources(updatedFontSources);
 
         doc.save(getArtifactsDir() + "WorkingWithFonts.GetSubstitutionWithoutSuffixes.pdf");
