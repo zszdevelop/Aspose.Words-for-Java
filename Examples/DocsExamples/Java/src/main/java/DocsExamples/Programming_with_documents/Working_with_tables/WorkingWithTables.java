@@ -8,9 +8,12 @@ import com.aspose.words.net.System.Data.DataSet;
 import com.aspose.words.net.System.Data.DataTable;
 import com.sun.deploy.xml.XMLNode;
 import jdk.nashorn.internal.runtime.Undefined;
+import org.apache.commons.lang.StringUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.testng.annotations.Test;
 import org.w3c.dom.Attr;
-import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -908,50 +911,41 @@ public class WorkingWithTables extends DocsExamplesBase
 
             doc.save(htmlStream, options);
 
-            TableInfo tableInf = new TableInfo();
-            RowInfo rowInf = new RowInfo();
-
             // Load HTML into the XML document.
-            DocumentBuilderFactory documentBuildFactory = DocumentBuilderFactory.newInstance();
-            javax.xml.parsers.DocumentBuilder documentBuilder = documentBuildFactory.newDocumentBuilder();
-            org.w3c.dom.Document document =
-                    documentBuilder.parse(new InputSource(new StringReader(htmlStream.toString())));
+            org.jsoup.nodes.Document document = Jsoup.parse(htmlStream.toString());
 
             // Get collection of tables in the HTML document.
-            XPath xPath = XPathFactory.newInstance().newXPath();
-            org.w3c.dom.NodeList tables = (org.w3c.dom.NodeList) xPath.evaluate("//Table",
-                    document, XPathConstants.NODESET);
+            Elements tables = document.getElementsByTag("table");
 
-            for (int i = 0; i < tables.getLength(); i++) {
-                org.w3c.dom.Node table = tables.item(i);
+            for (Element table : tables) {
+                TableInfo tableInf = new TableInfo();
 
-                org.w3c.dom.NodeList rows = (org.w3c.dom.NodeList) xPath.evaluate("tr",
-                        table, XPathConstants.NODESET);
+                // Get collection of rows in the table.
+                Elements rows = table.getElementsByTag("tr");
+
+                for (Element row : rows) {
+                    RowInfo rowInf = new RowInfo();
+
+                    // Get collection of cells.
+                    Elements cells = row.getElementsByTag("td");
+
+                    for (Element cell : cells) {
+                        // Determine row span and colspan of the current cell.
+                        String colSpanAttr = cell.attributes().get("colspan");
+                        String rowSpanAttr = cell.attributes().get("rowspan");
+
+                        int colSpan = StringUtils.isNotBlank(colSpanAttr) ? Integer.parseInt(colSpanAttr) : 0;
+                        int rowSpan = StringUtils.isNotBlank(rowSpanAttr) ? Integer.parseInt(rowSpanAttr) : 0;
+
+                        CellInfo cellInf = new CellInfo(colSpan, rowSpan);
+                        rowInf.getCells().add(cellInf);
+                    }
+
+                    tableInf.getRows().add(rowInf);
+                }
+
+                mTables.add(tableInf);
             }
-
-            // Get collection of rows in the table.
-            org.w3c.dom.NodeList rows = (org.w3c.dom.NodeList) xPath.evaluate("tr",
-                    tables, XPathConstants.NODESET);
-
-            // Get collection of cells.
-            org.w3c.dom.NodeList cells =
-                    (org.w3c.dom.NodeList) xPath.evaluate("td", rows, XPathConstants.NODESET);
-
-            for (org.w3c.dom.Node cell : (Iterable<org.w3c.dom.Node>) cells) {
-                // Determine row span and colspan of the current cell.
-                org.w3c.dom.Attr colSpanAttr = (Attr) cell.getAttributes().getNamedItem("colspan");
-                org.w3c.dom.Attr rowSpanAttr = (Attr) cell.getAttributes().getNamedItem("rowspan");
-
-                int colSpan = colSpanAttr == null ? 0 : Integer.parseInt(colSpanAttr.getNodeValue());
-                int rowSpan = rowSpanAttr == null ? 0 : Integer.parseInt(rowSpanAttr.getNodeValue());
-
-                CellInfo cellInf = new CellInfo(colSpan, rowSpan);
-                rowInf.getCells().add(cellInf);
-            }
-
-            tableInf.getRows().add(rowInf);
-
-            mTables.add(tableInf);
         }
 
         public int visitCellStart(Cell cell)
