@@ -52,6 +52,7 @@ import com.aspose.words.PaperSize;
 import com.aspose.words.FieldToc;
 import com.aspose.words.FieldType;
 import com.aspose.ms.System.IO.FileInfo;
+import com.aspose.words.HtmlLoadOptions;
 import com.aspose.ms.System.IO.MemoryStream;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
@@ -427,7 +428,7 @@ class ExHtmlSaveOptions !Test class should be public in Java to run, please fix 
 
         builder.write("Here is an SVG image: ");
         builder.insertHtml(
-            "<svg height='210' width='500'>\r\n                    <polygon points='100,10 40,198 190,78 10,78 160,198' \r\n                        style='fill:lime;stroke:purple;stroke-width:5;fill-rule:evenodd;' />\r\n                  </svg> ");
+            "<svg height='210' width='500'>\n                    <polygon points='100,10 40,198 190,78 10,78 160,198' \n                        style='fill:lime;stroke:purple;stroke-width:5;fill-rule:evenodd;' />\n                  </svg> ");
 
         builder.getDocument().save(getArtifactsDir() + "HtmlSaveOptions.SvgMetafileFormat.html",
             new HtmlSaveOptions(); { .setMetafileFormat(HtmlMetafileFormat.PNG); });
@@ -440,7 +441,7 @@ class ExHtmlSaveOptions !Test class should be public in Java to run, please fix 
 
         builder.write("Here is an Png image: ");
         builder.insertHtml(
-            "<svg height='210' width='500'>\r\n                    <polygon points='100,10 40,198 190,78 10,78 160,198' \r\n                        style='fill:lime;stroke:purple;stroke-width:5;fill-rule:evenodd;' />\r\n                  </svg> ");
+            "<svg height='210' width='500'>\n                    <polygon points='100,10 40,198 190,78 10,78 160,198' \n                        style='fill:lime;stroke:purple;stroke-width:5;fill-rule:evenodd;' />\n                  </svg> ");
 
         builder.getDocument().save(getArtifactsDir() + "HtmlSaveOptions.PngMetafileFormat.html",
             new HtmlSaveOptions(); { .setMetafileFormat(HtmlMetafileFormat.PNG); });
@@ -453,7 +454,7 @@ class ExHtmlSaveOptions !Test class should be public in Java to run, please fix 
 
         builder.write("Here is an image as is: ");
         builder.insertHtml(
-            "<img src=\"data:image/png;base64,\r\n                    iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABGdBTUEAALGP\r\n                    C/xhBQAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9YGARc5KB0XV+IA\r\n                    AAAddEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIFRoZSBHSU1Q72QlbgAAAF1J\r\n                    REFUGNO9zL0NglAAxPEfdLTs4BZM4DIO4C7OwQg2JoQ9LE1exdlYvBBeZ7jq\r\n                    ch9//q1uH4TLzw4d6+ErXMMcXuHWxId3KOETnnXXV6MJpcq2MLaI97CER3N0\r\n                    vr4MkhoXe0rZigAAAABJRU5ErkJggg==\" alt=\"Red dot\" />");
+            "<img src=\"data:image/png;base64,\n                    iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABGdBTUEAALGP\n                    C/xhBQAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9YGARc5KB0XV+IA\n                    AAAddEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIFRoZSBHSU1Q72QlbgAAAF1J\n                    REFUGNO9zL0NglAAxPEfdLTs4BZM4DIO4C7OwQg2JoQ9LE1exdlYvBBeZ7jq\n                    ch9//q1uH4TLzw4d6+ErXMMcXuHWxId3KOETnnXXV6MJpcq2MLaI97CER3N0\n                    vr4MkhoXe0rZigAAAABJRU5ErkJggg==\" alt=\"Red dot\" />");
 
         builder.getDocument().save(getArtifactsDir() + "HtmlSaveOptions.EmfOrWmfMetafileFormat.html",
             new HtmlSaveOptions(); { .setMetafileFormat(HtmlMetafileFormat.EMF_OR_WMF); });
@@ -1029,14 +1030,14 @@ class ExHtmlSaveOptions !Test class should be public in Java to run, please fix 
             Assert.assertTrue(outDocContents.contains("Content-ID: <document.html>"));
             Assert.assertTrue(outDocContents.contains("<link href=3D\"cid:styles.css\" type=3D\"text/css\" rel=3D\"stylesheet\" />"));
             Assert.assertTrue(outDocContents.contains("@font-face { font-family:'Arial Black'; src:url('cid:ariblk.ttf') }"));
-            Assert.assertTrue(outDocContents.contains("<img src=3D\"cid:image.003.jpeg\" width=3D\"351\" height=3D\"180\" alt=3D\"\" />"));
+            Assert.assertTrue(outDocContents.contains("<img src=3D\"cid:image.003.jpeg\" width=3D\"350\" height=3D\"180\" alt=3D\"\" />"));
         }
         else
         {
             Assert.assertTrue(outDocContents.contains("Content-Location: document.html"));
             Assert.assertTrue(outDocContents.contains("<link href=3D\"styles.css\" type=3D\"text/css\" rel=3D\"stylesheet\" />"));
             Assert.assertTrue(outDocContents.contains("@font-face { font-family:'Arial Black'; src:url('ariblk.ttf') }"));
-            Assert.assertTrue(outDocContents.contains("<img src=3D\"image.003.jpeg\" width=3D\"351\" height=3D\"180\" alt=3D\"\" />"));
+            Assert.assertTrue(outDocContents.contains("<img src=3D\"image.003.jpeg\" width=3D\"350\" height=3D\"180\" alt=3D\"\" />"));
         }
         //ExEnd
     }
@@ -1628,7 +1629,7 @@ class ExHtmlSaveOptions !Test class should be public in Java to run, please fix 
                 "<li style=\"margin-left:30.2pt; padding-left:5.8pt; -aw-font-family:'Courier New'; -aw-font-weight:normal; -aw-number-format:'o'\">"));
             
             Assert.assertTrue(outDocContents.contains(
-                "<img src=\"HtmlSaveOptions.RoundTripInformation.003.jpeg\" width=\"351\" height=\"180\" alt=\"\" " +
+                "<img src=\"HtmlSaveOptions.RoundTripInformation.003.jpeg\" width=\"350\" height=\"180\" alt=\"\" " +
                 "style=\"-aw-left-pos:0pt; -aw-rel-hpos:column; -aw-rel-vpos:paragraph; -aw-top-pos:0pt; -aw-wrap-type:inline\" />"));
 
 
@@ -1655,7 +1656,7 @@ class ExHtmlSaveOptions !Test class should be public in Java to run, please fix 
                 "<li style=\"margin-left:30.2pt; padding-left:5.8pt\">"));
             
             Assert.assertTrue(outDocContents.contains(
-                "<img src=\"HtmlSaveOptions.RoundTripInformation.003.jpeg\" width=\"351\" height=\"180\" alt=\"\" />"));
+                "<img src=\"HtmlSaveOptions.RoundTripInformation.003.jpeg\" width=\"350\" height=\"180\" alt=\"\" />"));
 
             Assert.assertTrue(outDocContents.contains(
                 "<span>Page number 1</span>"));
@@ -1819,11 +1820,18 @@ class ExHtmlSaveOptions !Test class should be public in Java to run, please fix 
         //ExStart
         //ExFor:HtmlMetafileFormat
         //ExFor:HtmlSaveOptions.MetafileFormat
+        //ExFor:HtmlLoadOptions.ConvertSvgToEmf
         //ExSummary:Shows how to convert SVG objects to a different format when saving HTML documents.
         String html = 
-            "<html>\r\n                    <svg xmlns='http://www.w3.org/2000/svg' width='500' height='40' viewBox='0 0 500 40'>\r\n                        <text x='0' y='35' font-family='Verdana' font-size='35'>Hello world!</text>\r\n                    </svg>\r\n                </html>";
+            "<html>\n                    <svg xmlns='http://www.w3.org/2000/svg' width='500' height='40' viewBox='0 0 500 40'>\n                        <text x='0' y='35' font-family='Verdana' font-size='35'>Hello world!</text>\n                    </svg>\n                </html>";
 
-        Document doc = new Document(new MemoryStream(Encoding.getUTF8().getBytes(html)));
+        // Use 'ConvertSvgToEmf' to turn back the legacy behavior
+        // where all SVG images loaded from an HTML document were converted to EMF.
+        // Now SVG images are loaded without conversion
+        // if the MS Word version specified in load options supports SVG images natively.
+        HtmlLoadOptions loadOptions = new HtmlLoadOptions(); { loadOptions.setConvertSvgToEmf(true); }
+
+        Document doc = new Document(new MemoryStream(Encoding.getUTF8().getBytes(html)), loadOptions);
 
         // This document contains a <svg> element in the form of text.
         // When we save the document to HTML, we can pass a SaveOptions object

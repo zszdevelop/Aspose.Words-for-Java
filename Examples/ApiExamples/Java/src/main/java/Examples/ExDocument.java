@@ -520,6 +520,24 @@ public class ExDocument extends ApiExampleBase {
     }
 
     @Test
+    public void mergePastedLists() throws Exception
+    {
+        //ExStart
+        //ExFor:ImportFormatOptions.MergePastedLists
+        //ExSummary:Shows how to merge lists from a documents.
+        Document srcDoc = new Document(getMyDir() + "List item.docx");
+        Document dstDoc = new Document(getMyDir() + "List destination.docx");
+
+        ImportFormatOptions options = new ImportFormatOptions(); { options.setMergePastedLists(true); }
+
+        // Set the "MergePastedLists" property to "true" pasted lists will be merged with surrounding lists.
+        dstDoc.appendDocument(srcDoc, ImportFormatMode.USE_DESTINATION_STYLES, options);
+
+        dstDoc.save(getArtifactsDir() + "Document.MergePastedLists.docx");
+        //ExEnd
+    }
+
+    @Test
     public void validateIndividualDocumentSignatures() throws Exception {
         //ExStart
         //ExFor:CertificateHolder.Certificate
@@ -980,7 +998,7 @@ public class ExDocument extends ApiExampleBase {
         // We can call UpdateTableLayout() to fix some of these issues.
         doc.updateTableLayout();
 
-        Assert.assertEquals("Cell 1             Cell 2             Cell 3\r\n\r\n", doc.toString(options));
+        Assert.assertEquals("Cell 1                                       Cell 2                                       Cell 3\r\n\r\n", doc.toString(options));
         Assert.assertEquals(155.0d, table.getFirstRow().getCells().get(0).getCellFormat().getWidth(), 2f);
         //ExEnd
     }
@@ -1147,36 +1165,6 @@ public class ExDocument extends ApiExampleBase {
         docOriginal.compare(docEdited, "John Doe", new Date(), compareOptions);
         docOriginal.save(getArtifactsDir() + "Document.CompareOptions.docx");
         //ExEnd
-
-        docOriginal = new Document(getArtifactsDir() + "Document.CompareOptions.docx");
-
-        TestUtil.verifyFootnote(FootnoteType.ENDNOTE, true, "",
-                "OriginalEdited endnote text.", (Footnote) docOriginal.getChild(NodeType.FOOTNOTE, 0, true));
-
-        // If we set compareOptions to ignore certain types of changes,
-        // then revisions done on those types of nodes will not appear in the output document.
-        // We can tell what kind of node a revision was done by looking at the NodeType of the revision's parent nodes.
-        Assert.assertNotEquals(compareOptions.getIgnoreFormatting(), IterableUtils.matchesAny(docOriginal.getRevisions(), rev -> rev.getRevisionType() == RevisionType.FORMAT_CHANGE));
-        Assert.assertNotEquals(compareOptions.getIgnoreCaseChanges(), IterableUtils.matchesAny(docOriginal.getRevisions(), rev -> rev.getParentNode().getText().contains("hello")));
-        Assert.assertNotEquals(compareOptions.getIgnoreComments(), IterableUtils.matchesAny(docOriginal.getRevisions(), rev -> hasParentOfType(rev, NodeType.COMMENT)));
-        Assert.assertNotEquals(compareOptions.getIgnoreComments(), IterableUtils.matchesAny(docOriginal.getRevisions(), rev -> hasParentOfType(rev, NodeType.TABLE)));
-        Assert.assertNotEquals(compareOptions.getIgnoreComments(), IterableUtils.matchesAny(docOriginal.getRevisions(), rev -> hasParentOfType(rev, NodeType.FIELD_START)));
-        Assert.assertNotEquals(compareOptions.getIgnoreComments(), IterableUtils.matchesAny(docOriginal.getRevisions(), rev -> hasParentOfType(rev, NodeType.FOOTNOTE)));
-        Assert.assertNotEquals(compareOptions.getIgnoreComments(), IterableUtils.matchesAny(docOriginal.getRevisions(), rev -> hasParentOfType(rev, NodeType.SHAPE)));
-        Assert.assertNotEquals(compareOptions.getIgnoreComments(), IterableUtils.matchesAny(docOriginal.getRevisions(), rev -> hasParentOfType(rev, NodeType.HEADER_FOOTER)));
-    }
-
-    /// <summary>
-    /// Returns true if the passed revision has a parent node with the type specified by parentType.
-    /// </summary>
-    private static boolean hasParentOfType(Revision revision, int parentType) {
-        Node n = revision.getParentNode();
-        while (n.getParentNode() != null) {
-            if (n.getNodeType() == parentType) return true;
-            n = n.getParentNode();
-        }
-
-        return false;
     }
 
     @Test(dataProvider = "ignoreDmlUniqueIdDataProvider")
@@ -1936,11 +1924,13 @@ public class ExDocument extends ApiExampleBase {
                 };
     }
 
-    @Test(dataProvider = "showCommentsDataProvider")
-    public void showComments(boolean showComments) throws Exception {
+    @Test
+    public void showComments() throws Exception
+    {
         //ExStart
-        //ExFor:LayoutOptions.ShowComments
-        //ExSummary:Shows how to show/hide comments when saving a document to a rendered format.
+        //ExFor:LayoutOptions.CommentDisplayMode
+        //ExFor:CommentDisplayMode
+        //ExSummary:Shows how to show comments when saving a document to a rendered format.
         Document doc = new Document();
         DocumentBuilder builder = new DocumentBuilder(doc);
 
@@ -1950,30 +1940,30 @@ public class ExDocument extends ApiExampleBase {
         comment.setText("My comment.");
         builder.getCurrentParagraph().appendChild(comment);
 
-        doc.getLayoutOptions().setShowComments(showComments);
+        // ShowInAnnotations is only available in Pdf1.7 and Pdf1.5 formats.
+        // In other formats, it will work similarly to Hide.
+        doc.getLayoutOptions().setCommentDisplayMode(CommentDisplayMode.SHOW_IN_ANNOTATIONS);
 
-        doc.save(getArtifactsDir() + "Document.ShowComments.pdf");
+        doc.save(getArtifactsDir() + "Document.ShowCommentsInAnnotations.pdf");
+
+        // Note that it's required to rebuild the document page layout (via Document.UpdatePageLayout() method)
+        // after changing the Document.LayoutOptions values.
+        doc.getLayoutOptions().setCommentDisplayMode(CommentDisplayMode.SHOW_IN_BALLOONS);
+        doc.updatePageLayout();
+
+        doc.save(getArtifactsDir() + "Document.ShowCommentsInBalloons.pdf");
         //ExEnd
 
-        com.aspose.pdf.Document pdfDoc = new com.aspose.pdf.Document(getArtifactsDir() + "Document.ShowComments.pdf");
+        com.aspose.pdf.Document pdfDoc =
+                new com.aspose.pdf.Document(getArtifactsDir() + "Document.ShowCommentsInBalloons.pdf");
         TextAbsorber textAbsorber = new TextAbsorber();
         textAbsorber.visit(pdfDoc);
 
         Assert.assertEquals(
-                showComments
-                        ? "Hello world!                                                                    Commented [J.D.1]:  My comment."
-                        : "Hello world!", textAbsorber.getText());
+                "Hello world!                                                                    Commented [J.D.1]:  My comment.",
+                textAbsorber.getText());
 
         pdfDoc.close();
-    }
-
-    @DataProvider(name = "showCommentsDataProvider")
-    public static Object[][] showCommentsDataProvider() {
-        return new Object[][]
-                {
-                        {false},
-                        {true},
-                };
     }
 
     @Test
@@ -1989,6 +1979,7 @@ public class ExDocument extends ApiExampleBase {
 
         target.copyStylesFromTemplate(template);
         Assert.assertEquals(18, target.getStyles().getCount()); //ExSkip
+
         //ExEnd
     }
 
@@ -2534,5 +2525,39 @@ public class ExDocument extends ApiExampleBase {
 
         doc.save(getArtifactsDir() + "Document.AllowEmbeddingPostScriptFonts.docx", saveOptions);
         //ExEnd
+    }
+
+    @Test
+    public void frameset() throws Exception
+    {
+        //ExStart
+        //ExFor:Document.Frameset
+        //ExFor:Frameset
+        //ExFor:Frameset.FrameDefaultUrl
+        //ExFor:Frameset.IsFrameLinkToFile
+        //ExFor:Frameset.ChildFramesets
+        //ExSummary:Shows how to access frames on-page.
+        // Document contains several frames with links to other documents.
+        Document doc = new Document(getMyDir() + "Frameset.docx");
+
+        // We can check the default URL (a web page URL or local document) or if the frame is an external resource.
+        Assert.assertEquals("https://file-examples-com.github.io/uploads/2017/02/file-sample_100kB.docx",
+                doc.getFrameset().getChildFramesets().get(0).getChildFramesets().get(0).getFrameDefaultUrl());
+        Assert.assertTrue(doc.getFrameset().getChildFramesets().get(0).getChildFramesets().get(0).isFrameLinkToFile());
+
+        Assert.assertEquals("Document.docx", doc.getFrameset().getChildFramesets().get(1).getFrameDefaultUrl());
+        Assert.assertFalse(doc.getFrameset().getChildFramesets().get(1).isFrameLinkToFile());
+
+        // Change properties for one of our frames.
+        doc.getFrameset().getChildFramesets().get(0).getChildFramesets().get(0).setFrameDefaultUrl("https://github.com/aspose-words/Aspose.Words-for-.NET/blob/master/Examples/Data/Absolute%20position%20tab.docx");
+        doc.getFrameset().getChildFramesets().get(0).getChildFramesets().get(0).isFrameLinkToFile(false);
+        //ExEnd
+
+        doc = DocumentHelper.saveOpen(doc);
+
+        Assert.assertEquals(
+                "https://github.com/aspose-words/Aspose.Words-for-.NET/blob/master/Examples/Data/Absolute%20position%20tab.docx",
+                doc.getFrameset().getChildFramesets().get(0).getChildFramesets().get(0).getFrameDefaultUrl());
+        Assert.assertFalse(doc.getFrameset().getChildFramesets().get(0).getChildFramesets().get(0).isFrameLinkToFile());
     }
 }

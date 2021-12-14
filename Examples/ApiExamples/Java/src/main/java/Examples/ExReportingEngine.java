@@ -28,9 +28,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.util.*;
 import java.util.List;
 
 @Test
@@ -739,7 +737,12 @@ public class ExReportingEngine extends ApiExampleBase {
     public void jsonDataString() throws Exception {
         Document doc = new Document(getMyDir() + "ReportingEngine.DataSource.Java.docx");
 
-        JsonDataSource dataSource = new JsonDataSource(getMyDir() + "List of people.json");
+        JsonDataLoadOptions options = new JsonDataLoadOptions();
+        {
+            options.setExactDateTimeParseFormats(Arrays.asList(new String[]{"MM/dd/yyyy", "MM.d.yy", "MM d yy"}));
+        }
+
+        JsonDataSource dataSource = new JsonDataSource(getMyDir() + "List of people.json", options);
         buildReport(doc, dataSource, "persons");
 
         doc.save(getArtifactsDir() + "ReportingEngine.JsonDataString.docx");
@@ -748,9 +751,15 @@ public class ExReportingEngine extends ApiExampleBase {
     @Test
     public void jsonDataStream() throws Exception {
         Document doc = new Document(getMyDir() + "ReportingEngine.DataSource.Java.docx");
+
+        JsonDataLoadOptions options = new JsonDataLoadOptions();
+        {
+            options.setExactDateTimeParseFormats(Arrays.asList(new String[]{"MM/dd/yyyy", "MM.d.yy", "MM d yy"}));
+        }
+
         InputStream stream = new FileInputStream(getMyDir() + "List of people.json");
         try {
-            JsonDataSource dataSource = new JsonDataSource(stream);
+            JsonDataSource dataSource = new JsonDataSource(stream, options);
             buildReport(doc, dataSource, "persons");
         } finally {
             stream.close();

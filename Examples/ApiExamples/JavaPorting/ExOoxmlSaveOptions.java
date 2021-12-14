@@ -167,7 +167,7 @@ class ExOoxmlSaveOptions !Test class should be public in Java to run, please fix
         //ExSummary:Shows how to determine whether to preserve the document's "Last saved time" property when saving.
         Document doc = new Document(getMyDir() + "Document.docx");
 
-        Assert.assertEquals(new DateTime(2020, 7, 30, 5, 27, 0), 
+        Assert.assertEquals(new DateTime(2021, 5, 11, 6, 32, 0), 
             doc.getBuiltInDocumentProperties().getLastSavedTimeInternal());
 
         // When we save the document to an OOXML format, we can create an OoxmlSaveOptions object
@@ -187,7 +187,7 @@ class ExOoxmlSaveOptions !Test class should be public in Java to run, please fix
         if (updateLastSavedTimeProperty)
             Assert.That(new Date(), Is.EqualTo(lastSavedTimeNew).Within(1).Days);
         else
-            Assert.assertEquals(new DateTime(2020, 7, 30, 5, 27, 0), 
+            Assert.assertEquals(new DateTime(2021, 5, 11, 6, 32, 0), 
                 lastSavedTimeNew);
         //ExEnd
     }
@@ -347,5 +347,20 @@ class ExOoxmlSaveOptions !Test class should be public in Java to run, please fix
         	}
             finally { if (stream != null) stream.close(); }
         }
+    }
+
+    @Test
+    public void exportGeneratorName() throws Exception
+    {
+        //ExStart
+        //ExFor:SaveOptions.ExportGeneratorName
+        //ExSummary:Shows how to disable adding name and version of Aspose.Words into produced files.
+        Document doc = new Document();
+        
+        // Use https://docs.aspose.com/words/net/generator-or-producer-name-included-in-output-documents/ to know how to check the result.
+        OoxmlSaveOptions saveOptions = new OoxmlSaveOptions(); { saveOptions.setExportGeneratorName(false); }
+        
+        doc.save(getArtifactsDir() + "OoxmlSaveOptions.ExportGeneratorName.docx", saveOptions);
+        //ExEnd
     }
 }
