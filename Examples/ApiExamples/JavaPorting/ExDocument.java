@@ -257,7 +257,7 @@ public class ExDocument extends ApiExampleBase
         //ExEnd
     }
 
-    @Test (groups = "IgnoreOnJenkins")
+    @Test (groups = "SkipMono")
     public void openType() throws Exception
     {
         //ExStart

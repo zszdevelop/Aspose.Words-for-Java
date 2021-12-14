@@ -606,7 +606,7 @@ class ExFontSettings !Test class should be public in Java to run, please fix .Ne
         //ExStart
         //ExFor:FontSettings            
         //ExFor:FontSettings.GetFontsSources()
-        //ExFor:FontSettings.SetFontsSources()
+        //ExFor:FontSettings.SetFontsSources(FontSourceBase[])
         //ExSummary:Shows how to add a font source to our existing font sources.
         Document doc = new Document();
         DocumentBuilder builder = new DocumentBuilder(doc);
@@ -1046,8 +1046,8 @@ class ExFontSettings !Test class should be public in Java to run, please fix .Ne
 
         org.w3c.dom.NodeList rules = fallbackSettingsDoc.SelectNodes("//aw:FontFallbackSettings/aw:FallbackTable/aw:Rule", manager);
 
-        Assert.assertEquals("0C00-0C7F", rules.item(5).getAttributes().getNamedItem("Ranges").getNodeValue());
-        Assert.assertEquals("Vani", rules.item(5).getAttributes().getNamedItem("FallbackFonts").getNodeValue());
+        Assert.assertEquals("0C00-0C7F", rules.item(8).getAttributes().getNamedItem("Ranges").getNodeValue());
+        Assert.assertEquals("Vani", rules.item(8).getAttributes().getNamedItem("FallbackFonts").getNodeValue());
     }
 
     @Test
