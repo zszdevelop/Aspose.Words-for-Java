@@ -8,7 +8,7 @@ import com.aspose.words.Document;
 import com.aspose.words.shaping.harfbuzz.HarfBuzzTextShaperFactory;
 
 
-class WorkingWithHarfBuzz extends DocsExamplesBase
+class EnableOpenTypeFeatures extends DocsExamplesBase
 {
     @Test
     public void openTypeFeatures() throws Exception

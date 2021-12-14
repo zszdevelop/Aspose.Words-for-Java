@@ -46,6 +46,20 @@ import com.aspose.words.Field;
 class AddContentUsingDocumentBuilder extends DocsExamplesBase
 {
     @Test
+    public void createNewDocument() throws Exception
+    {
+        //ExStart:CreateNewDocument
+        Document doc = new Document();
+
+        // Use a document builder to add content to the document.
+        DocumentBuilder builder = new DocumentBuilder(doc);
+        builder.writeln("Hello World!");
+
+        doc.save(getArtifactsDir() + "AddContentUsingDocumentBuilder.CreateNewDocument.docx");
+        //ExEnd:CreateNewDocument
+    }
+
+    @Test
     public void documentBuilderInsertBookmark() throws Exception
     {
         //ExStart:DocumentBuilderInsertBookmark
@@ -56,7 +70,7 @@ class AddContentUsingDocumentBuilder extends DocsExamplesBase
         builder.writeln("This is just a fine bookmark.");
         builder.endBookmark("FineBookmark");
 
-        doc.save(getArtifactsDir() + "WorkingWithBookmarks.DocumentBuilderInsertBookmark.docx");
+        doc.save(getArtifactsDir() + "AddContentUsingDocumentBuilder.DocumentBuilderInsertBookmark.docx");
         //ExEnd:DocumentBuilderInsertBookmark
     }
 

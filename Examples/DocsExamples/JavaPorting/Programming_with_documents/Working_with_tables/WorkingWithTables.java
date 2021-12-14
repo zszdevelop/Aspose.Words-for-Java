@@ -106,7 +106,12 @@ class WorkingWithTables extends DocsExamplesBase
         public static Column fromIndex(Table table, int columnIndex)
         {
             return new Column(table, columnIndex);
-        }private GetColumnCellsgetColumnCells().private ToArraytoArray();
+        }
+
+        /// <summary>
+        /// Returns the cells which make up the column.
+        /// </summary>
+        public Cell[] Cells => private GetColumnCellsgetColumnCells()private ToArraytoArray();
 
         /// <summary>
         /// Returns the index of the given cell in the column.
@@ -869,7 +874,7 @@ class WorkingWithTables extends DocsExamplesBase
     {
         public ArrayList<RowInfo> getRows() { return mRows; };
 
-        private ArrayList<RowInfo> mRows; = /*new*/ ArrayList<RowInfo>list();
+        private ArrayList<RowInfo> mRows; = /*new*/ArrayList<RowInfo>list();
     }
 
     /// <summary>
@@ -879,7 +884,7 @@ class WorkingWithTables extends DocsExamplesBase
     {
         public ArrayList<CellInfo> getCells() { return mCells; };
 
-        private ArrayList<CellInfo> mCells; = /*new*/ ArrayList<CellInfo>list();
+        private ArrayList<CellInfo> mCells; = /*new*/ArrayList<CellInfo>list();
     }
 
     /// <summary>
@@ -929,7 +934,7 @@ class WorkingWithTables extends DocsExamplesBase
             xmlDoc.Load(htmlStream);
 
             // Get collection of tables in the HTML document.
-            org.w3c.dom.NodeList tables = xmlDoc.getDocumentElement().SelectNodes("// Table");
+            org.w3c.dom.NodeList tables = xmlDoc.getDocumentElement().getElementsByTagName("table");
 
             for (org.w3c.dom.Node table : (Iterable<org.w3c.dom.Node>) tables)
             {

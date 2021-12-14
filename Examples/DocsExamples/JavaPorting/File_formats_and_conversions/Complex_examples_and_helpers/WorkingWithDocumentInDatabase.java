@@ -13,7 +13,7 @@ import com.aspose.words.net.System.Data.DataTable;
 
 public class WorkingWithDocumentInDatabase extends DocsExamplesBase
 {
-    @Test (enabled = false, description = "Uses Microsoft.Jet.OLEDB.4.0")
+    @Test
     public void loadAndSaveDocToDatabase() throws Exception
     {
         Document doc = new Document(getMyDir() + "Document.docx");
