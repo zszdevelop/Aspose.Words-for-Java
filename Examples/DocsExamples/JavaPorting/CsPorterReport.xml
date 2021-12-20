@@ -41,24 +41,15 @@
 		<File project="DocsExamples" dir="Mail Merge and Reporting" name="Working with Fields" status="AUTO" />
 		<File project="DocsExamples" dir="Mail Merge and Reporting" name="Working with XML data" status="AUTO" />
 		<File project="DocsExamples" dir="Programming with Documents" name="Apply License" status="AUTO" />
-		<File project="DocsExamples" dir="Programming with Documents\Contents Management" name="Extract content helper" status="NEW" />
-		<File project="DocsExamples" dir="Programming with Documents\Contents Management" name="Extract content" status="NEW" />
-		<File project="DocsExamples" dir="Programming with Documents\Contents Management" name="Find and replace" status="NEW" />
-		<File project="DocsExamples" dir="Programming with Documents\Contents Management" name="Remove content" status="NEW" />
-		<File project="DocsExamples" dir="Programming with Documents\Contents Management" name="Working with Bookmarks" status="NEW" />
-		<File project="DocsExamples" dir="Programming with Documents\Contents Management" name="Working with Ranges" status="NEW" />
-		<File project="DocsExamples" dir="Programming with Documents\Contents Management" name="Working with SDT" status="NEW" />
-		<File project="DocsExamples" dir="Programming with Documents\Contents Management" name="Working with styles and themes" status="NEW" />
-		<File project="DocsExamples" dir="Programming with Documents\Contents Management" name="Working with table of content" status="NEW" />
-		<File project="DocsExamples" dir="Programming with Documents\Contents Managment" name="Extract content helper" status="DELETED-IN-DOTNET" />
-		<File project="DocsExamples" dir="Programming with Documents\Contents Managment" name="Extract content" status="DELETED-IN-DOTNET" />
-		<File project="DocsExamples" dir="Programming with Documents\Contents Managment" name="Find and replace" status="DELETED-IN-DOTNET" />
-		<File project="DocsExamples" dir="Programming with Documents\Contents Managment" name="Remove content" status="DELETED-IN-DOTNET" />
-		<File project="DocsExamples" dir="Programming with Documents\Contents Managment" name="Working with Bookmarks" status="DELETED-IN-DOTNET" />
-		<File project="DocsExamples" dir="Programming with Documents\Contents Managment" name="Working with Ranges" status="DELETED-IN-DOTNET" />
-		<File project="DocsExamples" dir="Programming with Documents\Contents Managment" name="Working with SDT" status="DELETED-IN-DOTNET" />
-		<File project="DocsExamples" dir="Programming with Documents\Contents Managment" name="Working with styles and themes" status="DELETED-IN-DOTNET" />
-		<File project="DocsExamples" dir="Programming with Documents\Contents Managment" name="Working with table of content" status="DELETED-IN-DOTNET" />
+		<File project="DocsExamples" dir="Programming with Documents\Contents Management" name="Extract content helper" status="AUTO" />
+		<File project="DocsExamples" dir="Programming with Documents\Contents Management" name="Extract content" status="AUTO" />
+		<File project="DocsExamples" dir="Programming with Documents\Contents Management" name="Find and replace" status="AUTO" />
+		<File project="DocsExamples" dir="Programming with Documents\Contents Management" name="Remove content" status="AUTO" />
+		<File project="DocsExamples" dir="Programming with Documents\Contents Management" name="Working with Bookmarks" status="AUTO" />
+		<File project="DocsExamples" dir="Programming with Documents\Contents Management" name="Working with Ranges" status="AUTO" />
+		<File project="DocsExamples" dir="Programming with Documents\Contents Management" name="Working with SDT" status="AUTO" />
+		<File project="DocsExamples" dir="Programming with Documents\Contents Management" name="Working with styles and themes" status="AUTO" />
+		<File project="DocsExamples" dir="Programming with Documents\Contents Management" name="Working with table of content" status="AUTO" />
 		<File project="DocsExamples" dir="Programming with Documents" name="Enable OpenType features" status="AUTO" />
 		<File project="DocsExamples" dir="Programming with Documents\Protect or Encrypt Document" name="Document protection" status="AUTO" />
 		<File project="DocsExamples" dir="Programming with Documents\Protect or Encrypt Document" name="Working with DigitalSinatures" status="AUTO" />
