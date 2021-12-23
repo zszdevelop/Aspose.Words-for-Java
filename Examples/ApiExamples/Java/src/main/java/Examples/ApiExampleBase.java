@@ -181,7 +181,7 @@ public class ApiExampleBase {
     static {
         try {
             G_ASSEMBLY_DIR = System.getProperty("user.dir");
-            G_CODE_BASE_DIR = new File(G_ASSEMBLY_DIR).getParentFile() + File.separator;
+            G_CODE_BASE_DIR = new File(G_ASSEMBLY_DIR).getParentFile().getParentFile() + File.separator;
             G_LICENSE_DIR = G_CODE_BASE_DIR + "Data" + File.separator + "License" + File.separator;
             G_ARTIFACTS_DIR = G_CODE_BASE_DIR + "Data" + File.separator + "Artifacts" + File.separator;
             G_GOLDS_DIR = G_CODE_BASE_DIR + "Data" + File.separator + "Golds" + File.separator;
