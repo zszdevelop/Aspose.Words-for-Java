@@ -326,7 +326,6 @@ public class WorkingWithPdfSaveOptions extends DocsExamplesBase
             saveOptionsA1B.setJpegQuality(100); // Use JPEG compression at 50% quality to reduce file size.
             saveOptionsA1B.setImageColorSpaceExportMode(PdfImageColorSpaceExportMode.SIMPLE_CMYK);
         }
-        
 
         doc.save(getArtifactsDir() + "WorkingWithPdfSaveOptions.PdfImageCompression.Pdf_A1b.pdf", saveOptionsA1B);
         //ExEnd:PdfImageComppression
