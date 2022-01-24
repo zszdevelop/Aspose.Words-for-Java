@@ -1,42 +1,18 @@
-package DocsExamples.Rendering_and_Printing;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Rendering_and_printing;
 
 import DocsExamples.DocsExamplesBase;
-import org.testng.annotations.Test;
-import com.aspose.words.Document;
 import com.aspose.words.Shape;
-import com.aspose.words.NodeType;
-import com.aspose.words.ShapeRenderer;
-import com.aspose.words.ImageSaveOptions;
-import com.aspose.words.SaveFormat;
-import com.aspose.words.ImageColorMode;
-import com.aspose.ms.System.IO.FileStream;
-import com.aspose.ms.System.IO.FileMode;
-import com.aspose.ms.System.Drawing.msSize;
+import com.aspose.words.*;
+import org.apache.commons.io.FilenameUtils;
+import org.testng.annotations.Test;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
-
-import com.aspose.words.Cell;
-import com.aspose.words.Row;
-import com.aspose.words.DocumentBuilder;
-import com.aspose.words.ShapeType;
-import com.aspose.ms.System.Drawing.msColor;
-
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
-
-import com.aspose.words.Node;
-import com.aspose.words.FileFormatUtil;
-import com.aspose.ms.System.IO.Path;
-import com.aspose.words.Section;
-import com.aspose.words.InlineStory;
-import com.aspose.words.Story;
-import com.aspose.words.ShapeBase;
-import com.aspose.words.CompositeNode;
-import com.aspose.ms.System.IO.MemoryStream;
-import com.aspose.ms.System.Drawing.Rectangle;
-import com.aspose.ms.System.Drawing.msPoint;
 
 @Test
 public class RenderingShapes extends DocsExamplesBase
@@ -89,10 +65,9 @@ public class RenderingShapes extends DocsExamplesBase
 
     @Test
     //ExStart:RenderShapeToGraphics
-    public void renderShapeToGraphics() throws Exception
-    {
+    public void renderShapeToGraphics() throws Exception {
         Document doc = new Document(getMyDir() + "Rendering.docx");
-        
+
         Shape shape = (Shape) doc.getChild(NodeType.SHAPE, 0, true);
 
         ShapeRenderer render = shape.getShapeRenderer();
@@ -104,31 +79,29 @@ public class RenderingShapes extends DocsExamplesBase
         // and make sure that the graphics canvas is large enough to compensate for this.
         int maxSide = Math.max(shapeSizeInPixels.width, shapeSizeInPixels.height);
 
-        BufferedImage image = new BufferedImage((int) (maxSide * 1.25), (int) (maxSide * 1.25));
-        try /*JAVA: was using*/
-        {
-            // Rendering to a graphics object means we can specify settings and transformations to be applied to the rendered shape.
-            // In our case we will rotate the rendered shape.
-            Graphics2D graphics = Graphics2D.FromImage(image);
-            try /*JAVA: was using*/
-            {
-                // Clear the shape with the background color of the document.
-                graphics.Clear(shape.getDocument().getPageColor());
-                // Center the rotation using the translation method below.
-                graphics.TranslateTransform((float) image.getWidth() / 8f, (float) image.getHeight() / 2f);
-                // Rotate the image by 45 degrees.
-                graphics.RotateTransform(45f);
-                // Undo the translation.
-                graphics.TranslateTransform(-(float) image.getWidth() / 8f, -(float) image.getHeight() / 2f);
+        BufferedImage image = new BufferedImage((int) (maxSide * 1.25), (int) (maxSide * 1.25), BufferedImage.TYPE_INT_ARGB);
 
-                // Render the shape onto the graphics object.
-                render.renderToSize(graphics, 0f, 0f, msSize.getWidth(shapeSizeInPixels), msSize.getHeight(shapeSizeInPixels));
-            }
-            finally { if (graphics != null) graphics.close(); }
+        // Rendering to a graphics object means we can specify settings and transformations to be applied to the rendered shape.
+        // In our case we will rotate the rendered shape.
+        Graphics2D graphics = (Graphics2D) image.getGraphics();
+        try {
+            // Clear the shape with the background color of the document.
+            graphics.setBackground(shape.getDocument().getPageColor());
+            graphics.clearRect(0, 0, image.getWidth(), image.getHeight());
+            // Center the rotation using the translation method below.
+            graphics.translate(image.getWidth() / 8, image.getHeight() / 2);
+            // Rotate the image by 45 degrees.
+            graphics.rotate(45 * Math.PI / 180);
+            // Undo the translation.
+            graphics.translate(-image.getWidth() / 8, -image.getHeight() / 2);
 
-            image.Save(getArtifactsDir() + "RenderShape.RenderShapeToGraphics.png", ImageFormat.Png);
+            // Render the shape onto the graphics object.
+            render.renderToSize(graphics, 0, 0, shapeSizeInPixels.width, shapeSizeInPixels.height);
+        } finally {
+            if (graphics != null) graphics.dispose();
         }
-        finally { if (image != null) image.close(); }
+
+        ImageIO.write(image, "png", new File(getArtifactsDir() + "RenderShape.RenderShapeToGraphics.png"));
     }
     //ExEnd:RenderShapeToGraphics
 
@@ -168,7 +141,7 @@ public class RenderingShapes extends DocsExamplesBase
 
         ImageSaveOptions options = new ImageSaveOptions(SaveFormat.PNG);
         {
-            options.setPaperColor(msColor.getLightPink());
+            options.setPaperColor(new Color(255, 182, 193));
         }
 
         renderNode(textBoxShape.getLastParagraph(), getArtifactsDir() + "RenderShape.RenderParagraphToImage.png", options);
@@ -176,27 +149,26 @@ public class RenderingShapes extends DocsExamplesBase
     }
 
     @Test
-    public void findShapeSizes() throws Exception
-    {
+    public void findShapeSizes() throws Exception {
         Document doc = new Document(getMyDir() + "Rendering.docx");
-        
         Shape shape = (Shape) doc.getChild(NodeType.SHAPE, 0, true);
 
         //ExStart:FindShapeSizes
-        /*Size*/long shapeRenderedSize = shape.getShapeRenderer().getSizeInPixelsInternal(1.0f, 96.0f);
+        Point2D.Float shapeSizeInDocument = shape.getShapeRenderer().getSizeInPoints();
+        float width = shapeSizeInDocument.x; // The width of the shape.
+        float height = shapeSizeInDocument.y; // The height of the shape.
+        Dimension shapeRenderedSize = shape.getShapeRenderer().getSizeInPixels(1.0f, 96.0f);
 
-        BufferedImage image = new BufferedImage(msSize.getWidth(shapeRenderedSize), msSize.getHeight(shapeRenderedSize));
-        try /*JAVA: was using*/
-        {
-            Graphics2D graphics = Graphics2D.FromImage(image);
-            try /*JAVA: was using*/
-            {
-                // Render shape onto the graphics object using the RenderToScale
-                // or RenderToSize methods of ShapeRenderer class.
-            }
-            finally { if (graphics != null) graphics.close(); }
+        BufferedImage image = new BufferedImage(shapeRenderedSize.width, shapeRenderedSize.height,
+                BufferedImage.TYPE_INT_RGB);
+
+        Graphics2D graphics = (Graphics2D) image.getGraphics();
+        try {
+            // Render shape onto the graphics object using the RenderToScale
+            // or RenderToSize methods of ShapeRenderer class.
+        } finally {
+            if (graphics != null) graphics.dispose();
         }
-        finally { if (image != null) image.close(); }
         //ExEnd:FindShapeSizes
     }
 
@@ -218,15 +190,14 @@ public class RenderingShapes extends DocsExamplesBase
     /// <param name="node">The node to render.</param>
     /// <param name="filePath">The path to save the rendered image to.</param>
     /// <param name="imageOptions">The image options to use during rendering. This can be null.</param>
-    public void renderNode(Node node, String filePath, ImageSaveOptions imageOptions) throws Exception
-    {
+    void renderNode(Node node, String filePath, ImageSaveOptions imageOptions) throws Exception {
         if (imageOptions == null)
-            imageOptions = new ImageSaveOptions(FileFormatUtil.extensionToSaveFormat(Path.getExtension(filePath)));
+            imageOptions = new ImageSaveOptions(FileFormatUtil.extensionToSaveFormat(FilenameUtils.getExtension(filePath)));
 
         // Store the paper color to be used on the final image and change to transparent.
         // This will cause any content around the rendered node to be removed later on.
         Color savePaperColor = imageOptions.getPaperColor();
-        imageOptions.setPaperColor(msColor.getTransparent());
+        imageOptions.setPaperColor(new Color(0, 0, 0, 0));
 
         // There a bug which affects the cache of a cloned node.
         // To avoid this, we clone the entire document, including all nodes,
@@ -242,7 +213,7 @@ public class RenderingShapes extends DocsExamplesBase
         // Assume that the node cannot be larger than the page in size.
         shape.setWidth(parentSection.getPageSetup().getPageWidth());
         shape.setHeight(parentSection.getPageSetup().getPageHeight());
-        shape.setFillColor(msColor.getTransparent());
+        shape.setFillColor(new Color(0, 0, 0, 0));
 
         // Don't draw a surronding line on the shape.
         shape.setStroked(false);
@@ -253,8 +224,7 @@ public class RenderingShapes extends DocsExamplesBase
         // with the actual nodes of the document we need to clone the target node into the temporary shape.
         Node currentNode = node;
         while (!(currentNode.getParentNode() instanceof InlineStory || currentNode.getParentNode() instanceof Story ||
-                 currentNode.getParentNode() instanceof ShapeBase))
-        {
+                currentNode.getParentNode() instanceof ShapeBase)) {
             CompositeNode parent = (CompositeNode) currentNode.getParentNode().deepClone(false);
             currentNode = currentNode.getParentNode();
             parent.appendChild(node.deepClone(true));
@@ -267,63 +237,28 @@ public class RenderingShapes extends DocsExamplesBase
 
         // Render the shape to stream so we can take advantage of the effects of the ImageSaveOptions class.
         // Retrieve the rendered image and remove the shape from the document.
-        MemoryStream stream = new MemoryStream();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
         ShapeRenderer renderer = shape.getShapeRenderer();
-        renderer.save(stream, imageOptions);
+        shape.getShapeRenderer().save(stream, imageOptions);
         shape.remove();
 
-        Rectangle crop = renderer.getOpaqueBoundsInPixelsInternal(imageOptions.getScale(), imageOptions.getHorizontalResolution(),
-            imageOptions.getVerticalResolution());
+        Rectangle cropRectangle = renderer.getOpaqueBoundsInPixels(imageOptions.getScale(), imageOptions.getHorizontalResolution(),
+                imageOptions.getVerticalResolution());
+        BufferedImage renderedImage = new BufferedImage(cropRectangle.width, cropRectangle.height,
+                BufferedImage.TYPE_INT_RGB);
 
-        BufferedImage renderedImage = new BufferedImage(stream);
-        try /*JAVA: was using*/
-        {
-            BufferedImage croppedImage = new BufferedImage(crop.getWidth(), crop.getHeight());
-            croppedImage.SetResolution(imageOptions.getHorizontalResolution(), imageOptions.getVerticalResolution());
+        // Create the final image with the proper background color.
+        Graphics2D graphics = renderedImage.createGraphics();
+        try {
+            graphics.setBackground(savePaperColor);
+            graphics.clearRect(0, 0, renderedImage.getWidth(), renderedImage.getHeight());
+            graphics.drawImage(renderedImage, 0, 0, renderedImage.getWidth(), renderedImage.getHeight(), (int) cropRectangle.getX(),
+                    (int) cropRectangle.getY(), (int) cropRectangle.getWidth(), (int) cropRectangle.getHeight(), null);
 
-            // Create the final image with the proper background color.
-            Graphics2D g = Graphics2D.FromImage(croppedImage);
-            try /*JAVA: was using*/
-            {
-                g.Clear(savePaperColor);
-                g.DrawImage(renderedImage, new Rectangle(0, 0, croppedImage.getWidth(), croppedImage.getHeight()), crop.getX(),
-                    crop.getY(), crop.getWidth(), crop.getHeight(), GraphicsUnit.Pixel);
-
-                croppedImage.Save(filePath);
-            }
-            finally { if (g != null) g.close(); }
+            ImageIO.write(renderedImage, "png", new File(filePath));
+        } finally {
+            if (graphics != null) graphics.dispose();
         }
-        finally { if (renderedImage != null) renderedImage.close(); }
-    }
-
-    /// <summary>
-    /// Finds the minimum bounding box around non-transparent pixels in a Bitmap.
-    /// </summary>
-    public Rectangle findBoundingBoxAroundNode(BufferedImage originalBitmap)
-    {
-        /*Point*/long min = msPoint.ctor(Integer.MAX_VALUE, Integer.MAX_VALUE);
-        /*Point*/long max = msPoint.ctor(Integer.MIN_VALUE, Integer.MIN_VALUE);
-
-        for (int x = 0; x < originalBitmap.getWidth(); ++x)
-        {
-            for (int y = 0; y < originalBitmap.getHeight(); ++y)
-            {
-                // Note that you can speed up this part of the algorithm using LockBits and unsafe code instead of GetPixel.
-                Color pixelColor = originalBitmap.GetPixel(x, y);
-
-                // For each pixel that is not transparent, calculate the bounding box around it.
-                if (pixelColor.getRGB() != msColor.Empty.getRGB())
-                {
-                    min.msPoint.setX(!!!Autoporter error non-ref value type struct Math.min(x, msPoint.getX(min)));
-                    min.msPoint.setY(!!!Autoporter error non-ref value type struct Math.min(y, msPoint.getY(min)));
-                    max.msPoint.setX(!!!Autoporter error non-ref value type struct Math.max(x, msPoint.getX(max)));
-                    max.msPoint.setY(!!!Autoporter error non-ref value type struct Math.max(y, msPoint.getY(max)));
-                }
-            }
-        }
-
-        // Add one pixel to the width and height to avoid clipping.
-        return new Rectangle(msPoint.getX(min), msPoint.getY(min), msPoint.getX(max) - msPoint.getX(min) + 1, msPoint.getY(max) - msPoint.getY(min) + 1);
     }
 }
 

@@ -1,25 +1,19 @@
-package DocsExamples.Complex_examples_and_helpers;
-
-// ********* THIS FILE IS AUTO PORTED *********
+package DocsExamples.Rendering_and_printing.Complex_examples_and_helpers;
 
 import DocsExamples.DocsExamplesBase;
+import com.aspose.words.*;
+import org.apache.commons.lang3.StringUtils;
 import org.testng.annotations.Test;
-import com.aspose.words.Document;
-import com.aspose.words.LayoutEnumerator;
-import com.aspose.ms.System.msConsole;
-import com.aspose.words.LayoutEntityType;
-import com.aspose.ms.System.msString;
-import com.aspose.words.PageInfo;
+
+import javax.imageio.ImageIO;
+import java.awt.Stroke;
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import com.aspose.ms.System.Drawing.msSize;
-import java.awt.Graphics2D;
-import java.awt.Color;
-import com.aspose.ms.System.Drawing.RectangleF;
-import com.aspose.ms.System.Drawing.Rectangle;
-import com.aspose.ms.System.Convert;
-import com.aspose.words.ConvertUtil;
+import java.io.File;
+import java.text.MessageFormat;
 
-
+@Test
 public class EnumerateLayoutElements extends DocsExamplesBase
 {
     @Test
@@ -68,12 +62,12 @@ class LayoutInfoWriter
     /// </summary>
     private static void displayEntityInfo(LayoutEnumerator layoutEnumerator, String padding) throws Exception
     {
-        msConsole.write(padding + layoutEnumerator.getType() + " - " + layoutEnumerator.getKind());
+        System.out.print(padding + layoutEnumerator.getType() + " - " + layoutEnumerator.getKind());
 
         if (layoutEnumerator.getType() == LayoutEntityType.SPAN)
-            msConsole.write(" - " + layoutEnumerator.getText());
+            System.out.print(" - " + layoutEnumerator.getText());
 
-        msConsole.writeLine();
+        System.out.println();
     }
 
     /// <summary>
@@ -81,57 +75,51 @@ class LayoutInfoWriter
     /// </summary>
     private static String addPadding(String padding)
     {
-        return padding + msString.newString(' ', 4);
+        return padding + StringUtils.repeat(' ', 4);
     }
 }
 
 class OutlineLayoutEntitiesRenderer
 {
-    public static void run(Document doc, LayoutEnumerator layoutEnumerator, String folderPath) throws Exception
-    {
+    public static void run(Document doc, LayoutEnumerator layoutEnumerator, String folderPath) throws Exception {
         // Make sure the enumerator is at the beginning of the document.
         layoutEnumerator.reset();
 
-        for (int pageIndex = 0; pageIndex < doc.getPageCount(); pageIndex++)
-        {
+        for (int pageIndex = 0; pageIndex < doc.getPageCount(); pageIndex++) {
             // Use the document class to find information about the current page.
             PageInfo pageInfo = doc.getPageInfo(pageIndex);
 
             final float RESOLUTION = 150.0f;
-            /*Size*/long pageSize = pageInfo.getSizeInPixelsInternal(1.0f, RESOLUTION);
+            Dimension pageSize = pageInfo.getSizeInPixels(1.0f, RESOLUTION);
 
-            BufferedImage img = new BufferedImage(msSize.getWidth(pageSize), msSize.getHeight(pageSize));
-            try /*JAVA: was using*/
-            {
-                img.SetResolution(RESOLUTION, RESOLUTION);
+            BufferedImage image = new BufferedImage(pageSize.width, pageSize.height, BufferedImage.TYPE_INT_ARGB);
 
-                Graphics2D g = Graphics2D.FromImage(img);
-                try /*JAVA: was using*/
-                {
-                    // Make the background white.
-                    g.Clear(Color.WHITE);
+            Graphics2D graphics = image.createGraphics();
+            try {
+                // Make the background white.
+                graphics.setBackground(Color.WHITE);
+                graphics.clearRect(0, 0, image.getWidth(), image.getHeight());
 
-                    // Render the page to the graphics.
-                    doc.renderToScaleInternal(pageIndex, g, 0.0f, 0.0f, 1.0f);
+                // Render the page to the graphics.
+                doc.renderToScale(pageIndex, graphics, 0.0f, 0.0f, 1.0f);
 
-                    // Add an outline around each element on the page using the graphics object.
-                    addBoundingBoxToElementsOnPage(layoutEnumerator, g);
+                // Add an outline around each element on the page using the graphics object.
+                addBoundingBoxToElementsOnPage(layoutEnumerator, graphics);
 
-                    // Move the enumerator to the next page if there is one.
-                    layoutEnumerator.moveNext();
+                // Move the enumerator to the next page if there is one.
+                layoutEnumerator.moveNext();
 
-                    img.Save(folderPath + $"EnumerateLayoutElements.Page_{pageIndex + 1}.png");
-                }
-                finally { if (g != null) g.close(); }
+                ImageIO.write(image, "png", new File(folderPath + MessageFormat.format("EnumerateLayoutElements.Page_{0}.png", pageIndex + 1)));
+            } finally {
+                if (graphics != null) graphics.dispose();
             }
-            finally { if (img != null) img.close(); }
         }
     }
 
     /// <summary>
     /// Adds a colored border around each layout element on the page.
     /// </summary>
-    private static void addBoundingBoxToElementsOnPage(LayoutEnumerator layoutEnumerator, Graphics2D g) throws Exception
+    private static void addBoundingBoxToElementsOnPage(LayoutEnumerator layoutEnumerator, Graphics2D graphics) throws Exception
     {
         do
         {
@@ -139,17 +127,18 @@ class OutlineLayoutEntitiesRenderer
             // so the lines of child entities are drawn first and don't overlap the parent's lines.
             if (layoutEnumerator.moveLastChild())
             {
-                addBoundingBoxToElementsOnPage(layoutEnumerator, g);
+                addBoundingBoxToElementsOnPage(layoutEnumerator, graphics);
                 layoutEnumerator.moveParent();
             }
 
-            // Convert the rectangle representing the position of the layout entity on the page from points to pixels.
-            RectangleF rectF = layoutEnumerator.getRectangleInternal();
-            Rectangle rect = new Rectangle(pointToPixel(rectF.getLeft(), g.DpiX), pointToPixel(rectF.getTop(), g.DpiY),
-                pointToPixel(rectF.getWidth(), g.DpiX), pointToPixel(rectF.getHeight(), g.DpiY));
+            Stroke stroke1 = new BasicStroke(1f);
+            graphics.setColor(getColorFromType(layoutEnumerator.getType()));
+            graphics.setStroke(stroke1);
 
+            // Convert the rectangle representing the position of the layout entity on the page from points to pixels.
             // Draw a line around the layout entity on the page.
-            g.DrawRectangle(getColoredPenFromType(layoutEnumerator.getType()), rect);
+            Rectangle2D.Float rectF = layoutEnumerator.getRectangle();
+            graphics.drawRect((int) rectF.getX(), (int) rectF.getY(), (int) rectF.getWidth(), (int) rectF.getHeight());
 
             // Stop after all elements on the page have been processed.
             if (layoutEnumerator.getType() == LayoutEntityType.PAGE)
@@ -160,36 +149,36 @@ class OutlineLayoutEntitiesRenderer
     /// <summary>
     /// Returns a different colored pen for each entity type.
     /// </summary>
-    private static Pen getColoredPenFromType(/*LayoutEntityType*/int type)
+    private static Color getColorFromType(int type)
     {
         switch (type)
         {
             case LayoutEntityType.CELL:
-                return Pens.Purple;
+                return Color.PINK;
             case LayoutEntityType.COLUMN:
-                return Pens.Green;
+                return Color.green;
             case LayoutEntityType.COMMENT:
-                return Pens.LightBlue;
+                return Color.CYAN;
             case LayoutEntityType.ENDNOTE:
-                return Pens.DarkRed;
+                return Color.lightGray;
             case LayoutEntityType.FOOTNOTE:
-                return Pens.DarkBlue;
+                return Color.lightGray;
             case LayoutEntityType.HEADER_FOOTER:
-                return Pens.DarkGreen;
+                return Color.DARK_GRAY;
             case LayoutEntityType.LINE:
-                return Pens.Blue;
+                return Color.blue;
             case LayoutEntityType.NOTE_SEPARATOR:
-                return Pens.LightGreen;
+                return Color.magenta;
             case LayoutEntityType.PAGE:
-                return Pens.Red;
+                return Color.RED;
             case LayoutEntityType.ROW:
-                return Pens.Orange;
+                return Color.orange;
             case LayoutEntityType.SPAN:
-                return Pens.Red;
+                return Color.RED;
             case LayoutEntityType.TEXT_BOX:
-                return Pens.Yellow;
+                return Color.yellow;
             default:
-                return Pens.Red;
+                return Color.RED;
         }
     }
 
@@ -198,7 +187,7 @@ class OutlineLayoutEntitiesRenderer
     /// </summary>
     private static int pointToPixel(float value, double resolution)
     {
-        return Convert.toInt32(ConvertUtil.pointToPixel(value, resolution));
+        return (int) ConvertUtil.pointToPixel(value, resolution);
     }
 }
 
