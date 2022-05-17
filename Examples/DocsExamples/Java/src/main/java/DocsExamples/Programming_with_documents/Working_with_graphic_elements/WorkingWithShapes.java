@@ -10,6 +10,9 @@ import java.awt.*;
 import java.text.MessageFormat;
 import java.util.List;
 
+/**
+ * 绘制各种图形
+ */
 @Test
 public class WorkingWithShapes extends DocsExamplesBase
 {

@@ -8,6 +8,11 @@ import com.aspose.words.DocSaveOptions;
 
 @Test
 public class WorkingWithDocSaveOptions extends DocsExamplesBase {
+
+    /**
+     * 用密码加密文档
+     * @throws Exception
+     */
     @Test
     public void encryptDocumentWithPassword() throws Exception {
         //ExStart:EncryptDocumentWithPassword
@@ -25,10 +30,15 @@ public class WorkingWithDocSaveOptions extends DocsExamplesBase {
         //ExEnd:EncryptDocumentWithPassword
     }
 
+    /**
+     * 压缩设置
+     * @throws Exception
+     */
     @Test
     public void doNotCompressSmallMetafiles() throws Exception {
         //ExStart:DoNotCompressSmallMetafiles
-        Document doc = new Document(getMyDir() + "Microsoft equation object.docx");
+//        Document doc = new Document(getMyDir() + "Microsoft equation object.docx");
+        Document doc = new Document(getMyDir() + "test.docx");
 
         DocSaveOptions saveOptions = new DocSaveOptions();
         {
@@ -39,6 +49,10 @@ public class WorkingWithDocSaveOptions extends DocsExamplesBase {
         //ExEnd:DoNotCompressSmallMetafiles
     }
 
+    /**
+     * 不保存图片
+     * @throws Exception
+     */
     @Test
     public void doNotSavePictureBullet() throws Exception {
         //ExStart:DoNotSavePictureBullet

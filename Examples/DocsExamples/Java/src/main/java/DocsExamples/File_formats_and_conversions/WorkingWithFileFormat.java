@@ -17,6 +17,12 @@ import java.util.stream.Stream;
 @Test
 public class WorkingWithFileFormat extends DocsExamplesBase
 {
+    /**
+     * 检测文件的类型 FileFormatInfo
+     *  文件格式 .getLoadFormat()
+     *  文件是否加密 info.isEncrypted()
+     * @throws Exception
+     */
     @Test
     public void detectFileFormat() throws Exception {
         //ExStart:CheckFormatCompatibility

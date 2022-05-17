@@ -5,16 +5,26 @@ import com.aspose.words.Shape;
 import com.aspose.words.*;
 import org.testng.annotations.Test;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.io.File;
 
+/**
+ * 添加水印
+ */
 @Test
 public class WorkingWithWatermark extends DocsExamplesBase
 {
+    /**
+     * 添加带有特定选项的文本水印
+     * @throws Exception
+     */
     @Test
     public void addTextWatermarkWithSpecificOptions() throws Exception
     {
         //ExStart:AddTextWatermarkWithSpecificOptions
-        Document doc = new Document(getMyDir() + "Document.docx");
+//        Document doc = new Document(getMyDir() + "Document.docx");
+        Document doc = new Document(getMyDir() + "test.docx");
 
         TextWatermarkOptions options = new TextWatermarkOptions();
         {
@@ -28,6 +38,31 @@ public class WorkingWithWatermark extends DocsExamplesBase
         doc.getWatermark().setText("Test", options);
 
         doc.save(getArtifactsDir() + "WorkWithWatermark.AddTextWatermarkWithSpecificOptions.docx");
+        //ExEnd:AddTextWatermarkWithSpecificOptions
+    }
+
+    /**
+     * 添加带有特定选项的图片水印
+     * @throws Exception
+     */
+    @Test
+    public void imageWatermark() throws Exception
+    {
+        //ExStart:AddTextWatermarkWithSpecificOptions
+//        Document doc = new Document(getMyDir() + "Document.docx");
+        Document doc = new Document(getMyDir() + "test.docx");
+
+        // Modify the image watermark's appearance with an ImageWatermarkOptions object,
+        // then pass it while creating a watermark from an image file.
+        ImageWatermarkOptions imageWatermarkOptions = new ImageWatermarkOptions();
+        imageWatermarkOptions.setScale(0.2);
+        imageWatermarkOptions.isWashout(false);
+
+
+        doc.getWatermark().setImage(ImageIO.read(new File(getImagesDir() + "Logo.jpg")), imageWatermarkOptions);
+
+
+        doc.save(getArtifactsDir() + "imageWatermark.docx");
         //ExEnd:AddTextWatermarkWithSpecificOptions
     }
 

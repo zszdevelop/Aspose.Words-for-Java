@@ -4,6 +4,9 @@ import DocsExamples.DocsExamplesBase;
 import org.testng.annotations.Test;
 import com.aspose.words.Document;
 
+/**
+ * 自定义二维码生成
+ */
 @Test
 public class WorkingWithBarcodeGenerator extends DocsExamplesBase
 {

@@ -6,6 +6,9 @@ import org.testng.annotations.Test;
 
 import java.util.Date;
 
+/**
+ * 处理各种类型的图表
+ */
 @Test
 public class WorkingWithCharts extends DocsExamplesBase
 {

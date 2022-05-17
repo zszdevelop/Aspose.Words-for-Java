@@ -11,6 +11,10 @@ import com.aspose.words.IBarcodeGenerator;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * 各种码生成 实现IBarcodeGenerator
+ *
+ */
 //ExStart:GenerateACustomBarCodeImage_IBarcodeGenerator
 public class CustomBarcodeGenerator extends DocsExamplesBase implements IBarcodeGenerator
 {

@@ -8,8 +8,11 @@ package DocsExamples;
 // "as is", without warranty of any kind, either expressed or implied.
 //////////////////////////////////////////////////////////////////////////
 
+import com.aspose.email.system.io.MemoryStream;
+import com.aspose.words.ConvertUtil;
 import com.aspose.words.CurrentThreadSettings;
 import com.aspose.words.License;
+import com.sun.tools.javac.util.Convert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
@@ -64,9 +67,11 @@ public class DocsExamplesBase
     }
 
     /**
+     * 从目录中删除测试工件的所有目录和文件。
+     * 默认会删除测试生成的。
      * Delete all dirs and files from directory for test artifacts.
      */
-    @AfterClass(alwaysRun = true)
+//    @AfterClass(alwaysRun = true)
     public void tearDown()
     {
         deleteDir(artifactsDirPath);
@@ -88,6 +93,7 @@ public class DocsExamplesBase
             License wordsLicense = new License();
             wordsLicense.setLicense(testLicenseFileName);
         }
+
     }
 
     /**

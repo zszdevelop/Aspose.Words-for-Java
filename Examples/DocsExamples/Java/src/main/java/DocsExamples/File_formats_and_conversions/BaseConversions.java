@@ -11,6 +11,9 @@ import java.io.*;
 import com.aspose.words.SaveFormat;
 import com.aspose.words.DocumentBuilder;
 
+/**
+ * 文件格式转换
+ */
 @Test
 public class BaseConversions extends DocsExamplesBase
 {
@@ -22,7 +25,8 @@ public class BaseConversions extends DocsExamplesBase
         Document doc = new Document(getMyDir() + "Document.doc");
         //ExEnd:OpenDocument
 
-        doc.save(getArtifactsDir() + "BaseConversions.DocToDocx.docx");
+        String outPath = getArtifactsDir() + "BaseConversions.DocToDocx.docx";
+        doc.save(outPath);
         //ExEnd:LoadAndSave
     }
 
@@ -49,11 +53,16 @@ public class BaseConversions extends DocsExamplesBase
         FileUtils.writeByteArrayToFile(new File(getArtifactsDir() + "BaseConversions.DocxToRtf.rtf"), dstStream.toByteArray());
     }
 
+    /**
+     * docx 转 Pdf
+     * @throws Exception
+     */
     @Test
     public void docxToPdf() throws Exception
     {
         //ExStart:Doc2Pdf
-        Document doc = new Document(getMyDir() + "Document.docx");
+//        Document doc = new Document(getMyDir() + "Document.docx");
+        Document doc = new Document(getMyDir() + "test.docx");
 
         doc.save(getArtifactsDir() + "BaseConversions.DocxToPdf.pdf");
         //ExEnd:Doc2Pdf

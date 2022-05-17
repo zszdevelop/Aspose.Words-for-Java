@@ -8,6 +8,9 @@ import com.aspose.words.NodeType;
 import com.aspose.words.OfficeMathDisplayType;
 import com.aspose.words.OfficeMathJustification;
 
+/**
+ * 处理数学函数
+ */
 @Test
 public class WorkingWithOfficeMath extends DocsExamplesBase
 {

@@ -1,54 +1,52 @@
 package DocsExamples.File_formats_and_conversions.Save_options;
 
 import DocsExamples.DocsExamplesBase;
+import com.aspose.words.*;
 import org.testng.annotations.Test;
-import com.aspose.words.Document;
-import com.aspose.words.PdfSaveOptions;
-import com.aspose.words.MetafileRenderingOptions;
-import com.aspose.words.MetafileRenderingMode;
-import com.aspose.words.WarningInfo;
-import com.aspose.words.IWarningCallback;
-import com.aspose.words.WarningType;
-import com.aspose.words.WarningInfoCollection;
-import com.aspose.words.DocumentBuilder;
-import com.aspose.words.PdfDigitalSignatureDetails;
-import com.aspose.words.CertificateHolder;
+
 import java.util.Date;
-import com.aspose.words.PdfFontEmbeddingMode;
-import com.aspose.words.HeaderFooterBookmarksExportMode;
-import com.aspose.words.PdfCompliance;
-import com.aspose.words.PdfCustomPropertiesExport;
-import com.aspose.words.PdfImageCompression;
-import com.aspose.words.PdfImageColorSpaceExportMode;
-import com.aspose.words.Dml3DEffectsRenderingMode;
 
 @Test
-public class WorkingWithPdfSaveOptions extends DocsExamplesBase
-{
+public class WorkingWithPdfSaveOptions extends DocsExamplesBase {
+
+    /**
+     * 在窗口标题栏中显示文档标题
+     * ps：没看出区别
+     * @throws Exception
+     */
     @Test
-    public void displayDocTitleInWindowTitlebar() throws Exception
-    {
+    public void displayDocTitleInWindowTitlebar() throws Exception {
+
         //ExStart:DisplayDocTitleInWindowTitlebar
         Document doc = new Document(getMyDir() + "Rendering.docx");
 
-        PdfSaveOptions saveOptions = new PdfSaveOptions(); { saveOptions.setDisplayDocTitle(true); }
+        PdfSaveOptions saveOptions = new PdfSaveOptions();
+        saveOptions.setDisplayDocTitle(true);
 
         doc.save(getArtifactsDir() + "WorkingWithPdfSaveOptions.DisplayDocTitleInWindowTitlebar.pdf", saveOptions);
         //ExEnd:DisplayDocTitleInWindowTitlebar
     }
 
+    /**
+     * pdf渲染警告
+     * ps：没看出区别
+     * @throws Exception
+     */
     @Test
     //ExStart:PdfRenderWarnings
-    public void pdfRenderWarnings() throws Exception
-    {
+    public void pdfRenderWarnings() throws Exception {
         Document doc = new Document(getMyDir() + "WMF with image.docx");
 
         MetafileRenderingOptions metafileRenderingOptions = new MetafileRenderingOptions();
         {
-            metafileRenderingOptions.setEmulateRasterOperations(false); metafileRenderingOptions.setRenderingMode(MetafileRenderingMode.VECTOR_WITH_FALLBACK);
+            metafileRenderingOptions.setEmulateRasterOperations(false);
+            metafileRenderingOptions.setRenderingMode(MetafileRenderingMode.VECTOR_WITH_FALLBACK);
         }
 
-        PdfSaveOptions saveOptions = new PdfSaveOptions(); { saveOptions.setMetafileRenderingOptions(metafileRenderingOptions); }
+        PdfSaveOptions saveOptions = new PdfSaveOptions();
+        {
+            saveOptions.setMetafileRenderingOptions(metafileRenderingOptions);
+        }
 
         // If Aspose.Words cannot correctly render some of the metafile records
         // to vector graphics then Aspose.Words renders this metafile to a bitmap.
@@ -58,26 +56,22 @@ public class WorkingWithPdfSaveOptions extends DocsExamplesBase
         doc.save(getArtifactsDir() + "WorkingWithPdfSaveOptions.PdfRenderWarnings.pdf", saveOptions);
 
         // While the file saves successfully, rendering warnings that occurred during saving are collected here.
-        for (WarningInfo warningInfo : callback.mWarnings)
-        {
+        for (WarningInfo warningInfo : callback.mWarnings) {
             System.out.println(warningInfo.getDescription());
         }
     }
 
     //ExStart:RenderMetafileToBitmap
-    public static class HandleDocumentWarnings implements IWarningCallback
-    {
+    public static class HandleDocumentWarnings implements IWarningCallback {
         /// <summary>
         /// Our callback only needs to implement the "Warning" method. This method is called whenever there is a
         /// potential issue during document processing. The callback can be set to listen for warnings generated during
         /// document load and/or document save.
         /// </summary>
-        public void warning(WarningInfo info)
-        {
+        public void warning(WarningInfo info) {
             // For now type of warnings about unsupported metafile records changed
             // from DataLoss/UnexpectedContent to MinorFormattingLoss.
-            if (info.getWarningType() == WarningType.MINOR_FORMATTING_LOSS)
-            {
+            if (info.getWarningType() == WarningType.MINOR_FORMATTING_LOSS) {
                 System.out.println("Unsupported operation: " + info.getDescription());
                 mWarnings.warning(info);
             }
@@ -88,111 +82,151 @@ public class WorkingWithPdfSaveOptions extends DocsExamplesBase
     //ExEnd:RenderMetafileToBitmap
     //ExEnd:PdfRenderWarnings
 
+    /**
+     * 使用证书持有人进行数字签名的Pdf
+     * ps：没看出区别
+     * @throws Exception
+     */
     @Test
-    public void digitallySignedPdfUsingCertificateHolder() throws Exception
-    {
+    public void digitallySignedPdfUsingCertificateHolder() throws Exception {
         //ExStart:DigitallySignedPdfUsingCertificateHolder
         Document doc = new Document();
         DocumentBuilder builder = new DocumentBuilder(doc);
-        
+
         builder.writeln("Test Signed PDF.");
 
         PdfSaveOptions saveOptions = new PdfSaveOptions();
         {
             saveOptions.setDigitalSignatureDetails(new PdfDigitalSignatureDetails(
-                CertificateHolder.create(getMyDir() + "morzal.pfx", "aw"), "reason", "location",
-                new Date()));
+                    CertificateHolder.create(getMyDir() + "morzal.pfx", "aw"), "reason", "location",
+                    new Date()));
         }
 
         doc.save(getArtifactsDir() + "WorkingWithPdfSaveOptions.DigitallySignedPdfUsingCertificateHolder.pdf", saveOptions);
         //ExEnd:DigitallySignedPdfUsingCertificateHolder
     }
 
+    /**
+     * 嵌入所有字体
+     * @throws Exception
+     */
     @Test
-    public void embeddedAllFonts() throws Exception
-    {
+    public void embeddedAllFonts() throws Exception {
         //ExStart:EmbeddAllFonts
         Document doc = new Document(getMyDir() + "Rendering.docx");
 
         // The output PDF will be embedded with all fonts found in the document.
-        PdfSaveOptions saveOptions = new PdfSaveOptions(); { saveOptions.setEmbedFullFonts(true); }
-        
+        PdfSaveOptions saveOptions = new PdfSaveOptions();
+        {
+            saveOptions.setEmbedFullFonts(true);
+        }
+
         doc.save(getArtifactsDir() + "WorkingWithPdfSaveOptions.EmbeddedFontsInPdf.pdf", saveOptions);
         //ExEnd:EmbeddAllFonts
     }
 
+    /**
+     * 嵌入式子集字体
+     * @throws Exception
+     */
     @Test
-    public void embeddedSubsetFonts() throws Exception
-    {
+    public void embeddedSubsetFonts() throws Exception {
         //ExStart:EmbeddSubsetFonts
         Document doc = new Document(getMyDir() + "Rendering.docx");
 
         // The output PDF will contain subsets of the fonts in the document.
         // Only the glyphs used in the document are included in the PDF fonts.
-        PdfSaveOptions saveOptions = new PdfSaveOptions(); { saveOptions.setEmbedFullFonts(false); }
-        
+        PdfSaveOptions saveOptions = new PdfSaveOptions();
+        {
+            saveOptions.setEmbedFullFonts(false);
+        }
+
         doc.save(getArtifactsDir() + "WorkingWithPdfSaveOptions.EmbeddSubsetFonts.pdf", saveOptions);
         //ExEnd:EmbeddSubsetFonts
     }
 
+    /**
+     * 禁用嵌入Windows字体
+     * @throws Exception
+     */
     @Test
-    public void disableEmbedWindowsFonts() throws Exception
-    {
+    public void disableEmbedWindowsFonts() throws Exception {
         //ExStart:DisableEmbedWindowsFonts
         Document doc = new Document(getMyDir() + "Rendering.docx");
 
         // The output PDF will be saved without embedding standard windows fonts.
-        PdfSaveOptions saveOptions = new PdfSaveOptions(); { saveOptions.setFontEmbeddingMode(PdfFontEmbeddingMode.EMBED_NONE); }
-        
+        PdfSaveOptions saveOptions = new PdfSaveOptions();
+        {
+            saveOptions.setFontEmbeddingMode(PdfFontEmbeddingMode.EMBED_NONE);
+        }
+
         doc.save(getArtifactsDir() + "WorkingWithPdfSaveOptions.DisableEmbedWindowsFonts.pdf", saveOptions);
         //ExEnd:DisableEmbedWindowsFonts
     }
 
+    /**
+     * 跳过嵌入式Arial和Times Roman字体
+     * @throws Exception
+     */
     @Test
-    public void skipEmbeddedArialAndTimesRomanFonts() throws Exception
-    {
+    public void skipEmbeddedArialAndTimesRomanFonts() throws Exception {
         //ExStart:SkipEmbeddedArialAndTimesRomanFonts
         Document doc = new Document(getMyDir() + "Rendering.docx");
 
-        PdfSaveOptions saveOptions = new PdfSaveOptions(); { saveOptions.setFontEmbeddingMode(PdfFontEmbeddingMode.EMBED_ALL); }
+        PdfSaveOptions saveOptions = new PdfSaveOptions();
+        {
+            saveOptions.setFontEmbeddingMode(PdfFontEmbeddingMode.EMBED_ALL);
+        }
 
         doc.save(getArtifactsDir() + "WorkingWithPdfSaveOptions.SkipEmbeddedArialAndTimesRomanFonts.pdf", saveOptions);
         //ExEnd:SkipEmbeddedArialAndTimesRomanFonts
     }
 
+    /**
+     * 避免嵌入核心字体
+     * @throws Exception
+     */
     @Test
-    public void avoidEmbeddingCoreFonts() throws Exception
-    {
+    public void avoidEmbeddingCoreFonts() throws Exception {
         //ExStart:AvoidEmbeddingCoreFonts
         Document doc = new Document(getMyDir() + "Rendering.docx");
 
         // The output PDF will not be embedded with core fonts such as Arial, Times New Roman etc.
-        PdfSaveOptions saveOptions = new PdfSaveOptions(); { saveOptions.setUseCoreFonts(true); }
-        
+        PdfSaveOptions saveOptions = new PdfSaveOptions();
+        {
+            saveOptions.setUseCoreFonts(true);
+        }
+
         doc.save(getArtifactsDir() + "WorkingWithPdfSaveOptions.AvoidEmbeddingCoreFonts.pdf", saveOptions);
         //ExEnd:AvoidEmbeddingCoreFonts
     }
-    
+
+    /**
+     * pdf中打开外部链接的 Uri
+     * @throws Exception
+     */
     @Test
-    public void escapeUri() throws Exception
-    {
+    public void escapeUri() throws Exception {
         //ExStart:EscapeUri
         Document doc = new Document();
         DocumentBuilder builder = new DocumentBuilder(doc);
-        
-        builder.insertHyperlink("Testlink", 
-            "https://www.google.com/search?q=%2Fthe%20test", false);
+
+        builder.insertHyperlink("Testlink",
+                "https://www.google.com/search?q=%2Fthe%20test", false);
         builder.writeln();
-        builder.insertHyperlink("https://www.google.com/search?q=%2Fthe%20test", 
-            "https://www.google.com/search?q=%2Fthe%20test", false);
+        builder.insertHyperlink("https://www.google.com/search?q=%2Fthe%20test",
+                "https://www.google.com/search?q=%2Fthe%20test", false);
 
         doc.save(getArtifactsDir() + "WorkingWithPdfSaveOptions.EscapeUri.pdf");
         //ExEnd:EscapeUri
     }
 
+    /**
+     * 导出页眉页脚书签
+     * @throws Exception
+     */
     @Test
-    public void exportHeaderFooterBookmarks() throws Exception
-    {
+    public void exportHeaderFooterBookmarks() throws Exception {
         //ExStart:ExportHeaderFooterBookmarks
         Document doc = new Document(getMyDir() + "Bookmarks in headers and footers.docx");
 
@@ -204,9 +238,12 @@ public class WorkingWithPdfSaveOptions extends DocsExamplesBase
         //ExEnd:ExportHeaderFooterBookmarks
     }
 
+    /**
+     * 缩放Wmf字体到元文件大小
+     * @throws Exception
+     */
     @Test
-    public void scaleWmfFontsToMetafileSize() throws Exception
-    {
+    public void scaleWmfFontsToMetafileSize() throws Exception {
         //ExStart:ScaleWmfFontsToMetafileSize
         Document doc = new Document(getMyDir() + "WMF with text.docx");
 
@@ -217,39 +254,57 @@ public class WorkingWithPdfSaveOptions extends DocsExamplesBase
 
         // If Aspose.Words cannot correctly render some of the metafile records to vector graphics
         // then Aspose.Words renders this metafile to a bitmap.
-        PdfSaveOptions saveOptions = new PdfSaveOptions(); { saveOptions.setMetafileRenderingOptions(metafileRenderingOptions); }
+        PdfSaveOptions saveOptions = new PdfSaveOptions();
+        {
+            saveOptions.setMetafileRenderingOptions(metafileRenderingOptions);
+        }
 
         doc.save(getArtifactsDir() + "WorkingWithPdfSaveOptions.ScaleWmfFontsToMetafileSize.pdf", saveOptions);
         //ExEnd:ScaleWmfFontsToMetafileSize
     }
 
+    /**
+     * 附加文本定位
+     * @throws Exception
+     */
     @Test
-    public void additionalTextPositioning() throws Exception
-    {
+    public void additionalTextPositioning() throws Exception {
         //ExStart:AdditionalTextPositioning
         Document doc = new Document(getMyDir() + "Rendering.docx");
 
-        PdfSaveOptions saveOptions = new PdfSaveOptions(); { saveOptions.setAdditionalTextPositioning(true); }
+        PdfSaveOptions saveOptions = new PdfSaveOptions();
+        {
+            saveOptions.setAdditionalTextPositioning(true);
+        }
 
         doc.save(getArtifactsDir() + "WorkingWithPdfSaveOptions.AdditionalTextPositioning.pdf", saveOptions);
         //ExEnd:AdditionalTextPositioning
     }
 
+    /**
+     * 转换为Pdf 17
+     * @throws Exception
+     */
     @Test
-    public void conversionToPdf17() throws Exception
-    {
+    public void conversionToPdf17() throws Exception {
         //ExStart:ConversionToPDF17
         Document doc = new Document(getMyDir() + "Rendering.docx");
 
-        PdfSaveOptions saveOptions = new PdfSaveOptions(); { saveOptions.setCompliance(PdfCompliance.PDF_17); }
+        PdfSaveOptions saveOptions = new PdfSaveOptions();
+        {
+            saveOptions.setCompliance(PdfCompliance.PDF_17);
+        }
 
         doc.save(getArtifactsDir() + "WorkingWithPdfSaveOptions.ConversionToPdf17.pdf", saveOptions);
         //ExEnd:ConversionToPDF17
     }
 
+    /**
+     * 将采样图像
+     * @throws Exception
+     */
     @Test
-    public void downsamplingImages() throws Exception
-    {
+    public void downsamplingImages() throws Exception {
         //ExStart:DownsamplingImages
         Document doc = new Document(getMyDir() + "Rendering.docx");
 
@@ -265,9 +320,12 @@ public class WorkingWithPdfSaveOptions extends DocsExamplesBase
         //ExEnd:DownsamplingImages
     }
 
+    /**
+     * 设置大纲选项
+     * @throws Exception
+     */
     @Test
-    public void setOutlineOptions() throws Exception
-    {
+    public void setOutlineOptions() throws Exception {
         //ExStart:SetOutlineOptions
         Document doc = new Document(getMyDir() + "Rendering.docx");
 
@@ -280,41 +338,45 @@ public class WorkingWithPdfSaveOptions extends DocsExamplesBase
     }
 
     @Test
-    public void customPropertiesExport() throws Exception
-    {
+    public void customPropertiesExport() throws Exception {
         //ExStart:CustomPropertiesExport
         Document doc = new Document();
         doc.getCustomDocumentProperties().add("Company", "Aspose");
 
-        PdfSaveOptions saveOptions = new PdfSaveOptions(); { saveOptions.setCustomPropertiesExport(PdfCustomPropertiesExport.STANDARD); }
+        PdfSaveOptions saveOptions = new PdfSaveOptions();
+        {
+            saveOptions.setCustomPropertiesExport(PdfCustomPropertiesExport.STANDARD);
+        }
 
         doc.save(getArtifactsDir() + "WorkingWithPdfSaveOptions.CustomPropertiesExport.pdf", saveOptions);
         //ExEnd:CustomPropertiesExport
     }
 
     @Test
-    public void exportDocumentStructure() throws Exception
-    {
+    public void exportDocumentStructure() throws Exception {
         //ExStart:ExportDocumentStructure
         Document doc = new Document(getMyDir() + "Paragraphs.docx");
 
         // The file size will be increased and the structure will be visible in the "Content" navigation pane
         // of Adobe Acrobat Pro, while editing the .pdf.
-        PdfSaveOptions saveOptions = new PdfSaveOptions(); { saveOptions.setExportDocumentStructure(true); }
+        PdfSaveOptions saveOptions = new PdfSaveOptions();
+        {
+            saveOptions.setExportDocumentStructure(true);
+        }
 
         doc.save(getArtifactsDir() + "WorkingWithPdfSaveOptions.ExportDocumentStructure.pdf", saveOptions);
         //ExEnd:ExportDocumentStructure
     }
 
     @Test
-    public void pdfImageComppression() throws Exception
-    {
+    public void pdfImageComppression() throws Exception {
         //ExStart:PdfImageComppression
         Document doc = new Document(getMyDir() + "Rendering.docx");
 
         PdfSaveOptions saveOptions = new PdfSaveOptions();
         {
-            saveOptions.setImageCompression(PdfImageCompression.JPEG); saveOptions.setPreserveFormFields(true);
+            saveOptions.setImageCompression(PdfImageCompression.JPEG);
+            saveOptions.setPreserveFormFields(true);
         }
 
         doc.save(getArtifactsDir() + "WorkingWithPdfSaveOptions.PdfImageCompression.pdf", saveOptions);
@@ -332,36 +394,42 @@ public class WorkingWithPdfSaveOptions extends DocsExamplesBase
     }
 
     @Test
-    public void updateLastPrintedProperty() throws Exception
-    {
+    public void updateLastPrintedProperty() throws Exception {
         //ExStart:UpdateIfLastPrinted
         Document doc = new Document(getMyDir() + "Rendering.docx");
 
-        PdfSaveOptions saveOptions = new PdfSaveOptions(); { saveOptions.setUpdateLastPrintedProperty(true); }
+        PdfSaveOptions saveOptions = new PdfSaveOptions();
+        {
+            saveOptions.setUpdateLastPrintedProperty(true);
+        }
 
         doc.save(getArtifactsDir() + "WorkingWithPdfSaveOptions.UpdateIfLastPrinted.pdf", saveOptions);
         //ExEnd:UpdateIfLastPrinted
     }
 
     @Test
-    public void dml3DEffectsRendering() throws Exception
-    {
+    public void dml3DEffectsRendering() throws Exception {
         //ExStart:Dml3DEffectsRendering
         Document doc = new Document(getMyDir() + "Rendering.docx");
 
-        PdfSaveOptions saveOptions = new PdfSaveOptions(); { saveOptions.setDml3DEffectsRenderingMode(Dml3DEffectsRenderingMode.ADVANCED); }
+        PdfSaveOptions saveOptions = new PdfSaveOptions();
+        {
+            saveOptions.setDml3DEffectsRenderingMode(Dml3DEffectsRenderingMode.ADVANCED);
+        }
 
         doc.save(getArtifactsDir() + "WorkingWithPdfSaveOptions.Dml3DEffectsRendering.pdf", saveOptions);
         //ExEnd:Dml3DEffectsRendering
     }
 
     @Test
-    public void interpolateImages() throws Exception
-    {
+    public void interpolateImages() throws Exception {
         //ExStart:SetImageInterpolation
         Document doc = new Document(getMyDir() + "Rendering.docx");
 
-        PdfSaveOptions saveOptions = new PdfSaveOptions(); { saveOptions.setInterpolateImages(true); }
+        PdfSaveOptions saveOptions = new PdfSaveOptions();
+        {
+            saveOptions.setInterpolateImages(true);
+        }
 
         doc.save(getArtifactsDir() + "WorkingWithPdfSaveOptions.InterpolateImages.pdf", saveOptions);
         //ExEnd:SetImageInterpolation
