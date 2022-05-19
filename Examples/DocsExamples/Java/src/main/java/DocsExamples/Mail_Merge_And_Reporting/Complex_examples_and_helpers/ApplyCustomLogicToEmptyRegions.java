@@ -20,9 +20,16 @@ import com.aspose.words.Cell;
 import com.aspose.words.CellMerge;
 import com.aspose.words.net.System.Data.DataRelation;
 
+/**
+ * 将自定义逻辑应用于空区域
+ */
 @Test
 public class ApplyCustomLogicToEmptyRegions extends DocsExamplesBase
 {
+    /**
+     * 使用嵌套自定义的区域执行
+     * @throws Exception
+     */
     @Test
     public void executeWithRegionsNestedCustom() throws Exception
     {

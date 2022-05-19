@@ -14,9 +14,17 @@ import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterJob;
 
+/**
+ * 打印文档
+ */
 @Test
 public class PrintDocuments extends DocsExamplesBase
 {
+
+    /**
+     * 只有安装了打印机驱动程序才能运行
+     * @throws Exception
+     */
     @Test (enabled = false, description = "Run only when the printer driver is installed")
     public void printMultiplePages() throws Exception
     {

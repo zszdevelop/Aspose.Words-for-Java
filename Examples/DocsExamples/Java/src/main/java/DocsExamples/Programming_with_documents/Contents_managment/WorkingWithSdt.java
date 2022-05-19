@@ -100,6 +100,10 @@ public class WorkingWithSdt extends DocsExamplesBase
         //ExEnd:ComboBoxContentControl
     }
 
+    /**
+     * 富文本框内容控件
+     * @throws Exception
+     */
     @Test
     public void richTextBoxContentControl() throws Exception
     {
@@ -120,6 +124,10 @@ public class WorkingWithSdt extends DocsExamplesBase
         //ExEnd:RichTextBoxContentControl
     }
 
+    /**
+     * 设置内容控制颜色
+     * @throws Exception
+     */
     @Test
     public void setContentControlColor() throws Exception
     {
@@ -133,6 +141,10 @@ public class WorkingWithSdt extends DocsExamplesBase
         //ExEnd:SetContentControlColor
     }
 
+    /**
+     * 清除内容控制
+     * @throws Exception
+     */
     @Test
     public void clearContentsControl() throws Exception
     {

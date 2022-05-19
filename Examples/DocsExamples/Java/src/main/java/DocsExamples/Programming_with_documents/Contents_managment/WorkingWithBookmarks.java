@@ -6,9 +6,16 @@ import org.testng.annotations.Test;
 
 import java.text.MessageFormat;
 
+/**
+ * 使用书签
+ */
 @Test
 public class WorkingWithBookmarks extends DocsExamplesBase
 {
+    /**
+     * 访问书签
+     * @throws Exception
+     */
     @Test
     public void accessBookmarks() throws Exception
     {
@@ -22,6 +29,10 @@ public class WorkingWithBookmarks extends DocsExamplesBase
         //ExEnd:AccessBookmarks
     }
 
+    /**
+     * 更新书签数据
+     * @throws Exception
+     */
     @Test
     public void updateBookmarkData() throws Exception
     {
@@ -38,6 +49,10 @@ public class WorkingWithBookmarks extends DocsExamplesBase
         //ExEnd:UpdateBookmarkData
     }
 
+    /**
+     * 书签表列
+     * @throws Exception
+     */
     @Test
     public void bookmarkTableColumns() throws Exception {
         //ExStart:BookmarkTable
@@ -85,6 +100,10 @@ public class WorkingWithBookmarks extends DocsExamplesBase
         //ExEnd:BookmarkTableColumns
     }
 
+    /**
+     * 复制书签文本
+     * @throws Exception
+     */
     @Test
     public void copyBookmarkedText() throws Exception
     {
@@ -145,6 +164,10 @@ public class WorkingWithBookmarks extends DocsExamplesBase
         }
     }
 
+    /**
+     * 创建书签
+     * @throws Exception
+     */
     @Test
     public void createBookmark() throws Exception
     {
@@ -170,6 +193,10 @@ public class WorkingWithBookmarks extends DocsExamplesBase
         //ExEnd:CreateBookmark
     }
 
+    /**
+     * 显示隐藏书签
+     * @throws Exception
+     */
     @Test
     public void showHideBookmarks() throws Exception
     {
@@ -231,6 +258,10 @@ public class WorkingWithBookmarks extends DocsExamplesBase
     }
     //ExEnd:ShowHideBookmarkedContent
 
+    /**
+     * 理清行书签
+     * @throws Exception
+     */
     @Test
     public void untangleRowBookmarks() throws Exception
     {

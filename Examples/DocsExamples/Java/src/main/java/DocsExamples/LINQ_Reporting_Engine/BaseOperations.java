@@ -10,6 +10,9 @@ import com.aspose.words.ReportingEngine;
 import java.util.ArrayList;
 import java.awt.Color;
 
+/**
+ * 基本操作
+ */
 @Test
 public class BaseOperations extends DocsExamplesBase
 {
@@ -31,6 +34,10 @@ public class BaseOperations extends DocsExamplesBase
         //ExEnd:HelloWorld
     }
 
+    /**
+     * 单行
+     * @throws Exception
+     */
     @Test
     public void singleRow() throws Exception
     {
@@ -45,6 +52,10 @@ public class BaseOperations extends DocsExamplesBase
         //ExEnd:SingleRow
     }
 
+    /**
+     * 通用主详细信息
+     * @throws Exception
+     */
     @Test
     public void commonMasterDetail() throws Exception
     {
@@ -73,6 +84,10 @@ public class BaseOperations extends DocsExamplesBase
         //ExEnd:ConditionalBlocks
     }
 
+    /**
+     * 设置背景颜色
+     * @throws Exception
+     */
     @Test
     public void settingBackgroundColor() throws Exception
     {

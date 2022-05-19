@@ -18,6 +18,9 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.MessageFormat;
 
+/**
+ * 使用字段,替换文本
+ */
 @Test
 public class WorkingWithFields extends DocsExamplesBase
 {
@@ -193,6 +196,10 @@ public class WorkingWithFields extends DocsExamplesBase
     }
     //ExEnd:DataSourceRoot
 
+    /**
+     * 合并和条件字段
+     * @throws Exception
+     */
     @Test
     public void mailMergeAndConditionalField() throws Exception
     {
@@ -222,6 +229,10 @@ public class WorkingWithFields extends DocsExamplesBase
         //ExEnd:MailMergeAndConditionalField
     }
 
+    /**
+     * 合并图像从Blob
+     * @throws Exception
+     */
     @Test
     public void mailMergeImageFromBlob() throws Exception
     {
@@ -271,6 +282,10 @@ public class WorkingWithFields extends DocsExamplesBase
     }
     //ExEnd:HandleMergeImageFieldFromBlob
 
+    /**
+     * 处理合并开关
+     * @throws Exception
+     */
     @Test
     public void handleMailMergeSwitches() throws Exception
     {
@@ -312,6 +327,10 @@ public class WorkingWithFields extends DocsExamplesBase
     }
     //ExEnd:HandleMailMergeSwitches
 
+    /**
+     * 交替行
+     * @throws Exception
+     */
     @Test
     public void alternatingRows() throws Exception
     {

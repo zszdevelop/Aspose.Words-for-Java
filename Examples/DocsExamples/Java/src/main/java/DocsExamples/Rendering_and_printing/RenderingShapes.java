@@ -14,6 +14,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 
+/**
+ * 渲染形状相关
+ */
 @Test
 public class RenderingShapes extends DocsExamplesBase
 {
@@ -37,6 +40,10 @@ public class RenderingShapes extends DocsExamplesBase
         //ExEnd:RenderShapeAsEmf
     }
 
+    /**
+     * 取出文件中的图形 转为jpeg
+     * @throws Exception
+     */
     @Test
     public void renderShapeAsJpeg() throws Exception
     {

@@ -5,9 +5,16 @@ import org.testng.annotations.Test;
 import com.aspose.words.Document;
 import com.aspose.words.ProtectionType;
 
+/**
+ * 文件保护(密码)
+ */
 @Test
 public class DocumentProtection extends DocsExamplesBase
 {
+    /**
+     * 文档加密
+     * @throws Exception
+     */
     @Test
     public void protect() throws Exception
     {
@@ -17,6 +24,10 @@ public class DocumentProtection extends DocsExamplesBase
         //ExEnd:ProtectDocument
     }
 
+    /**
+     * 文档解密
+     * @throws Exception
+     */
     @Test
     public void unprotect() throws Exception
     {
@@ -26,6 +37,10 @@ public class DocumentProtection extends DocsExamplesBase
         //ExEnd:UnprotectDocument
     }
 
+    /**
+     * 文档是否加密
+     * @throws Exception
+     */
     @Test
     public void getProtectionType() throws Exception
     {

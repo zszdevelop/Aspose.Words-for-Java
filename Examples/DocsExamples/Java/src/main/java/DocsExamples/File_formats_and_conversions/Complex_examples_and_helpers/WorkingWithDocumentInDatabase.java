@@ -14,6 +14,9 @@ import java.nio.file.Paths;
 import java.sql.*;
 import java.text.MessageFormat;
 
+/**
+ * 在数据库中使用文档
+ */
 @Test
 public class WorkingWithDocumentInDatabase extends DocsExamplesBase
 {

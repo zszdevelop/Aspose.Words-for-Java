@@ -6,6 +6,9 @@ import com.aspose.words.ShapeType;
 import com.aspose.words.TextBox;
 import org.testng.annotations.Test;
 
+/**
+ * 处理文本框
+ */
 @Test
 public class WorkingWithTextboxes
 {
@@ -26,6 +29,10 @@ public class WorkingWithTextboxes
         //ExEnd:CreateALink
     }
 
+    /**
+     * 检验序列
+     * @throws Exception
+     */
     @Test
     public void checkSequence() throws Exception
     {

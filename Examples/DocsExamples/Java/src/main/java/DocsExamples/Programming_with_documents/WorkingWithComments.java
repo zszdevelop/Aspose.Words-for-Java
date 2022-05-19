@@ -9,9 +9,16 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+/**
+ * 批注处理
+ */
 @Test
 public class WorkingWithComments extends DocsExamplesBase
 {
+    /**
+     * 添加批注
+     * @throws Exception
+     */
     @Test
     public void addComments() throws Exception
     {
@@ -34,6 +41,10 @@ public class WorkingWithComments extends DocsExamplesBase
         //ExEnd:AddComments
     }
 
+    /**
+     * 添加指定锚定批注
+     * @throws Exception
+     */
     @Test
     public void anchorComment() throws Exception
     {
@@ -69,6 +80,10 @@ public class WorkingWithComments extends DocsExamplesBase
         //ExEnd:AnchorComment
     }
 
+    /**
+     * 移除批注
+     * @throws Exception
+     */
     @Test
     public void addRemoveCommentReply() throws Exception
     {

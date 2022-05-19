@@ -8,9 +8,16 @@ import java.text.MessageFormat;
 import java.util.Date;
 import java.util.Map;
 
+/**
+ * 使用文档属性
+ */
 @Test
 public class WorkingWithDocumentProperties extends DocsExamplesBase
 {
+    /**
+     * 获取变量
+     * @throws Exception
+     */
     @Test
     public void getVariables() throws Exception
     {
@@ -36,6 +43,10 @@ public class WorkingWithDocumentProperties extends DocsExamplesBase
         System.out.println("\nDocument have following variables " + variables);
     }
 
+    /**
+     * 枚举属性
+     * @throws Exception
+     */
     @Test
     public void enumerateProperties() throws Exception
     {
@@ -55,6 +66,10 @@ public class WorkingWithDocumentProperties extends DocsExamplesBase
         //ExEnd:EnumerateProperties
     }
 
+    /**
+     * 添加自定义文档属性
+     * @throws Exception
+     */
     @Test
     public void addCustomDocumentProperties() throws Exception
     {
@@ -73,6 +88,10 @@ public class WorkingWithDocumentProperties extends DocsExamplesBase
         //ExEnd:AddCustomDocumentProperties
     }
 
+    /**\
+     * 删除自定义文档属性
+     * @throws Exception
+     */
     @Test
     public void removeCustomDocumentProperties() throws Exception
     {
@@ -82,6 +101,10 @@ public class WorkingWithDocumentProperties extends DocsExamplesBase
         //ExEnd:CustomRemove
     }
 
+    /**
+     * 删除个人信息
+     * @throws Exception
+     */
     @Test
     public void removePersonalInformation() throws Exception
     {
@@ -92,6 +115,10 @@ public class WorkingWithDocumentProperties extends DocsExamplesBase
         //ExEnd:RemovePersonalInformation
     }
 
+    /**
+     * 配置内容链接
+     * @throws Exception
+     */
     @Test
     public void configuringLinkToContent() throws Exception
     {
@@ -117,6 +144,10 @@ public class WorkingWithDocumentProperties extends DocsExamplesBase
         //ExEnd:ConfiguringLinkToContent
     }
 
+    /**
+     * 在测量单位之间转换
+     * @throws Exception
+     */
     @Test
     public void convertBetweenMeasurementUnits() throws Exception
     {
@@ -134,6 +165,9 @@ public class WorkingWithDocumentProperties extends DocsExamplesBase
         //ExEnd:ConvertBetweenMeasurementUnits
     }
 
+    /**
+     * 使用控制字符
+     */
     @Test
     public void useControlCharacters()
     {

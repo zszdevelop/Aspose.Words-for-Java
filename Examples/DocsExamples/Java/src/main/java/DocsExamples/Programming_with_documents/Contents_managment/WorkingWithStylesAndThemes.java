@@ -6,9 +6,16 @@ import org.testng.annotations.Test;
 
 import java.awt.*;
 
+/**
+ * 处理风格和主题
+ */
 @Test
 public class WorkingWithStylesAndThemes extends DocsExamplesBase
 {
+    /**
+     * 访问样式
+     * @throws Exception
+     */
     @Test
     public void accessStyles() throws Exception
     {
@@ -35,6 +42,10 @@ public class WorkingWithStylesAndThemes extends DocsExamplesBase
         //ExEnd:AccessStyles
     }
 
+    /**
+     * 复制样式
+     * @throws Exception
+     */
     @Test
     public void copyStyles() throws Exception
     {
@@ -48,6 +59,10 @@ public class WorkingWithStylesAndThemes extends DocsExamplesBase
         //ExEnd:CopyStyles
     }
 
+    /**
+     * 获取主题属性
+     * @throws Exception
+     */
     @Test
     public void getThemeProperties() throws Exception
     {
@@ -62,6 +77,10 @@ public class WorkingWithStylesAndThemes extends DocsExamplesBase
         //ExEnd:GetThemeProperties 
     }
 
+    /**
+     * 设置主题属性
+     * @throws Exception
+     */
     @Test
     public void setThemeProperties() throws Exception
     {
@@ -74,6 +93,10 @@ public class WorkingWithStylesAndThemes extends DocsExamplesBase
         //ExEnd:SetThemeProperties 
     }
 
+    /**
+     * 插入样式分隔符
+     * @throws Exception
+     */
     @Test
     public void insertStyleSeparator() throws Exception
     {

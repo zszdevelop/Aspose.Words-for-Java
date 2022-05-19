@@ -10,9 +10,16 @@ import java.io.File;
 import java.text.MessageFormat;
 import java.util.Collection;
 
+/**
+ * 拆分文档
+ */
 @Test
 public class SplitDocument extends DocsExamplesBase
 {
+    /**
+     * 按标题Html
+     * @throws Exception
+     */
     @Test
     public void byHeadingsHtml() throws Exception
     {
@@ -30,6 +37,10 @@ public class SplitDocument extends DocsExamplesBase
         //ExEnd:SplitDocumentByHeadingsHtml
     }
 
+    /**
+     * 按Html部分
+     * @throws Exception
+     */
     @Test
     public void bySectionsHtml() throws Exception
     {

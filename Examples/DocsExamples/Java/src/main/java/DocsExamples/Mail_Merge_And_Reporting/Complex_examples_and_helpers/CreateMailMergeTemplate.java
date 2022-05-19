@@ -6,6 +6,9 @@ import com.aspose.words.TextFormFieldType;
 import com.aspose.words.BreakType;
 import org.testng.annotations.Test;
 
+/**
+ * 创建合并模板
+ */
 @Test
 public class CreateMailMergeTemplate
 {

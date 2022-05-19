@@ -5,6 +5,8 @@ import org.testng.annotations.Test;
 import com.aspose.words.RtfLoadOptions;
 import com.aspose.words.Document;
 
+import java.lang.reflect.Modifier;
+
 @Test
 public class WorkingWithRtfLoadOptions extends DocsExamplesBase {
     @Test
@@ -19,5 +21,8 @@ public class WorkingWithRtfLoadOptions extends DocsExamplesBase {
 
         doc.save(getArtifactsDir() + "WorkingWithRtfLoadOptions.RecognizeUtf8Text.rtf");
         //ExEnd:RecognizeUtf8Text
+
     }
+
+
 }

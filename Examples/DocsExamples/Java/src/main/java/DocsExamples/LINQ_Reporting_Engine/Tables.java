@@ -6,9 +6,16 @@ import org.testng.annotations.Test;
 import com.aspose.words.Document;
 import com.aspose.words.ReportingEngine;
 
+/**
+ * 报表-table
+ */
 @Test
 class Tables extends DocsExamplesBase
 {
+    /**
+     * 在表格中替代内容
+     * @throws Exception
+     */
     @Test
     public void inTableAlternateContent() throws Exception
     {
@@ -35,6 +42,10 @@ class Tables extends DocsExamplesBase
         //ExEnd:InTableMasterDetail
     }
 
+    /**
+     * 在表与过滤分组排序
+     * @throws Exception
+     */
     @Test
     public void inTableWithFilteringGroupingSorting() throws Exception
     {

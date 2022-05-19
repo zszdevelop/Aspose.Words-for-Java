@@ -6,9 +6,16 @@ import org.testng.annotations.Test;
 
 import java.util.Date;
 
+/**
+ * 比较文件
+ */
 @Test
 public class CompareDocuments extends DocsExamplesBase
 {
+    /**
+     * 比较相等
+     * @throws Exception
+     */
     @Test
     public void compareForEqual() throws Exception
     {
@@ -23,6 +30,10 @@ public class CompareDocuments extends DocsExamplesBase
         //ExEnd:CompareForEqual                     
     }
 
+    /**
+     * 比较选项
+     * @throws Exception
+     */
     @Test
     public void compareOptions() throws Exception
     {

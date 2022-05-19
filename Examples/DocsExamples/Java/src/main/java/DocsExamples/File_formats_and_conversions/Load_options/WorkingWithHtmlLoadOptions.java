@@ -10,6 +10,9 @@ import com.aspose.words.SaveFormat;
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * 加载html选项
+ */
 @Test
 public class WorkingWithHtmlLoadOptions extends DocsExamplesBase
 {

@@ -9,6 +9,9 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 
+/**
+ * 很少用
+ */
 @Test
 public class WorkingWithOleObjectsAndActiveX extends DocsExamplesBase
 {

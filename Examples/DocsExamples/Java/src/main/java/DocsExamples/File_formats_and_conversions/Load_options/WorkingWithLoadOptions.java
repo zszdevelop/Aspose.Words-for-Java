@@ -14,6 +14,9 @@ import com.aspose.words.PdfLoadOptions;
 import java.nio.charset.Charset;
 import java.text.MessageFormat;
 
+/**
+ * 加载选项的设置
+ */
 @Test
 public class WorkingWithLoadOptions extends DocsExamplesBase {
     @Test
@@ -30,6 +33,10 @@ public class WorkingWithLoadOptions extends DocsExamplesBase {
         //ExEnd:UpdateDirtyFields
     }
 
+    /**
+     * 加载加密文档
+     * @throws Exception
+     */
     @Test
     public void loadEncryptedDocument() throws Exception {
         //ExStart:LoadSaveEncryptedDoc
@@ -55,6 +62,10 @@ public class WorkingWithLoadOptions extends DocsExamplesBase {
         //ExEnd:ConvertShapeToOfficeMath
     }
 
+    /**
+     * 设置word版本
+     * @throws Exception
+     */
     @Test
     public void setMsWordVersion() throws Exception {
         //ExStart:SetMSWordVersion
@@ -71,6 +82,10 @@ public class WorkingWithLoadOptions extends DocsExamplesBase {
         //ExEnd:SetMSWordVersion
     }
 
+    /**
+     * 使用临时文件夹
+     * @throws Exception
+     */
     @Test
     public void useTempFolder() throws Exception {
         //ExStart:UseTempFolder  
@@ -83,6 +98,10 @@ public class WorkingWithLoadOptions extends DocsExamplesBase {
         //ExEnd:UseTempFolder  
     }
 
+    /**
+     * 文档加载警告监听
+     * @throws Exception
+     */
     @Test
     public void warningCallback() throws Exception {
         //ExStart:WarningCallback

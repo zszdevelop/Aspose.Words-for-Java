@@ -4,9 +4,17 @@ import DocsExamples.DocsExamplesBase;
 import com.aspose.words.*;
 import org.testng.annotations.Test;
 
+/**
+ * 处理markdown 格式文档
+ */
 @Test
 public class WorkingWithMarkdown extends DocsExamplesBase
 {
+
+    /**
+     * 生成markdown 文档
+     * @throws Exception
+     */
     @Test
     public void createMarkdownDocument() throws Exception
     {
@@ -78,6 +86,10 @@ public class WorkingWithMarkdown extends DocsExamplesBase
         //ExEnd:CreateMarkdownDocument
     }
 
+    /**
+     * 读取markdown 文档
+     * @throws Exception
+     */
     @Test
     public void readMarkdownDocument() throws Exception
     {
@@ -92,6 +104,10 @@ public class WorkingWithMarkdown extends DocsExamplesBase
         //ExEnd:ReadMarkdownDocument
     }
 
+    /**
+     * 重点，加粗，斜体
+     * @throws Exception
+     */
     @Test
     public void emphases() throws Exception
     {
@@ -128,6 +144,10 @@ public class WorkingWithMarkdown extends DocsExamplesBase
         //ExEnd:Emphases
     }
 
+    /**
+     * 标题等级设置
+     * @throws Exception
+     */
     @Test
     public void headings() throws Exception
     {

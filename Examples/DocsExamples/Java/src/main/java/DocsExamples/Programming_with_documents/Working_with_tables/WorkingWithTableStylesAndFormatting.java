@@ -6,6 +6,9 @@ import org.testng.annotations.Test;
 
 import java.awt.*;
 
+/**
+ * 处理表格样式和格式
+ */
 @Test
 public class WorkingWithTableStylesAndFormatting extends DocsExamplesBase
 {
@@ -25,6 +28,10 @@ public class WorkingWithTableStylesAndFormatting extends DocsExamplesBase
         //ExEnd:GetDistancebetweenTableSurroundingText
     }
 
+    /**
+     * 设置外框
+     * @throws Exception
+     */
     @Test
     public void applyOutlineBorder() throws Exception
     {
@@ -50,6 +57,10 @@ public class WorkingWithTableStylesAndFormatting extends DocsExamplesBase
         //ExEnd:ApplyOutlineBorder
     }
 
+    /**
+     * 创建带边框的表格
+     * @throws Exception
+     */
     @Test
     public void buildTableWithBorders() throws Exception
     {

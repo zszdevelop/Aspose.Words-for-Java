@@ -6,9 +6,16 @@ import org.testng.annotations.Test;
 
 import java.text.MessageFormat;
 
+/**
+ * 使用Web扩展
+ */
 @Test
 public class WorkingWithWebExtension extends DocsExamplesBase
 {
+    /**
+     * 使用Web扩展任务窗格
+     * @throws Exception
+     */
     @Test
     public void usingWebExtensionTaskPanes() throws Exception
     {

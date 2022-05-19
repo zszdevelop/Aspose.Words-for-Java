@@ -10,6 +10,9 @@ import com.aspose.words.FootnoteType;
 import com.aspose.words.EndnoteOptions;
 import com.aspose.words.FootnoteNumberingRule;
 
+/**
+ *
+ */
 @Test
 public class WorkingWithFootnoteAndEndnote extends DocsExamplesBase
 {

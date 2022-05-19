@@ -15,9 +15,16 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * 字段处理
+ */
 @Test
 public class WorkingWithFields extends DocsExamplesBase
 {
+    /**
+     * 动态更新字段
+     * @throws Exception
+     */
     @Test
     public void changeFieldUpdateCultureSource() throws Exception
     {
@@ -42,6 +49,10 @@ public class WorkingWithFields extends DocsExamplesBase
         //ExEnd:ChangeFieldUpdateCultureSource
     }
 
+    /**
+     * 在字段级别指定区域设置
+     * @throws Exception
+     */
     @Test
     public void specifyLocaleAtFieldLevel() throws Exception
     {
@@ -55,6 +66,10 @@ public class WorkingWithFields extends DocsExamplesBase
         //ExEnd:SpecifylocaleAtFieldlevel
     }
 
+    /**
+     * 替换超链接
+     * @throws Exception
+     */
     @Test
     public void replaceHyperlinks() throws Exception
     {
@@ -80,6 +95,10 @@ public class WorkingWithFields extends DocsExamplesBase
         //ExEnd:ReplaceHyperlinks
     }
 
+    /**
+     * 重命名合并字段
+     * @throws Exception
+     */
     @Test
     public void renameMergeFields() throws Exception
     {

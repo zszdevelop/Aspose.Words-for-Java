@@ -7,6 +7,9 @@ import org.testng.annotations.Test;
 import java.text.MessageFormat;
 import java.util.HashMap;
 
+/**
+ * 联接和追加文档
+ */
 @Test
 public class JoinAndAppendDocuments extends DocsExamplesBase
 {

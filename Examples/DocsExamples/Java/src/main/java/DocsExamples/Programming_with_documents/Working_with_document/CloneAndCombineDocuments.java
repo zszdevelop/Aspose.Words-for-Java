@@ -7,9 +7,16 @@ import org.testng.annotations.Test;
 import java.io.ByteArrayInputStream;
 import java.util.regex.Pattern;
 
+/**
+ * 克隆和组合文档
+ */
 @Test
 public class CloneAndCombineDocuments extends DocsExamplesBase
 {
+    /**
+     * 克隆文档
+     * @throws Exception
+     */
     @Test
     public void cloningDocument() throws Exception
     {

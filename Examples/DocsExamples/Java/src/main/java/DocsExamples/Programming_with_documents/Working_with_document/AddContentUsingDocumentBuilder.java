@@ -11,9 +11,16 @@ import java.awt.*;
 import java.text.MessageFormat;
 import java.util.regex.Pattern;
 
+/**
+ * 使用文档生成器添加内容
+ */
 @Test
 public class AddContentUsingDocumentBuilder extends DocsExamplesBase
 {
+    /**
+     * 文档生成器插入书签
+     * @throws Exception
+     */
     @Test
     public void documentBuilderInsertBookmark() throws Exception
     {
@@ -29,6 +36,10 @@ public class AddContentUsingDocumentBuilder extends DocsExamplesBase
         //ExEnd:DocumentBuilderInsertBookmark
     }
 
+    /**
+     * 构建表
+     * @throws Exception
+     */
     @Test
     public void buildTable() throws Exception
     {
@@ -66,6 +77,10 @@ public class AddContentUsingDocumentBuilder extends DocsExamplesBase
         //ExEnd:BuildTable
     }
 
+    /**
+     * 插入水平线
+     * @throws Exception
+     */
     @Test
     public void insertHorizontalRule() throws Exception
     {
@@ -80,6 +95,10 @@ public class AddContentUsingDocumentBuilder extends DocsExamplesBase
         //ExEnd:InsertHorizontalRule
     }
 
+    /**
+     * 水平线格式
+     * @throws Exception
+     */
     @Test
     public void horizontalRuleFormat() throws Exception
     {
@@ -99,6 +118,10 @@ public class AddContentUsingDocumentBuilder extends DocsExamplesBase
         //ExEnd:HorizontalRuleFormat
     }
 
+    /**
+     * 插入块
+     * @throws Exception
+     */
     @Test
     public void insertBreak() throws Exception
     {
@@ -118,6 +141,10 @@ public class AddContentUsingDocumentBuilder extends DocsExamplesBase
         //ExEnd:InsertBreak
     }
 
+    /**
+     * 插入文本输入表单字段
+     * @throws Exception
+     */
     @Test
     public void insertTextInputFormField() throws Exception
     {
@@ -131,6 +158,10 @@ public class AddContentUsingDocumentBuilder extends DocsExamplesBase
         //ExEnd:InsertTextInputFormField
     }
 
+    /**
+     * 插入复选框表单字段
+     * @throws Exception
+     */
     @Test
     public void insertCheckBoxFormField() throws Exception
     {
@@ -144,6 +175,10 @@ public class AddContentUsingDocumentBuilder extends DocsExamplesBase
         //ExEnd:InsertCheckBoxFormField
     }
 
+    /**
+     * 插入组合框表单字段
+     * @throws Exception
+     */
     @Test
     public void insertComboBoxFormField() throws Exception
     {
@@ -196,6 +231,10 @@ public class AddContentUsingDocumentBuilder extends DocsExamplesBase
         //ExEnd:InsertHyperlink
     }
 
+    /**
+     * 插入目录
+     * @throws Exception
+     */
     @Test
     public void insertTableOfContents() throws Exception
     {
@@ -247,6 +286,10 @@ public class AddContentUsingDocumentBuilder extends DocsExamplesBase
         //ExEnd:InsertTableOfContents
     }
 
+    /**
+     * 插入内联图像
+     * @throws Exception
+     */
     @Test
     public void insertInlineImage() throws Exception
     {
@@ -260,6 +303,10 @@ public class AddContentUsingDocumentBuilder extends DocsExamplesBase
         //ExEnd:InsertInlineImage
     }
 
+    /**
+     * 插入浮动图像
+     * @throws Exception
+     */
     @Test
     public void insertFloatingImage() throws Exception
     {

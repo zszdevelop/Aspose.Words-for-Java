@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import com.aspose.words.IMailMergeDataSource;
 import com.aspose.words.ref.Ref;
 
+/**
+ * 嵌套合并自定义
+ */
 @Test
 public class NestedMailMergeCustom extends DocsExamplesBase
 {

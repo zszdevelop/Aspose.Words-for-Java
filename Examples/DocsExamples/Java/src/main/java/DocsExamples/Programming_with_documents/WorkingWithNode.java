@@ -4,6 +4,10 @@ import DocsExamples.DocsExamplesBase;
 import com.aspose.words.*;
 import org.testng.annotations.Test;
 
+/**
+ * 处理节点
+ * 文档内包含数个节点
+ */
 @Test
 public class WorkingWithNode extends DocsExamplesBase
 {

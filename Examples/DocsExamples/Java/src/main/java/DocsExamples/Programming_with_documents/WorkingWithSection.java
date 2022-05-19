@@ -7,6 +7,9 @@ import com.aspose.words.DocumentBuilder;
 import com.aspose.words.Section;
 import com.aspose.words.PaperSize;
 
+/**
+ * 处理Section 部分
+ */
 @Test
 public class WorkingWithSection extends DocsExamplesBase
 {
@@ -23,6 +26,8 @@ public class WorkingWithSection extends DocsExamplesBase
         Section sectionToAdd = new Section(doc);
         doc.getSections().add(sectionToAdd);
         //ExEnd:AddSection
+
+        doc.save(getArtifactsDir() + "addSection.docx");
     }
 
     @Test

@@ -15,6 +15,10 @@ import java.util.Date;
 @Test
 public class Charts extends DocsExamplesBase
 {
+    /**
+     * 创建气泡图
+     * @throws Exception
+     */
     @Test
     public void createBubbleChart() throws Exception
     {
@@ -29,6 +33,10 @@ public class Charts extends DocsExamplesBase
         //ExEnd:BubbleChart
     }
 
+    /**
+     * 动态设置图表系列名称
+     * @throws Exception
+     */
     @Test
     public void setChartSeriesNameDynamically() throws Exception
     {
@@ -43,6 +51,10 @@ public class Charts extends DocsExamplesBase
         //ExEnd:SetChartSeriesNameDynamically
     }
 
+    /**
+     * 图表与过滤分组排序
+     * @throws Exception
+     */
     @Test
     public void chartWithFilteringGroupingOrdering() throws Exception
     {
@@ -57,6 +69,10 @@ public class Charts extends DocsExamplesBase
         //ExEnd:ChartWithFilteringGroupingOrdering
     }
 
+    /**
+     * 饼图
+     * @throws Exception
+     */
     @Test
     public void pieChart() throws Exception
     {
@@ -71,6 +87,10 @@ public class Charts extends DocsExamplesBase
         //ExEnd:PieChart
     }
 
+    /**
+     * 散点图
+     * @throws Exception
+     */
     @Test
     public void scatterChart() throws Exception
     {

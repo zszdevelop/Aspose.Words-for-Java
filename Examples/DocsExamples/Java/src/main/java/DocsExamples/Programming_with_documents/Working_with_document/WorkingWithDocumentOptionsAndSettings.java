@@ -6,9 +6,16 @@ import org.testng.annotations.Test;
 
 import java.text.MessageFormat;
 
+/**
+ * 使用文档选项和设置
+ */
 @Test
 public class WorkingWithDocumentOptionsAndSettings extends DocsExamplesBase
 {
+    /**
+     * 优化Ms Word
+     * @throws Exception
+     */
     @Test
     public void optimizeForMsWord() throws Exception
     {
@@ -21,6 +28,10 @@ public class WorkingWithDocumentOptionsAndSettings extends DocsExamplesBase
         //ExEnd:OptimizeForMsWord
     }
 
+    /**
+     * 显示语法和拼写错误
+     * @throws Exception
+     */
     @Test
     public void showGrammaticalAndSpellingErrors() throws Exception
     {
@@ -34,6 +45,10 @@ public class WorkingWithDocumentOptionsAndSettings extends DocsExamplesBase
         //ExEnd:ShowGrammaticalAndSpellingErrors
     }
 
+    /**
+     * 清理未使用的样式和列表
+     * @throws Exception
+     */
     @Test
     public void cleanupUnusedStylesAndLists() throws Exception
     {
@@ -57,6 +72,10 @@ public class WorkingWithDocumentOptionsAndSettings extends DocsExamplesBase
         //ExEnd:CleanupUnusedStylesandLists
     }
 
+    /**
+     * 清理重复样式
+     * @throws Exception
+     */
     @Test
     public void cleanupDuplicateStyle() throws Exception
     {
@@ -77,6 +96,10 @@ public class WorkingWithDocumentOptionsAndSettings extends DocsExamplesBase
         //ExEnd:CleanupDuplicateStyle
     }
 
+    /**
+     * 查看选项
+     * @throws Exception
+     */
     @Test
     public void viewOptions() throws Exception
     {
@@ -90,6 +113,10 @@ public class WorkingWithDocumentOptionsAndSettings extends DocsExamplesBase
         //ExEnd:SetViewOption
     }
 
+    /**
+     * 文档页面设置
+     * @throws Exception
+     */
     @Test
     public void documentPageSetup() throws Exception
     {
@@ -107,6 +134,10 @@ public class WorkingWithDocumentOptionsAndSettings extends DocsExamplesBase
         //ExEnd:DocumentPageSetup
     }
 
+    /**
+     * 添加日语作为编辑语言
+     * @throws Exception
+     */
     @Test
     public void addJapaneseAsEditingLanguages() throws Exception
     {
@@ -125,6 +156,10 @@ public class WorkingWithDocumentOptionsAndSettings extends DocsExamplesBase
                     : "The document default FarEast language was set to another than Japanese language originally, so it is not overridden.");
     }
 
+    /**
+     * 设置俄语为默认编辑语言
+     * @throws Exception
+     */
     @Test
     public void setRussianAsDefaultEditingLanguage() throws Exception
     {
@@ -141,6 +176,10 @@ public class WorkingWithDocumentOptionsAndSettings extends DocsExamplesBase
         //ExEnd:SetRussianAsDefaultEditingLanguage
     }
 
+    /**
+     * 设置页面设置和部分格式
+     * @throws Exception
+     */
     @Test
     public void setPageSetupAndSectionFormatting() throws Exception
     {

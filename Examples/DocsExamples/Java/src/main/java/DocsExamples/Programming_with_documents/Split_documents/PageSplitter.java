@@ -11,9 +11,16 @@ import java.text.MessageFormat;
 import java.util.*;
 import java.util.regex.Pattern;
 
+/**
+ * 分页器
+ */
 @Test
 public class PageSplitter extends DocsExamplesBase
 {
+    /**
+     * 分割文件
+     * @throws Exception
+     */
     @Test
     public void splitDocuments() throws Exception
     {

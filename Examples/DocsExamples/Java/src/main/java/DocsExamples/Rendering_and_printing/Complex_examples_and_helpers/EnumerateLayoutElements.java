@@ -13,6 +13,18 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.text.MessageFormat;
 
+/**
+ * 列举布局元素
+ * 布局+文本内容
+ * 1 -
+ *     2 -
+ *         32 -
+ *             64 - TEXT - Evaluation
+ *             64 - SPACES -
+ *             64 - TEXT - Only.
+ *             64 - SPACES -
+ *             64 - TEXT - Created
+ */
 @Test
 public class EnumerateLayoutElements extends DocsExamplesBase
 {

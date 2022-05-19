@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.regex.Pattern;
 
+/**
+ * 查找和替换
+ */
 @Test
 public class FindAndReplace extends DocsExamplesBase
 {
@@ -31,6 +34,10 @@ public class FindAndReplace extends DocsExamplesBase
         doc.save(getArtifactsDir() + "FindAndReplace.SimpleFindReplace.docx");
     }
 
+    /**
+     * 查找并高亮显示
+     * @throws Exception
+     */
     @Test
     public void findAndHighlight() throws Exception
     {
@@ -121,6 +128,10 @@ public class FindAndReplace extends DocsExamplesBase
     }
     //ExEnd:SplitRun
 
+    /**
+     * 搜索模式中的元字符
+     * @throws Exception
+     */
     @Test
     public void metaCharactersInSearchPattern() throws Exception
     {
@@ -179,6 +190,10 @@ public class FindAndReplace extends DocsExamplesBase
         //ExEnd:ReplaceTextContainingMetaCharacters
     }
 
+    /**
+     * 忽略字段内的文本
+     * @throws Exception
+     */
     @Test
     public void ignoreTextInsideFields() throws Exception
     {
@@ -203,6 +218,10 @@ public class FindAndReplace extends DocsExamplesBase
         //ExEnd:IgnoreTextInsideFields
     }
 
+    /**
+     * 忽略删除修订中的文本
+     * @throws Exception
+     */
     @Test
     public void ignoreTextInsideDeleteRevisions() throws Exception
     {
@@ -233,6 +252,10 @@ public class FindAndReplace extends DocsExamplesBase
         //ExEnd:IgnoreTextInsideDeleteRevisions
     }
 
+    /**
+     * 忽略文本内插入修订
+     * @throws Exception
+     */
     @Test
     public void ignoreTextInsideInsertRevisions() throws Exception
     {
@@ -353,6 +376,10 @@ public class FindAndReplace extends DocsExamplesBase
     }
     //ExEnd:ShowChangesForHeaderAndFooterOrders
 
+    /**
+     * 用字段替换文本
+     * @throws Exception
+     */
     @Test
     public void replaceTextWithField() throws Exception
     {
@@ -493,6 +520,10 @@ public class FindAndReplace extends DocsExamplesBase
     }
     //ExEnd:MyReplaceEvaluator
 
+    /**
+     * 使用Html替换
+     * @throws Exception
+     */
     @Test
     //ExStart:ReplaceWithHtml
     public void replaceWithHtml() throws Exception
@@ -620,6 +651,10 @@ public class FindAndReplace extends DocsExamplesBase
     }
     //ExEnd:UsingLegacyOrder
 
+    /**
+     * 替换表格中的文本
+     * @throws Exception
+     */
     @Test
     public void replaceTextInTable() throws Exception
     {

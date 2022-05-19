@@ -9,9 +9,16 @@ import java.io.File;
 import java.util.Date;
 import java.util.UUID;
 
+/**
+ * 使用数字签名
+ */
 @Test
 public class WorkingWithDigitalSinatures extends DocsExamplesBase
 {
+    /**
+     * 签名文件
+     * @throws Exception
+     */
     @Test
     public void signDocument() throws Exception
     {
@@ -23,6 +30,10 @@ public class WorkingWithDigitalSinatures extends DocsExamplesBase
         //ExEnd:SingDocument
     }
 
+    /**
+     * 签名加密文档
+     * @throws Exception
+     */
     @Test
     public void signingEncryptedDocument() throws Exception
     {
@@ -36,6 +47,10 @@ public class WorkingWithDigitalSinatures extends DocsExamplesBase
         //ExEnd:SigningEncryptedDocument
     }
 
+    /**
+     * 创建和签名新签名行
+     * @throws Exception
+     */
     @Test
     public void creatingAndSigningNewSignatureLine() throws Exception
     {

@@ -20,6 +20,10 @@ import com.aspose.words.FieldEnd;
 @Test
 public class RemoveContent extends DocsExamplesBase
 {
+    /**
+     * 删除分页符
+     * @throws Exception
+     */
     @Test
     public void removePageBreaks() throws Exception
     {
@@ -70,6 +74,10 @@ public class RemoveContent extends DocsExamplesBase
     }
     //ExEnd:RemoveSectionBreaks
 
+    /**
+     * 移除页脚
+     * @throws Exception
+     */
     @Test
     public void removeFooters() throws Exception
     {
@@ -95,6 +103,10 @@ public class RemoveContent extends DocsExamplesBase
         //ExEnd:RemoveFooters
     }
 
+    /**
+     * 删除toc
+     * @throws Exception
+     */
     @Test
     //ExStart:RemoveTOCFromDocument
     public void removeToc() throws Exception
@@ -107,6 +119,11 @@ public class RemoveContent extends DocsExamplesBase
         doc.save(getArtifactsDir() + "RemoveContent.RemoveToc.doc");
     }
 
+    /**
+     * 删除目录
+     * @param doc
+     * @param index
+     */
     /// <summary>
     /// Removes the specified table of contents field from the document.
     /// </summary>

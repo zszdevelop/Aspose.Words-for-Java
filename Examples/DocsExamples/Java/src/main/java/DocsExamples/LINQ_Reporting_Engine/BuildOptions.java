@@ -8,6 +8,9 @@ import com.aspose.words.Document;
 import com.aspose.words.ReportingEngine;
 import com.aspose.words.ReportBuildOptions;
 
+/**
+ * 构建选项
+ */
 @Test
 public class BuildOptions extends DocsExamplesBase
 {

@@ -5,6 +5,9 @@ import org.testng.Assert;
 
 import java.util.ArrayList;
 
+/**
+ * 提取内容助手
+ */
 public class ExtractContentHelper
 {
     //ExStart:CommonExtractContent

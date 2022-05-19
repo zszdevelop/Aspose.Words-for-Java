@@ -15,6 +15,9 @@ import java.util.ArrayList;
 import com.aspose.words.MailMergeRegionInfo;
 import org.testng.Assert;
 
+/**
+ * 合并字段,基础操作
+ */
 @Test
 public class BaseOperations extends DocsExamplesBase
 {
@@ -41,6 +44,10 @@ public class BaseOperations extends DocsExamplesBase
         //ExEnd:SimpleMailMerge
     }
 
+    /**
+     * 使用If Else
+     * @throws Exception
+     */
     @Test
     public void useIfElseMustache() throws Exception
     {
@@ -54,6 +61,10 @@ public class BaseOperations extends DocsExamplesBase
         //ExEnd:UseOfifelseMustacheSyntax
     }
 
+    /**
+     * 使用数据表的语法
+     * @throws Exception
+     */
     @Test
     public void mustacheSyntaxUsingDataTable() throws Exception
     {

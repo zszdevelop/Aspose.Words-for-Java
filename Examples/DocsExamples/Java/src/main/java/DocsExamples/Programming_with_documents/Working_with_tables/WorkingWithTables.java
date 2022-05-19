@@ -29,9 +29,16 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * 处理表格
+ */
 @Test
 public class WorkingWithTables extends DocsExamplesBase
 {
+    /**
+     * 移除列
+     * @throws Exception
+     */
     @Test
     public void removeColumn() throws Exception
     {
@@ -43,8 +50,13 @@ public class WorkingWithTables extends DocsExamplesBase
         Column column = Column.fromIndex(table, 2);
         column.remove();
         //ExEnd:RemoveColumn
+        doc.save(getArtifactsDir() + "WorkingWithTables.removeColumn.docx");
     }
 
+    /**
+     * 添加列
+     * @throws Exception
+     */
     @Test
     public void insertBlankColumn() throws Exception
     {
@@ -66,6 +78,7 @@ public class WorkingWithTables extends DocsExamplesBase
         for (Cell cell : newColumn.getColumnCells())
             cell.getFirstParagraph().appendChild(new Run(doc, "Column Text " + newColumn.indexOf(cell)));
         //ExEnd:InsertBlankColumn
+        doc.save(getArtifactsDir() + "WorkingWithTables.insertBlankColumn.docx");
     }
 
     //ExStart:ColumnClass
@@ -420,6 +433,10 @@ public class WorkingWithTables extends DocsExamplesBase
         //ExEnd:InsertTableDirectly
     }
 
+    /**
+     * 插入html表格
+     * @throws Exception
+     */
     @Test
     public void insertTableFromHtml() throws Exception
     {
@@ -443,6 +460,10 @@ public class WorkingWithTables extends DocsExamplesBase
         //ExEnd:InsertTableFromHtml
     }
 
+    /**
+     * 创建简单表格
+     * @throws Exception
+     */
     @Test
     public void createSimpleTable() throws Exception
     {
@@ -478,6 +499,10 @@ public class WorkingWithTables extends DocsExamplesBase
         //ExEnd:CreateSimpleTable
     }
 
+    /**
+     * 格式化表
+     * @throws Exception
+     */
     @Test
     public void formattedTable() throws Exception
     {
@@ -552,6 +577,10 @@ public class WorkingWithTables extends DocsExamplesBase
         //ExEnd:FormattedTable
     }
 
+    /**
+     * 嵌套表
+     * @throws Exception
+     */
     @Test
     public void nestedTable() throws Exception
     {
@@ -583,6 +612,10 @@ public class WorkingWithTables extends DocsExamplesBase
         //ExEnd:NestedTable
     }
 
+    /**
+     * 组合行
+     * @throws Exception
+     */
     @Test
     public void combineRows() throws Exception
     {
@@ -604,6 +637,10 @@ public class WorkingWithTables extends DocsExamplesBase
         //ExEnd:CombineRows
     }
 
+    /**
+     * 拆分表
+     * @throws Exception
+     */
     @Test
     public void splitTable() throws Exception
     {
@@ -636,6 +673,10 @@ public class WorkingWithTables extends DocsExamplesBase
         //ExEnd:SplitTable
     }
 
+    /**
+     * 行格式禁用跨页断行
+     * @throws Exception
+     */
     @Test
     public void rowFormatDisableBreakAcrossPages() throws Exception
     {
@@ -652,6 +693,10 @@ public class WorkingWithTables extends DocsExamplesBase
         //ExEnd:RowFormatDisableBreakAcrossPages
     }
 
+    /**
+     * 把表放在一起
+     * @throws Exception
+     */
     @Test
     public void keepTableTogether() throws Exception
     {
@@ -675,6 +720,10 @@ public class WorkingWithTables extends DocsExamplesBase
         //ExEnd:KeepTableTogether
     }
 
+    /**
+     * 检查合并的单元格
+     * @throws Exception
+     */
     @Test
     public void checkCellsMerged() throws Exception
     {
@@ -974,6 +1023,10 @@ public class WorkingWithTables extends DocsExamplesBase
     }
     //ExEnd:HorizontalAndVerticalMergeHelperClasses
 
+    /**
+     * 在后续页面上重复行
+     * @throws Exception
+     */
     @Test
     public void repeatRowsOnSubsequentPages() throws Exception
     {
@@ -1009,6 +1062,10 @@ public class WorkingWithTables extends DocsExamplesBase
         //ExEnd:RepeatRowsOnSubsequentPages
     }
 
+    /**
+     * 自动适应页面宽度
+     * @throws Exception
+     */
     @Test
     public void autoFitToPageWidth() throws Exception
     {
@@ -1033,6 +1090,10 @@ public class WorkingWithTables extends DocsExamplesBase
         //ExEnd:AutoFitToPageWidth
     }
 
+    /**
+     * 首选宽度设置
+     * @throws Exception
+     */
     @Test
     public void preferredWidthSettings() throws Exception
     {
@@ -1067,6 +1128,10 @@ public class WorkingWithTables extends DocsExamplesBase
         //ExEnd:PreferredWidthSettings
     }
 
+    /**
+     * 检索首选宽度类型
+     * @throws Exception
+     */
     @Test
     public void retrievePreferredWidthType() throws Exception
     {
@@ -1084,6 +1149,10 @@ public class WorkingWithTables extends DocsExamplesBase
         //ExEnd:RetrievePreferredWidthType
     }
 
+    /**
+     * 得到表的位置
+     * @throws Exception
+     */
     @Test
     public void getTablePosition() throws Exception
     {

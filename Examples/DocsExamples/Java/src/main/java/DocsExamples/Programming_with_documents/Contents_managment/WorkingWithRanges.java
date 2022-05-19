@@ -4,9 +4,16 @@ import DocsExamples.DocsExamplesBase;
 import org.testng.annotations.Test;
 import com.aspose.words.Document;
 
+/**
+ * 使用范围
+ */
 @Test
 public class WorkingWithRanges extends DocsExamplesBase
 {
+    /**
+     * 范围删除文本
+     * @throws Exception
+     */
     @Test
     public void rangesDeleteText() throws Exception
     {

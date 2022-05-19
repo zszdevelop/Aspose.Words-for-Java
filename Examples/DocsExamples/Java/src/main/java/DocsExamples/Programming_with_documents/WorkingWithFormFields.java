@@ -9,9 +9,16 @@ import com.aspose.words.FieldType;
 import com.aspose.words.FormFieldCollection;
 import java.awt.Color;
 
+/**
+ * 处理表单字段
+ */
 @Test
 public class WorkingWithFormFields extends DocsExamplesBase
 {
+    /**
+     * 插入一个下拉选项
+     * @throws Exception
+     */
     @Test
     public void insertFormFields() throws Exception
     {
@@ -22,6 +29,8 @@ public class WorkingWithFormFields extends DocsExamplesBase
         String[] items = { "One", "Two", "Three" };
         builder.insertComboBox("DropDown", items, 0);
         //ExEnd:InsertFormFields
+
+        doc.save(getArtifactsDir() + "insertFormFields.docx");
     }
 
     @Test
@@ -33,7 +42,7 @@ public class WorkingWithFormFields extends DocsExamplesBase
 
         if (formField.getType() == FieldType.FIELD_FORM_TEXT_INPUT)
             formField.setResult("My name is " + formField.getName());
-        //ExEnd:FormFieldsWorkWithProperties            
+        //ExEnd:FormFieldsWorkWithProperties
     }
 
     @Test

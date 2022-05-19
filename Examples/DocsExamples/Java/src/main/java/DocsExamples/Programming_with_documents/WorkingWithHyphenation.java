@@ -10,6 +10,9 @@ import java.io.FileInputStream;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
 
+/**
+ * 处理段字
+ */
 @Test
 public class WorkingWithHyphenation extends DocsExamplesBase
 {

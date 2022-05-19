@@ -10,9 +10,16 @@ import java.text.MessageFormat;
 import java.util.*;
 import java.util.List;
 
+/**
+ * 处理修订
+ */
 @Test
 public class WorkingWithRevisions extends DocsExamplesBase
 {
+    /**
+     * 接受修订
+     * @throws Exception
+     */
     @Test
     public void acceptRevisions() throws Exception
     {

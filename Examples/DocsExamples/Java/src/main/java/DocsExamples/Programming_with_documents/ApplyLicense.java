@@ -9,6 +9,9 @@ import com.aspose.words.Document;
 import java.io.File;
 import java.io.FileInputStream;
 
+/**
+ * 设置应用许可证
+ */
 @Test
 public class ApplyLicense extends DocsExamplesBase
 {

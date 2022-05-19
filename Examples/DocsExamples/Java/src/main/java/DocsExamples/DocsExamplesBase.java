@@ -53,7 +53,7 @@ public class DocsExamplesBase
      *
      * @throws Exception exception for setUnlimitedLicense()
      */
-    @BeforeClass(alwaysRun = true)
+//    @BeforeClass(alwaysRun = true)
     public void setUp() throws Exception {
         CurrentThreadSettings.setLocale(Locale.US);
 
@@ -84,7 +84,9 @@ public class DocsExamplesBase
      */
     private static void setUnlimitedLicense() throws Exception {
         // This is where the test license is on my development machine.
-        String testLicenseFileName = getLicenseDir() + "Aspose.Total.Java.lic";
+//        String testLicenseFileName = getLicenseDir() + "Aspose.Total.Java.lic";
+        String testLicenseFileName = getLicenseDir() + "license-new.xml";
+//        String testLicenseFileName = getLicenseDir() + "license.xml";
         if (new File(testLicenseFileName).exists()) {
             // This shows how to use an Aspose.Words license when you have purchased one.
             // You don't have to specify full path as shown here. You can specify just the
@@ -92,6 +94,7 @@ public class DocsExamplesBase
             // binaries or you add the license to your project as an embedded resource.
             License wordsLicense = new License();
             wordsLicense.setLicense(testLicenseFileName);
+
         }
 
     }

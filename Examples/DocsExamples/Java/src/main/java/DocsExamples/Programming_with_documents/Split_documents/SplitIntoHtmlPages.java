@@ -8,6 +8,9 @@ import org.testng.annotations.Test;
 import java.io.File;
 import java.util.ArrayList;
 
+/**
+ * 拆分成Html页面
+ */
 @Test
 public class SplitIntoHtmlPages extends DocsExamplesBase
 {

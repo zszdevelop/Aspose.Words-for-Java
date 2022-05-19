@@ -6,9 +6,16 @@ import org.testng.annotations.Test;
 
 import java.awt.*;
 
+/**
+ * 文档格式
+ */
 @Test
 public class DocumentFormatting extends DocsExamplesBase
 {
+    /**
+     * 亚洲和拉丁文本之间的空间
+     * @throws Exception
+     */
     @Test
     public void spaceBetweenAsianAndLatinText() throws Exception
     {
@@ -27,6 +34,10 @@ public class DocumentFormatting extends DocsExamplesBase
         //ExEnd:SpaceBetweenAsianAndLatinText
     }
 
+    /**
+     * 亚洲排版排版组
+     * @throws Exception
+     */
     @Test
     public void asianTypographyLineBreakGroup() throws Exception
     {
@@ -42,6 +53,10 @@ public class DocumentFormatting extends DocsExamplesBase
         //ExEnd:AsianTypographyLineBreakGroup
     }
 
+    /**
+     * 段落格式
+     * @throws Exception
+     */
     @Test
     public void paragraphFormatting() throws Exception
     {
@@ -64,6 +79,10 @@ public class DocumentFormatting extends DocsExamplesBase
         //ExEnd:ParagraphFormatting
     }
 
+    /**
+     * 多级列表格式
+     * @throws Exception
+     */
     @Test
     public void multilevelListFormatting() throws Exception
     {
@@ -95,6 +114,10 @@ public class DocumentFormatting extends DocsExamplesBase
         //ExEnd:MultilevelListFormatting
     }
 
+    /**
+     * 应用段落样式
+     * @throws Exception
+     */
     @Test
     public void applyParagraphStyle() throws Exception
     {
@@ -109,6 +132,10 @@ public class DocumentFormatting extends DocsExamplesBase
         //ExEnd:ApplyParagraphStyle
     }
 
+    /**
+     * 将边框和阴影应用于段落
+     * @throws Exception
+     */
     @Test
     public void applyBordersAndShadingToParagraph() throws Exception
     {
@@ -133,7 +160,11 @@ public class DocumentFormatting extends DocsExamplesBase
         doc.save(getArtifactsDir() + "DocumentFormatting.ApplyBordersAndShadingToParagraph.doc");
         //ExEnd:ApplyBordersAndShadingToParagraph
     }
-    
+
+    /**
+     * 更改亚洲段落间距和缩进
+     * @throws Exception
+     */
     @Test
     public void changeAsianParagraphSpacingAndIndents() throws Exception
     {
@@ -151,6 +182,10 @@ public class DocumentFormatting extends DocsExamplesBase
         //ExEnd:ChangeAsianParagraphSpacingAndIndents
     }
 
+    /**
+     * 对齐到网格
+     * @throws Exception
+     */
     @Test
     public void snapToGrid() throws Exception
     {
@@ -171,6 +206,10 @@ public class DocumentFormatting extends DocsExamplesBase
         //ExEnd:SetSnapToGrid
     }
 
+    /**
+     * 获取段落样式分隔符
+     * @throws Exception
+     */
     @Test
     public void getParagraphStyleSeparator() throws Exception
     {

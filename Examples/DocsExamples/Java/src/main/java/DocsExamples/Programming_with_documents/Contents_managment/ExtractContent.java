@@ -8,8 +8,16 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * 提取内容
+ */
 @Test
 public class ExtractContent extends DocsExamplesBase {
+
+    /**
+     * 提取块级节点之间的内容
+     * @throws Exception
+     */
     @Test
     public void extractContentBetweenBlockLevelNodes() throws Exception {
         //ExStart:ExtractContentBetweenBlockLevelNodes
@@ -35,6 +43,10 @@ public class ExtractContent extends DocsExamplesBase {
         //ExEnd:ExtractContentBetweenBlockLevelNodes
     }
 
+    /**
+     * 提取书签之间的内容
+     * @throws Exception
+     */
     @Test
     public void extractContentBetweenBookmark() throws Exception {
         //ExStart:ExtractContentBetweenBookmark
@@ -63,6 +75,10 @@ public class ExtractContent extends DocsExamplesBase {
         //ExEnd:ExtractContentBetweenBookmark
     }
 
+    /**
+     * 提取注释范围之间的内容
+     * @throws Exception
+     */
     @Test
     public void extractContentBetweenCommentRange() throws Exception {
         //ExStart:ExtractContentBetweenCommentRange
@@ -87,6 +103,10 @@ public class ExtractContent extends DocsExamplesBase {
         //ExEnd:ExtractContentBetweenCommentRange
     }
 
+    /**
+     * 提取段落之间的内容
+     * @throws Exception
+     */
     @Test
     public void extractContentBetweenParagraphs() throws Exception {
         //ExStart:ExtractContentBetweenParagraphs
@@ -103,6 +123,10 @@ public class ExtractContent extends DocsExamplesBase {
         //ExEnd:ExtractContentBetweenParagraphs
     }
 
+    /**
+     * 在段落样式之间提取内容
+     * @throws Exception
+     */
     @Test
     public void extractContentBetweenParagraphStyles() throws Exception {
         //ExStart:ExtractContentBetweenParagraphStyles
@@ -124,6 +148,10 @@ public class ExtractContent extends DocsExamplesBase {
         //ExEnd:ExtractContentBetweenParagraphStyles
     }
 
+    /**
+     *  在运行之间提取内容
+     * @throws Exception
+     */
     @Test
     public void extractContentBetweenRuns() throws Exception {
         //ExStart:ExtractContentBetweenRuns

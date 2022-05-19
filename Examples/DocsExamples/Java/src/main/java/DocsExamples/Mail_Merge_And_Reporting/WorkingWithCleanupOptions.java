@@ -8,9 +8,16 @@ import com.aspose.words.MailMergeCleanupOptions;
 import com.aspose.words.DocumentBuilder;
 import com.aspose.words.FieldMergeField;
 
+/**
+ * 使用清理选项
+ */
 @Test
 public class WorkingWithCleanupOptions extends DocsExamplesBase
 {
+    /**
+     * 从表中删除行
+     * @throws Exception
+     */
     @Test
     public void removeRowsFromTable() throws Exception
     {
@@ -28,6 +35,10 @@ public class WorkingWithCleanupOptions extends DocsExamplesBase
         //ExEnd:RemoveRowsFromTable
     }
 
+    /**
+     * 使用标点符号清理段落
+     * @throws Exception
+     */
     @Test
     public void cleanupParagraphsWithPunctuationMarks() throws Exception
     {
@@ -55,6 +66,10 @@ public class WorkingWithCleanupOptions extends DocsExamplesBase
         //ExEnd:CleanupParagraphsWithPunctuationMarks
     }
 
+    /**
+     * 删除未合并的区域
+     * @throws Exception
+     */
     @Test
     public void removeUnmergedRegions() throws Exception
     {
@@ -93,6 +108,10 @@ public class WorkingWithCleanupOptions extends DocsExamplesBase
         //ExEnd:RemoveEmptyParagraphs
     }
 
+    /**
+     * 删除未使用的字段
+     * @throws Exception
+     */
     @Test
     public void removeUnusedFields() throws Exception
     {
@@ -108,6 +127,10 @@ public class WorkingWithCleanupOptions extends DocsExamplesBase
         //ExEnd:RemoveUnusedFields
     }
 
+    /**
+     * 删除包含字段
+     * @throws Exception
+     */
     @Test
     public void removeContainingFields() throws Exception
     {
@@ -123,6 +146,10 @@ public class WorkingWithCleanupOptions extends DocsExamplesBase
         //ExEnd:RemoveContainingFields
     }
 
+    /**
+     * 删除空表行
+     * @throws Exception
+     */
     @Test
     public void removeEmptyTableRows() throws Exception
     {

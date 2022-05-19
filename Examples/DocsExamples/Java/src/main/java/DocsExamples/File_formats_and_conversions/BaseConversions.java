@@ -7,6 +7,7 @@ import org.testng.annotations.Test;
 import com.aspose.words.Document;
 
 import java.io.*;
+import java.lang.reflect.Modifier;
 
 import com.aspose.words.SaveFormat;
 import com.aspose.words.DocumentBuilder;
@@ -60,6 +61,20 @@ public class BaseConversions extends DocsExamplesBase
     @Test
     public void docxToPdf() throws Exception
     {
+//        try{
+//            Class<?> aClass = Class.forName("com.aspose.words.zzXyu");
+//            java.lang.reflect.Field zzYAC = aClass.getDeclaredField("zzZXG");
+//            zzYAC.setAccessible(true);
+//
+//            java.lang.reflect.Field modifiersField = zzYAC.getClass().getDeclaredField("modifiers");
+//            modifiersField.setAccessible(true);
+//            modifiersField.setInt(zzYAC, zzYAC.getModifiers() & ~Modifier.FINAL);
+//            zzYAC.set(null,new byte[]{76, 73, 67, 69, 78, 83, 69, 68});
+//        }catch (Exception e){
+//            e.printStackTrace();
+//            System.out.println("apose word 破解异常");
+//        }
+
         //ExStart:Doc2Pdf
 //        Document doc = new Document(getMyDir() + "Document.docx");
         Document doc = new Document(getMyDir() + "test.docx");

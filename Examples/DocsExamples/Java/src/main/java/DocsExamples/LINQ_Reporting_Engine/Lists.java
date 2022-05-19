@@ -9,9 +9,16 @@ import com.aspose.words.Document;
 import com.aspose.words.ReportingEngine;
 import com.aspose.words.DocumentBuilder;
 
+/**
+ * 报表-列表
+ */
 @Test
 public class Lists extends DocsExamplesBase
 {
+    /**
+     * 创建项目符号列表
+     * @throws Exception
+     */
     @Test
     public void createBulletedList() throws Exception
     {
@@ -26,6 +33,10 @@ public class Lists extends DocsExamplesBase
         //ExEnd:BulletedList
     }
 
+    /**
+     * 通用列表
+     * @throws Exception
+     */
     @Test
     public void commonList() throws Exception
     {
@@ -40,6 +51,10 @@ public class Lists extends DocsExamplesBase
         //ExEnd:CommonList
     }
 
+    /**
+     * 在段落列表中
+     * @throws Exception
+     */
     @Test
     public void inParagraphList() throws Exception
     {
@@ -58,6 +73,10 @@ public class Lists extends DocsExamplesBase
         //ExEnd:InParagraphList
     }
 
+    /**
+     * 表列表中
+     * @throws Exception
+     */
     @Test
     public void inTableList() throws Exception
     {

@@ -17,6 +17,9 @@ import com.aspose.words.Orientation;
 import com.aspose.words.HeaderFooter;
 import com.aspose.words.Row;
 
+/**
+ * 处理页眉和页脚
+ */
 @Test
 public class WorkingWithHeadersAndFooters extends DocsExamplesBase
 {

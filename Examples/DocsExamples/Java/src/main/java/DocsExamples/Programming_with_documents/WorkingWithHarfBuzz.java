@@ -5,6 +5,9 @@ import org.testng.annotations.Test;
 import com.aspose.words.Document;
 import com.aspose.words.shaping.harfbuzz.HarfBuzzTextShaperFactory;
 
+/**
+ * [Harfbuzz](http://harfbuzz.org/ 是一个 OpenType 文本整形引擎。
+ */
 @Test
 public class WorkingWithHarfBuzz extends DocsExamplesBase
 {

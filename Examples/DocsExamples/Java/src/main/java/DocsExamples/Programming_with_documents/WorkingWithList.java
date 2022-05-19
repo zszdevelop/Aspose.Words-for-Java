@@ -14,9 +14,16 @@ import java.text.MessageFormat;
 
 import com.aspose.words.ListLevelAlignment;
 
+/**
+ * 处理列表
+ */
 @Test
 public class WorkingWithList extends DocsExamplesBase
 {
+    /**
+     * 渲染列表（单层），并在制定行分页
+     * @throws Exception
+     */
     @Test
     public void restartListAtEachSection() throws Exception
     {
@@ -46,6 +53,10 @@ public class WorkingWithList extends DocsExamplesBase
         //ExEnd:RestartListAtEachSection
     }
 
+    /**
+     * 渲染带层级的列表
+     * @throws Exception
+     */
     @Test
     public void specifyListLevel() throws Exception
     {
@@ -81,6 +92,10 @@ public class WorkingWithList extends DocsExamplesBase
         //ExEnd:SpecifyListLevel
     }
 
+    /**
+     * 带编号的列表
+     * @throws Exception
+     */
     @Test
     public void restartListNumber() throws Exception
     {
